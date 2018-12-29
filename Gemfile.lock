@@ -92,6 +92,7 @@ GEM
     guard-minitest (2.4.4)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
+    hashie (3.6.0)
     hirb (0.7.3)
     hirb-unicode (0.0.5)
       hirb (~> 0.5)
@@ -135,6 +136,16 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    oauth (0.5.4)
+    omniauth (1.9.0)
+      hashie (>= 3.4.6, < 3.7.0)
+      rack (>= 1.6.2, < 3)
+    omniauth-oauth (1.1.0)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-twitter (1.4.0)
+      omniauth-oauth (~> 1.1)
+      rack
     orm_adapter (0.5.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -183,6 +194,8 @@ GEM
       railties (>= 4.2.0, < 5.3)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
+    rufus-lua (1.1.5)
+      ffi (~> 1.9)
     sass (3.7.2)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -243,10 +256,12 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   mini_racer
   minitest-reporters (= 1.1.14)
+  omniauth-twitter
   puma (~> 3.11)
   rails (~> 5.2.2)
   rails-controller-testing (= 1.0.2)
   redis (~> 4.0)
+  rufus-lua
   sass
   spring
   spring-watcher-listen (~> 2.0.0)
