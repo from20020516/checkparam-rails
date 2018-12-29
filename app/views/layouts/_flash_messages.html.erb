@@ -1,0 +1,11 @@
+<% flash.each do |message_type, message| %>
+<div class="alert alert-<%= message_type %>">
+  <%= message %>
+</div>
+<% end %>
+<script>
+  $(function(){
+    // fadeout
+    setTimeout("$('.alert').fadeOut('slow')", 3000)
+  })
+</script>

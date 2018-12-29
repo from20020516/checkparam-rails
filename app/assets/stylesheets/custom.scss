@@ -1,0 +1,88 @@
+/* universal */
+div[class^="col"] {
+  border: 1px red solid; // debug for Bootstrap
+}
+body {
+  margin: 0px;
+}
+.container {
+  margin-top: 15px;
+}
+/* header */
+header {
+  height: 50px;
+  width: 100%;
+  background-color: rgba(34,49,52,0.9);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  .alert {
+    margin-bottom: 0;
+    padding: .5rem 1.5rem;
+  }
+}
+/* sidebar */
+#sidebar {
+  text-align: center;
+}
+/* footer */
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #777;
+}
+footer a {
+  color: #555;
+}
+footer a:hover {
+  color: #222;
+}
+footer small {
+  float: left;
+}
+footer ul {
+  float: right;
+  list-style: none;
+}
+footer ul li {
+  float: left;
+  margin-left: 15px;
+}
+section {
+  overflow: auto;
+}
+textarea {
+  resize: vertical;
+}
+.center {
+  text-align: center;
+}
+.center h1 {
+  margin-bottom: 10px;
+}
+/* typography */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #777;
+}
+h3 {
+  text-align: center;
+}
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
