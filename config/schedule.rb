@@ -17,11 +17,3 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 # Learn more: http://github.com/javan/whenever
-
-set :output, 'log/crontab.log'
-ENV['RAILS_ENV'] ||= 'development'
-set :environment, ENV['RAILS_ENV']
-
-every 7.days do
-
-end
