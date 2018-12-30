@@ -13,7 +13,9 @@ namespace :parse do
 
       for i,v in pairs(item) do -- FILTER
         if (v.category == "Weapon" or v.category == "Armor")
-        and v.level >= 1 then
+        and v.level >= 1
+        and v.item_level == 118
+        then
           ary[i] = {v, desc[i] or ""}
         end
       end
@@ -21,17 +23,22 @@ namespace :parse do
     ')
 
     JSON.parse(res).each do |data|
-      @equipment = Equipment.find_or_initialize_by(id: data[0])
-      @equipment.update(
-        jal:          data[1][0]["jal"],
-        enl:          data[1][0]["enl"],
-        group:        data[1][0]["type"],
-        slot:         data[1][0]["slots"],
-        skill:        data[1][0]["skill"],
-        description:  data[1][1]["ja"],
-        job:          data[1][0]["jobs"],
-        lv:           data[1][0]["level"],
-        itemlv:       data[1][0]["item_level"],
+      @item = Item.find_or_initialize_by(id: data[0])
+      @item.update(
+        jal:    data[1][0]["jal"],
+        enl:    data[1][0]["enl"],
+        group:  data[1][0]["type"],
+        slot:   data[1][0]["slots"],
+        skill:  data[1][0]["skill"],
+        job:    data[1][0]["jobs"],
+        lv:     data[1][0]["level"],
+        itemlv: data[1][0]["item_level"],
+      )
+
+      @description = Description.find_or_initialize_by(id: data[0])
+      @description.update(
+        ja:  data[1][1]["ja"] || "",
+        en:  data[1][1]["en"] || "",
       )
     end
   end
@@ -41,8 +48,8 @@ namespace :parse do
     hash = Hash.new
     hash.default = 0
 
-    Equipment.all.each do |data|
-      str = data.description
+    Description.all.each do |data|
+      str = data.ja
       nya = str.gsub(/\n/," ").gsub(/[+-]?[0-9]+%?/, "").split(/\s/)
       nya.each do |prop|
         hash[prop] += 1
@@ -54,9 +61,10 @@ namespace :parse do
   # TO-DO: ペット対応
   desc "restructure equipment descriptions."
   task :rest => :environment do
-    Equipment.all.each do |data|
-      str = data.description
-      puts data.jal.yellow, str.red
+    Description.all.each do |data|
+      str = data.ja
+      puts data.id.to_s.light_black, data.ja.yellow
+
       nya = str.gsub(/\n/," ").split(/\s/)
       puts nya
     end
