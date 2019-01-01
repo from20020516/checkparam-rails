@@ -1,8 +1,9 @@
 namespace :parse do
   require 'colorize'
+  require 'colorized_string'
   require 'rufus-lua'
 
-  desc "get equipment data from lua."
+  desc "get Items from lua."
   task :fetch => :environment do
     @state = Rufus::Lua::State.new
     res = @state.eval('
@@ -43,6 +44,18 @@ namespace :parse do
     end
   end
 
+  # TO-DO: ペット対応
+  desc "restructure equipment descriptions."
+  task :rest => :environment do
+    Description.all.each do |data|
+      puts data.id.to_s.light_black, data.ja.yellow
+      nya = data.ja.gsub(/\n/," ").split(/\s/)
+      for t in nya
+        p t.scan(/([+-]?[0-9]+)%?/)
+      end
+    end
+  end
+
   desc "counts frequency of property name usage."
   task :counts => :environment do
     hash = Hash.new
@@ -58,22 +71,8 @@ namespace :parse do
     p hash.sort {|(k1, v1), (k2, v2)| v2 <=> v1}
   end
 
-  # TO-DO: ペット対応
-  desc "restructure equipment descriptions."
-  task :rest => :environment do
-    Description.all.each do |data|
-      str = data.ja
-      puts data.id.to_s.light_black, data.ja.yellow
-
-      nya = str.gsub(/\n/," ").split(/\s/)
-      puts nya
-    end
-  end
-
-  desc "colorize test"
+  desc "TEST Colorize"
   task :color => :environment do
-    require 'colorize'
-    require 'colorized_string'
     String.colors.each do |color|
       puts ColorizedString[color.to_s].colorize(color)
     end
