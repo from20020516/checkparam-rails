@@ -1,0 +1,108 @@
+<%#= @job_id %>
+<%#= Job.find(@job_id).ens%>
+<div class="form-group">
+  <%= form_with scope: :equipset do |f| %>
+  <div class="form-group row">
+    <label for="equipset_main" class="col-2 col-form-label"><%= image_tag '/icons/48/16622.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:main, Item.where('job & ? > 0 and slot & ? > 0 and itemlv >= 119', 2**@job_id, 2**0), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_sub" class="col-2 col-form-label"><%= image_tag '/icons/48/12332.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:sub, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**1), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_range" class="col-2 col-form-label"><%= image_tag '/icons/48/17174.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:range, Item.where('job & ? > 0 and slot & ? > 0 and itemlv >= 119', 2**@job_id, 2**2), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_ammo" class="col-2 col-form-label"><%= image_tag '/icons/48/17326.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:ammo, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**3), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_head" class="col-2 col-form-label"><%= image_tag '/icons/48/12523.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:head, Item.where('job & ? > 0 and slot & ? > 0 and itemlv >= 118', 2**@job_id, 2**4), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_neck" class="col-2 col-form-label"><%= image_tag '/icons/48/13074.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:neck, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**9), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_ear1" class="col-2 col-form-label"><%= image_tag '/icons/48/13358.png' %></label>
+    <div class="col-10">
+       <%= f.collection_select(:ear1, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**11), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_ear2" class="col-2 col-form-label"><%= image_tag '/icons/48/13358.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:ear2, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**12), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_body" class="col-2 col-form-label"><%= image_tag '/icons/48/12551.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:body, Item.where('job & ? > 0 and slot & ? > 0 and itemlv >= 119', 2**@job_id, 2**5), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_hands" class="col-2 col-form-label"><%= image_tag '/icons/48/12679.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:hands, Item.where('job & ? > 0 and slot & ? > 0 and itemlv >= 119', 2**@job_id, 2**6), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_ring1" class="col-2 col-form-label"><%= image_tag '/icons/48/13505.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:ring1, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**13), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_ring2" class="col-2 col-form-label"><%= image_tag '/icons/48/13505.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:ring2, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**13), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_back" class="col-2 col-form-label"><%= image_tag '/icons/48/13606.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:back, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**15), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_waist" class="col-2 col-form-label"><%= image_tag '/icons/48/13215.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:waist, Item.where('job & ? > 0 and slot & ? > 0', 2**@job_id, 2**10), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_legs" class="col-2 col-form-label"><%= image_tag '/icons/48/12807.png' %></label>
+    <div class="col-10">
+     <%= f.collection_select(:legs, Item.where('job & ? > 0 and slot & ? > 0 and itemlv >= 119', 2**@job_id, 2**7), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="equipset_feet" class="col-2 col-form-label"><%= image_tag '/icons/48/12935.png' %></label>
+    <div class="col-10">
+      <%= f.collection_select(:feet, Item.where('job & ? > 0 and slot & ? > 0 and itemlv >= 119', 2**@job_id, 2**8), :id, :jal, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+<% end %>
+</div>
+<script>
+  var equipset = document.querySelector("#equipset")
+  equipset.addEventListener("change", function(data) {
+    equipset.querySelector(`label[for="${data.target.id}"] img`).src = `/icons/48/${data.target.value}.png`;
+  }, {passive: true});  
+</script>

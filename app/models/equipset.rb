@@ -1,0 +1,2 @@
+class Equipset < ApplicationRecord
+end
