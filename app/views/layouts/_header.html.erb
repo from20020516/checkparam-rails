@@ -1,21 +1,34 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="logo">
-    <nav>
-      <%= link_to "LOGO", root_path %>
-    </nav>
-  </div>
+  <nav>
+    <%= link_to "Checkparam", root_path %>
+  </nav>
+  <nav>
+    <div class="form-inline col-offset-3">
+      <!--scope: :NAME //params[:NAME] で取り出せる-->
+      <%= form_with scope: :job, id: "main_job", passive: true do |f| %>
+        <%= f.collection_select(:id, Job.all.slice(1..22), :id, :ens, {selected: @job_id}, {class: 'form-control'}) %>
+      <% end %>
+      <%= form_with scope: :equipset, id: "set_number" do |f| %>
+        <%= f.select(:id, (1..10).to_a, {include_blank: false}, {class: "form-control"}) %>
+        <%#= f.submit(class: "btn btn-secondary") %>
+      <% end %>
+    </div>
+  </nav>
   <nav>
     <%= render 'layouts/flash_messages' %>
-  </nav>
-  <div class="login">
-    <nav>
-  		<% if user_signed_in? %>
-  		  Logged in as <%= current_user.name %>
+    <div>
+    	<% if user_signed_in? %>
+    	  Logged in as <%= current_user.name %>
         <%= link_to image_tag(current_user.image) %>
-  		  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-  		<% else %>
-        <%= link_to 'Twitterログイン', user_twitter_omniauth_authorize_path %>
-  		<% end %>
-		</nav>
-  </div>
+    	  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+    	<% else %>
+        <%= link_to 'Login via Twitter', user_twitter_omniauth_authorize_path %>
+    	<% end %>
+    </div>
+  </nav>
+  <script>
+    document.querySelector("#main_job").addEventListener("change", function() {
+      Rails.fire($(this).closest("form")[0], 'submit');
+    }, {passive: true});
+  </script>
 </header>

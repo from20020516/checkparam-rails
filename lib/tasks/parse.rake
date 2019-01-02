@@ -14,8 +14,8 @@ namespace :parse do
 
       for i,v in pairs(item) do -- FILTER
         if (v.category == "Weapon" or v.category == "Armor")
-        and v.level >= 1
-        and v.item_level == 118
+        and v.level >= 99
+        --and v.item_level == 119
         then
           ary[i] = {v, desc[i] or ""}
         end
@@ -53,6 +53,28 @@ namespace :parse do
       for t in nya
         p t.scan(/([+-]?[0-9]+)%?/)
       end
+    end
+  end
+
+  desc "get JSON from specific lua table."
+  task :json => :environment do
+    @state = Rufus::Lua::State.new
+    res = @state.eval('
+      local json = require("lib.assets.json")
+      local table = require("lib.assets.Resources.resources_data.jobs")
+      return json.stringify(table)
+    ')
+    # sort by key
+    # JSON.parse(res).sort_by { |k,v| k.to_i } do |data|
+    JSON.parse(res).each do |data|
+      puts data
+      @job = Job.find_or_initialize_by(id: data[0])
+      @job.update(
+        ja:    data[1]["ja"],
+        en:    data[1]["en"],
+        jas:    data[1]["jas"],
+        ens:    data[1]["ens"],        
+      )
     end
   end
 

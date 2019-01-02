@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_30_163522) do
+ActiveRecord::Schema.define(version: 2019_01_01_095010) do
 
   create_table "descriptions", force: :cascade do |t|
     t.text "ja"
@@ -67,6 +67,27 @@ ActiveRecord::Schema.define(version: 2018_12_30_163522) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "equipsets", force: :cascade do |t|
+    t.text "main"
+    t.text "sub"
+    t.text "range"
+    t.text "ammo"
+    t.text "head"
+    t.text "neck"
+    t.text "ear1"
+    t.text "ear2"
+    t.text "body"
+    t.text "hands"
+    t.text "ring1"
+    t.text "ring2"
+    t.text "back"
+    t.text "waist"
+    t.text "legs"
+    t.text "feet"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "items", force: :cascade do |t|
     t.string "jal"
     t.string "enl"
@@ -76,6 +97,15 @@ ActiveRecord::Schema.define(version: 2018_12_30_163522) do
     t.integer "job"
     t.integer "lv"
     t.integer "itemlv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.text "ja"
+    t.text "en"
+    t.text "ens"
+    t.text "jas"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
