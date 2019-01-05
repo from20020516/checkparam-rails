@@ -1,11 +1,16 @@
 class HomeController < ApplicationController
+
   def index
-    @job_id = cookies.signed["job"] || 1
+  end
+
+  def about
   end
 
   def update
-    @job_id = params[:job][:id].to_i
-    cookies.signed["job"] = @job_id
+    @user = User.find(current_user.id)
+    @user.update_attributes(jobid: params[:jobid] || @user[:jobid], lang: params[:lang] || @user[:lang])
+    current_user.update_attributes(jobid: @user[:jobid], lang: @user[:lang])
+
     render partial: 'equipset_partial'
   end
 end
