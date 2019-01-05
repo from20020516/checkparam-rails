@@ -1,34 +1,57 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <nav>
-    <%= link_to "Checkparam", root_path %>
-  </nav>
-  <nav>
-    <div class="form-inline col-offset-3">
+<nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
+  <div class="container">
+    <% if user_signed_in? %>
+    <%= link_to "Checkparam", root_path, class: "navbar-brand" %>
+    <div class="form-inline">
       <!--scope: :NAME //params[:NAME] で取り出せる-->
-      <%= form_with scope: :job, id: "main_job", passive: true do |f| %>
-        <%= f.collection_select(:id, Job.all.slice(1..22), :id, :ens, {selected: @job_id}, {class: 'form-control'}) %>
+      <%= form_with model: @user, class: "watch" do |f| %>
+        <%= f.collection_select(:jobid, Job.all.slice(1..22), :id, :ens, {selected: current_user.jobid || 1},
+          {class: 'form-control', onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
       <% end %>
+
       <%= form_with scope: :equipset, id: "set_number" do |f| %>
         <%= f.select(:id, (1..10).to_a, {include_blank: false}, {class: "form-control"}) %>
-        <%#= f.submit(class: "btn btn-secondary") %>
       <% end %>
     </div>
-  </nav>
-  <nav>
-    <%= render 'layouts/flash_messages' %>
-    <div>
-    	<% if user_signed_in? %>
-    	  Logged in as <%= current_user.name %>
-        <%= link_to image_tag(current_user.image) %>
-    	  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-    	<% else %>
-        <%= link_to 'Login via Twitter', user_twitter_omniauth_authorize_path %>
-    	<% end %>
-    </div>
-  </nav>
-  <script>
-    document.querySelector("#main_job").addEventListener("change", function() {
-      Rails.fire($(this).closest("form")[0], 'submit');
-    }, {passive: true});
-  </script>
-</header>
+    <ul class="navbar-nav" id="header-menu">
+      <li class="nav-item dropleft">
+        <a class="nav-link dropleft-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= image_tag current_user.image, id: "twitter_icon", size: '40x40' %>
+        </a>
+        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+          <%= link_to "@#{current_user.nickname}", root_path, class: "dropdown-item" %>
+
+          <div id="language">
+            <%= form_with model: @user, class: "watch" do |f| %>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>">JP
+                <%= f.radio_button :lang, :ja, onchange: 'Rails.fire($(this).closest("form")[0], "submit")' %>
+              </label>
+              <label class="btn btn-secondary <%= 'active' if current_user.lang == 'en' %>">EN
+                <%= f.radio_button :lang, :en, onchange: 'Rails.fire($(this).closest("form")[0], "submit")' %>
+              </label>
+            </div>
+            <% end %>
+          </div>
+
+          <div class="dropdown-divider"></div>
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item",id: "logout" %>
+        </div>
+      </li>
+    </ul>
+    <% else %>
+      <%= link_to "Checkparam", root_path, class: "navbar-brand" %>
+      <%= button_to 'Login with Twitter', user_twitter_omniauth_authorize_path, class: "btn btn-outline-secondary", id: "login" %>
+    <% end %>
+  </div>
+</nav>
+<!-- assetsに入れるとlink_to後動作しない…turbolinks? -->
+<script>
+(function() {
+  $(function() {
+    return $('.watch').on('ajax:complete', function(event) {
+      return $('#equipset').html(event.detail[0].response);
+    });
+  });
+}).call(this);
+</script>

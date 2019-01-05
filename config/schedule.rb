@@ -18,5 +18,5 @@ every :monday, at: '5am' do # Use any day of the week or :weekend, :weekday
 end
 
 # every 1.minute do # 1.minute 1.day 1.week 1.month 1.year is also supported
-#   rake "parse:color"
+#   rake "parse:items"
 # end

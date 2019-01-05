@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :omniauthable
+  # https://qiita.com/gakkie/items/6ef70c0788c3cbff81ee
+  devise :database_authenticatable, :omniauthable, :rememberable, :trackable
+  # :registerable, :validatable, :recoverable, :confirmable, :lockable, :timeoutable, 
 
   def self.find_for_oauth(auth)
    user = User.where(uid: auth.uid, provider: auth.provider).first
@@ -11,20 +11,16 @@ class User < ApplicationRecord
      user = User.create(
        uid:      auth.uid,
        provider: auth.provider,
-       email:    User.dummy_email(auth),
+       # email:    auth.info.email, # require APIs permission.
+       lang:     auth.extra.raw_info.lang == "ja" ? "ja" : "en",
        password: Devise.friendly_token[0, 20],
-       image: auth.info.image.gsub("http","https"),
-       name: auth.info.name,
+       image:    auth.info.image.gsub("http","https"),
        nickname: auth.info.nickname,
-       )
+       jobid:    1,
+       setid:    1,
+     )
    end
 
    user
-  end
-
-  private
-
-  def self.dummy_email(auth)
-   "#{auth.uid}-#{auth.provider}@example.com"
   end
 end
