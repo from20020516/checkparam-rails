@@ -2,6 +2,5 @@
 
 ## TO-DO
 
-- DB最適化
-  -　装備のスクリーニング
-  -　'has_many'
+- Dark Thema
+- equipset#show
