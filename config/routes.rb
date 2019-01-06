@@ -3,10 +3,11 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
   resources :users
+  resources :gearsets
+  resources :jobs
 
-  root 'home#index'
-  post '/', to: 'home#update', as: 'home_update'
-  get  '/about', to: 'home#about'
-  post '/about', to: 'home#update'
+  root 'gearsets#index'
+  get  '/about', to: 'gearsets#about'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

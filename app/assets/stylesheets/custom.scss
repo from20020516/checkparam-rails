@@ -5,9 +5,10 @@ div[class^="col"] {
 
 body {
   margin-top: 65px!important; // header
+  //background-color: #00001A!important;
 }
 
-#equipmenu {
+#gearmenu {
   width: 210px; //200+border*2
   height: 210px;
   border: 5px solid #003366;
@@ -23,7 +24,7 @@ body {
   }
 }
 
-#equipset {
+#gearset {
   .row {
     margin-bottom: 0;
   }
@@ -34,11 +35,12 @@ body {
 
 .navbar {
   //opacity: 0.9;
+  height: 50px;
   #logout {
     color: red;
   }
   .btn-group {
-    width: 60%;
+    width: 50%;
   }
 }
 

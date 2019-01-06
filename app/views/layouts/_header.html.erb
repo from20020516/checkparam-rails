@@ -1,28 +1,32 @@
 <nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
   <div class="container">
     <% if user_signed_in? %>
-    <%= link_to "Checkparam", root_path, class: "navbar-brand" %>
+    <%= link_to "Checkparam", root_path, class: "navbar-brand", data: {turbolinks: false} %>
     <div class="form-inline">
-      <!--scope: :NAME //params[:NAME] で取り出せる-->
-      <%= form_with model: @user, class: "watch" do |f| %>
-        <%= f.collection_select(:jobid, Job.all.slice(1..22), :id, :ens, {selected: current_user.jobid || 1},
-          {class: 'form-control', onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-      <% end %>
-
-      <%= form_with scope: :equipset, id: "set_number" do |f| %>
-        <%= f.select(:id, (1..10).to_a, {include_blank: false}, {class: "form-control"}) %>
+      <% if controller.action_name != "about" %>
+        <!-- url: [URL] -> Controller & Action指定(要routes) / scope: :[NAME] -> Controller内でparams[:NAME]として分類 -->
+        <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
+          <%= f.collection_select(:jobid, Job.all.slice(1..22), :id, :ens, {selected: current_user.jobid || 1},
+            {class: 'form-control', onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+        <% end %>
+        <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
+          <%= f.select(:setid, (1..5).to_a, {include_blank: false, selected: current_user.setid || 1},
+            {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+        <% end %>
       <% end %>
     </div>
     <ul class="navbar-nav" id="header-menu">
       <li class="nav-item dropleft">
         <a class="nav-link dropleft-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= image_tag current_user.image, id: "twitter_icon", size: '40x40' %>
+          <%= image_tag current_user.image, id: "twitter_icon", size: '48x48' %>
         </a>
         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-          <%= link_to "@#{current_user.nickname}", root_path, class: "dropdown-item" %>
-
+          <div class="dropdown-item">
+            <%= "@#{current_user.nickname}" %>
+          </div>
+          <% if controller.action_name != "about" %>
           <div id="language">
-            <%= form_with model: @user, class: "watch" do |f| %>
+            <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>">JP
                 <%= f.radio_button :lang, :ja, onchange: 'Rails.fire($(this).closest("form")[0], "submit")' %>
@@ -33,7 +37,7 @@
             </div>
             <% end %>
           </div>
-
+          <% end %>
           <div class="dropdown-divider"></div>
           <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item",id: "logout" %>
         </div>
@@ -45,13 +49,3 @@
     <% end %>
   </div>
 </nav>
-<!-- assetsに入れるとlink_to後動作しない…turbolinks? -->
-<script>
-(function() {
-  $(function() {
-    return $('.watch').on('ajax:complete', function(event) {
-      return $('#equipset').html(event.detail[0].response);
-    });
-  });
-}).call(this);
-</script>

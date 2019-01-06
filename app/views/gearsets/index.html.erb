@@ -1,0 +1,50 @@
+<div class="row">
+  <% if user_signed_in? %>
+    <div class="col-lg-6">
+      <div class="mx-auto" id="gearmenu">
+      <%#= render 'layouts/flash_messages' %>
+        <div class="row">
+          <div class="col-3" id="gearset_main"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_main" %></div>
+          <div class="col-3" id="gearset_sub"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_sub" %></div>
+          <div class="col-3" id="gearset_range"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_range" %></div>
+          <div class="col-3" id="gearset_ammo"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_ammo" %></div>
+        </div>
+        <div class="row">
+          <div class="col-3" id="gearset_head"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_head" %></div>
+          <div class="col-3" id="gearset_neck"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_neck" %></div>
+          <div class="col-3" id="gearset_ear1"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_ear1" %></div>
+          <div class="col-3" id="gearset_ear2"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_ear2" %></div>
+        </div>
+        <div class="row">
+          <div class="col-3" id="gearset_body"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_body" %></div>
+          <div class="col-3" id="gearset_hands"><%= image_tag '/icons/48/0.png', size: "48x48",class: "gearset_hands" %></div>
+          <div class="col-3" id="gearset_ring1"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_ring1" %></div>
+          <div class="col-3" id="gearset_ring2"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_ring2" %></div>
+        </div>
+        <div class="row">
+          <div class="col-3" id="gearset_back"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_back" %></div>
+          <div class="col-3" id="gearset_waist"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_waist" %></div>
+          <div class="col-3" id="gearset_legs"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_legs" %></div>
+          <div class="col-3" id="gearset_feet"><%= image_tag '/icons/48/0.png', size: "48x48", class: "gearset_feet" %></div>
+        </div>
+      </div>
+      <h1>params here</h1>
+    </div>
+    <div class="col-lg-6" id="gearset">
+      <%= render 'layouts/gearset_partial' %>
+    </div>
+    <script>
+      // 装備変更時 Icon描画 //
+      document.querySelector("#gearset").addEventListener("change", function() {
+        setIcon();
+      }, { passive: true });
+    </script>
+  <% else %>
+    <div class="col-lg-12 text-center" id="landing-page">
+      <h1>/checkparam your Ideas.</h1>
+      <div class="col-12">
+        <%= button_to 'Twitterアカウントで登録', user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg my-5", id: "signup" %>
+      </div>
+    </div>
+  <% end %>
+</div>
