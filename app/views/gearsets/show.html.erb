@@ -1,0 +1,144 @@
+<% if false #Rails.env.development? %>
+<div class="row align-items-center text-center">
+  <div class="debug border border-secondary p-2 col-12">
+    Debug: <%= controller.controller_name %>#<%= controller.action_name %><br>
+    @gearset.id: <%= @gearset.id %> @gearset.main: <%= @gearset.main %><br>
+  </div>
+</div>
+<% end %>
+<div class="row align-items-center text-center">
+  <div class="col-12 mb-3">
+    <h3><%= Job.find(@gearset.jobid)[current_user.lang] %> / <%= @gearset.user.name %> (<%= link_to "@#{@gearset.user.nickname}", "https://twitter.com/#{@gearset.user.nickname}" %>)</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="mx-auto" id="gearmenu">
+      <div class="row">
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:main]}.png", size: "64x64", class: "gearset_main" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:sub]}.png", size: "64x64", class: "gearset_sub" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:range]}.png", size: "64x64", class: "gearset_range" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:ammo]}.png", size: "64x64", class: "gearset_ammo" %></div>
+      </div>
+      <div class="row">
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:head]}.png", size: "64x64", class: "gearset_head" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:neck]}.png", size: "64x64", class: "gearset_neck" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:ear1]}.png", size: "64x64", class: "gearset_ear1" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:ear2]}.png", size: "64x64", class: "gearset_ear2" %></div>
+      </div>
+      <div class="row">
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:body]}.png", size: "64x64", class: "gearset_body" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:hands]}.png", size: "64x64",class: "gearset_hands" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:ring1]}.png", size: "64x64", class: "gearset_ring1" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:ring2]}.png", size: "64x64", class: "gearset_ring2" %></div>
+      </div>
+      <div class="row">
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:back]}.png", size: "64x64", class: "gearset_back" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:waist]}.png", size: "64x64", class: "gearset_waist" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:legs]}.png", size: "64x64", class: "gearset_legs" %></div>
+        <div class="col-3"><%= image_tag "/icons/64/#{@gearset[:feet]}.png", size: "64x64", class: "gearset_feet" %></div>
+      </div>
+      <div class="my-3 text-center">
+        <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{Job.find(@gearset.jobid)[current_user.lang]}%20@#{@gearset.user.nickname}&url=https://checkparam.com/gearsets/#{@gearset.id.to_s}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6" id="show">
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:main]}.png", size: "48x48", class: "gearset_main" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:main]), Item.find_by(id: @gearset[:main])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:main])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:sub]}.png", size: "48x48", class: "gearset_sub" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:sub]), Item.find_by(id: @gearset[:sub])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:sub])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:range]}.png", size: "48x48", class: "gearset_range" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:range]), Item.find_by(id: @gearset[:range])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:range])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:ammo]}.png", size: "48x48", class: "gearset_ammo" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:ammo]), Item.find_by(id: @gearset[:ammo])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:ammo])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:head]}.png", size: "48x48", class: "gearset_head" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:head]), Item.find_by(id: @gearset[:head])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:head])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:neck]}.png", size: "48x48", class: "gearset_neck" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:neck]), Item.find_by(id: @gearset[:neck])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:neck])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:ear1]}.png", size: "48x48", class: "gearset_ear1" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:ear1]), Item.find_by(id: @gearset[:ear1])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:ear1])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:ear2]}.png", size: "48x48", class: "gearset_ear2" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:ear2]), Item.find_by(id: @gearset[:ear2])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:ear2])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:body]}.png", size: "48x48", class: "gearset_body" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:body]), Item.find_by(id: @gearset[:body])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:body])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:hands]}.png", size: "48x48", class: "gearset_hands" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:hands]), Item.find_by(id: @gearset[:hands])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:hands])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:ring1]}.png", size: "48x48", class: "gearset_ring1" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:ring1]), Item.find_by(id: @gearset[:ring1])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:ring1])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:ring2]}.png", size: "48x48", class: "gearset_ring2" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:ring2]), Item.find_by(id: @gearset[:ring2])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:ring2])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:back]}.png", size: "48x48", class: "gearset_back" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:back]), Item.find_by(id: @gearset[:back])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:back])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:waist]}.png", size: "48x48", class: "gearset_waist" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:waist]), Item.find_by(id: @gearset[:waist])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:waist])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:legs]}.png", size: "48x48", class: "gearset_legs" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:legs]), Item.find_by(id: @gearset[:legs])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:legs])&.ja}" %>
+    </div>
+    <div class="row align-items-center text-center">
+      <div class="col-3">
+        <%= image_tag "/icons/48/#{@gearset[:feet]}.png", size: "48x48", class: "gearset_feet" %>
+      </div>
+        <%= link_to_if Item.find_by(id: @gearset[:feet]), Item.find_by(id: @gearset[:feet])&.ja, "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @gearset[:feet])&.ja}" %>
+    </div>
+  </div>
+</div>

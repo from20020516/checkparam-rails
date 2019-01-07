@@ -1,16 +1,51 @@
-div[class^="col"] {
-  //outline: 1px dashed gray;
-  outline-offset: -1px; // debug for Bootstrap
-}
-
+// * {
+//   outline: 1px dashed gray;
+//   outline-offset: -1px;
+// }
 body {
   margin-top: 65px!important; // header
-  //background-color: #00001A!important;
+  color: grey!important;
+  background-color: #00001F!important;
+  a {
+    color: #777;
+    &:hover {
+      //color: #222;
+    }
+  }
+
+  #landing-page {
+    margin-top: 65px;
+    span {
+      color: white;
+    }
+  }
+  #show {
+    vartical-align: middle;
+    a {
+      color: lightslategray;
+      font-weight: bold;
+    } // img {
+    //   outline: 1px dashed gray;
+    //   outline-offset: -1px;
+    // }
+  }
+}
+
+#gearset {
+  .row {
+    margin-bottom: 0;
+  }
+  .form-control {
+    margin-top: 10px;
+    color: #00001F;
+    font-weight: bold;
+    background-color: #8B9FB3;
+  }
 }
 
 #gearmenu {
-  width: 210px; //200+border*2
-  height: 210px;
+  width: 274px; //(64+1+1)*4+border*2
+  height: 274px;
   border: 5px solid #003366;
 
   div[class^="col"] {
@@ -24,17 +59,9 @@ body {
   }
 }
 
-#gearset {
-  .row {
-    margin-bottom: 0;
-  }
-  .form-control {
-    margin-top: 10px;
-  }
-}
-
 .navbar {
   //opacity: 0.9;
+  background-color: black;
   height: 50px;
   #logout {
     color: red;
@@ -57,7 +84,7 @@ body {
   a {
     color: #777;
     &:hover {
-      color: #222;
+      //color: #222;
     }
   }
 }

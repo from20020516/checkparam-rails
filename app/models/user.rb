@@ -13,11 +13,12 @@ class User < ApplicationRecord
      user = User.create(
        uid:      auth.uid,
        provider: auth.provider,
-       # email:    auth.info.email, # require APIs permission.
+       email:    auth.info.email, # require APIs permission.
        lang:     auth.extra.raw_info.lang == "ja" ? "ja" : "en",
        password: Devise.friendly_token[0, 20],
        image:    auth.info.image.gsub("http","https"),
        nickname: auth.info.nickname,
+       name:     auth.info.name,
        jobid:    1,
        setid:    1,
      )

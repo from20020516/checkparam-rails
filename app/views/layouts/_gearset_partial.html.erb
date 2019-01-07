@@ -1,9 +1,15 @@
-<% if Rails.env.development? %>
-  <p>
+<% if false #Rails.env.development? %>
+  <div class="debug border border-secondary p-2">
+    Debug: <%= controller.controller_name %>#<%= controller.action_name %><br>
+    Job/Set: <%= Job.find(current_user.jobid).ja %>/<%= current_user.setid %><br>
+    User.id: <%= current_user.id %><br>
+    Gearset.id: <%= Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id %><br>
     <%= Time.now %><br>
-    <%= current_user.lang %> <%= Job.find(current_user.jobid).ja %> <%= current_user.setid %>
-  </p>
+  </div>
 <% end %>
+<div class="my-2 text-center">
+  <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{Job.find(current_user.jobid).ja}&url=https://checkparam.com/gearsets/#{Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id.to_s}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+</div>
 
 <div class="form-group">
   <%= form_with model: Gearset.find_or_create_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid) do |f| %>
@@ -13,6 +19,10 @@
       <%= f.collection_select(:main, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**0).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
+
+<!--Comment Begin-->
+<%# if false %>
+
   <div class="form-group row">
     <label for="gearset_sub" class="col-2 col-form-label"><%= image_tag '/icons/48/12332.png', size: "48x48", class: "gearset_sub" %></label>
     <div class="col-10">
@@ -103,6 +113,10 @@
       <%= f.collection_select(:feet, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**8).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
+
+<%# end %>
+<!--Comment End-->
+
 <% end %>
 </div>
 
@@ -116,3 +130,4 @@
   // render partial -> Icon描画
   setIcon();
 </script>
+
