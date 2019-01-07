@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_05_103750) do
+ActiveRecord::Schema.define(version: 2019_01_07_031210) do
 
   create_table "descriptions", force: :cascade do |t|
     t.text "ja"
@@ -113,6 +113,11 @@ ActiveRecord::Schema.define(version: 2019_01_05_103750) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "nyans", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -124,6 +129,7 @@ ActiveRecord::Schema.define(version: 2019_01_05_103750) do
     t.string "last_sign_in_ip"
     t.string "provider"
     t.string "uid"
+    t.string "name"
     t.string "nickname"
     t.string "image"
     t.string "lang"

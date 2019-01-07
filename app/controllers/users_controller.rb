@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
   # before_action :authenticate_user!
-  ## @user.update_attributesの内容がすぐに反映されなくなる… Ajax関係?
+  ## @user.update_attributesの内容がすぐに反映されなくなる… Ajax関係? // or Deviseで既に定義してる?
 
   def update
-    p params
     @user = User.find(params[:id])
     @user.update_attributes(
       jobid: params[:user][:jobid] || @user[:jobid],

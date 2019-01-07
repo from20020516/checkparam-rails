@@ -1,5 +1,6 @@
 class GearsetsController < ApplicationController
   before_action :authenticate_user!, only: :update
+  before_action :require_gearset, only: [:show, :update]
 
   def index
   end
@@ -7,12 +8,21 @@ class GearsetsController < ApplicationController
   def about
   end
 
+  # 装備セット変更
   def update
-    @gearset = Gearset.find(params[:id])
     @gearset.update_attributes(params_int(params[:gearset]))
   end
 
+  # 装備セット公開
+  def show
+  end
+
   private
+
+  def require_gearset
+    @gearset = Gearset.find(params[:id])
+    #require 'byebug'; byebug
+  end
 
   def gearset_params
      params.require(:gearset).permit(:id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet)

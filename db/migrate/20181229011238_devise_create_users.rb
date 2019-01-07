@@ -35,7 +35,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       ## Omniauthable
       t.string    :provider
       t.string    :uid
-      # t.string    :name
+      t.string    :name
       t.string    :nickname
       t.string    :image
       t.string    :lang
