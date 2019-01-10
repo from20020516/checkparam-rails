@@ -1,9 +1,10 @@
-# /Checkparam on Rails
-
-## TO-DO
+# TO-DO
 
 - checkparam
 - show: ログインユーザーに限定 // before: authenticate_user!
-- user: コメント追加
+- "refactoring wet ware"
+- コメント追加
 - /anon
 - LP
+- readme
+- アイコン:hover => description表示

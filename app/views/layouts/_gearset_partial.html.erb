@@ -14,7 +14,7 @@
 <div class="form-group">
   <%= form_with model: Gearset.find_or_create_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid) do |f| %>
   <div class="form-group row">
-    <label for="gearset_main" class="col-2 col-form-label"><%= image_tag "/icons/48/16622.png", size: "48x48", class: "gearset_main" %></label>
+    <label for="gearset_main" class="col-2 col-form-label"><%= image_tag "/icons/64/16622.png", size: "48x48", class: "gearset_main" %></label>
     <div class="col-10">
       <%= f.collection_select(:main, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**0).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
@@ -24,91 +24,91 @@
 <%# if false %>
 
   <div class="form-group row">
-    <label for="gearset_sub" class="col-2 col-form-label"><%= image_tag '/icons/48/12332.png', size: "48x48", class: "gearset_sub" %></label>
+    <label for="gearset_sub" class="col-2 col-form-label"><%= image_tag '/icons/64/12332.png', size: "48x48", class: "gearset_sub" %></label>
     <div class="col-10">
       <%= f.collection_select(:sub, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**1).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_range" class="col-2 col-form-label"><%= image_tag '/icons/48/17174.png', size: "48x48", class: "gearset_range" %></label>
+    <label for="gearset_range" class="col-2 col-form-label"><%= image_tag '/icons/64/17174.png', size: "48x48", class: "gearset_range" %></label>
     <div class="col-10">
       <%= f.collection_select(:range, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**2).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_ammo" class="col-2 col-form-label"><%= image_tag '/icons/48/17326.png', size: "48x48", class: "gearset_ammo" %></label>
+    <label for="gearset_ammo" class="col-2 col-form-label"><%= image_tag '/icons/64/17326.png', size: "48x48", class: "gearset_ammo" %></label>
     <div class="col-10">
       <%= f.collection_select(:ammo, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**3).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_head" class="col-2 col-form-label"><%= image_tag '/icons/48/12523.png', size: "48x48", class: "gearset_head" %></label>
+    <label for="gearset_head" class="col-2 col-form-label"><%= image_tag '/icons/64/12523.png', size: "48x48", class: "gearset_head" %></label>
     <div class="col-10">
       <%= f.collection_select(:head, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**4).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_neck" class="col-2 col-form-label"><%= image_tag '/icons/48/13074.png', size: "48x48", class: "gearset_neck" %></label>
+    <label for="gearset_neck" class="col-2 col-form-label"><%= image_tag '/icons/64/13074.png', size: "48x48", class: "gearset_neck" %></label>
     <div class="col-10">
       <%= f.collection_select(:neck, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**9).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_ear1" class="col-2 col-form-label"><%= image_tag '/icons/48/13358.png', size: "48x48", class: "gearset_ear1" %></label>
+    <label for="gearset_ear1" class="col-2 col-form-label"><%= image_tag '/icons/64/13358.png', size: "48x48", class: "gearset_ear1" %></label>
     <div class="col-10">
        <%= f.collection_select(:ear1, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**11).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_ear2" class="col-2 col-form-label"><%= image_tag '/icons/48/13358.png', size: "48x48", class: "gearset_ear2" %></label>
+    <label for="gearset_ear2" class="col-2 col-form-label"><%= image_tag '/icons/64/13358.png', size: "48x48", class: "gearset_ear2" %></label>
     <div class="col-10">
       <%= f.collection_select(:ear2, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**12).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_body" class="col-2 col-form-label"><%= image_tag '/icons/48/12551.png', size: "48x48", class: "gearset_body" %></label>
+    <label for="gearset_body" class="col-2 col-form-label"><%= image_tag '/icons/64/12551.png', size: "48x48", class: "gearset_body" %></label>
     <div class="col-10">
       <%= f.collection_select(:body, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**5).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_hands" class="col-2 col-form-label"><%= image_tag '/icons/48/12679.png', size: "48x48", class: "gearset_hands" %></label>
+    <label for="gearset_hands" class="col-2 col-form-label"><%= image_tag '/icons/64/12679.png', size: "48x48", class: "gearset_hands" %></label>
     <div class="col-10">
       <%= f.collection_select(:hands, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**6).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_ring1" class="col-2 col-form-label"><%= image_tag '/icons/48/13505.png', size: "48x48", class: "gearset_ring1" %></label>
+    <label for="gearset_ring1" class="col-2 col-form-label"><%= image_tag '/icons/64/13505.png', size: "48x48", class: "gearset_ring1" %></label>
     <div class="col-10">
       <%= f.collection_select(:ring1, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**13).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_ring2" class="col-2 col-form-label"><%= image_tag '/icons/48/13505.png', size: "48x48", class: "gearset_ring2" %></label>
+    <label for="gearset_ring2" class="col-2 col-form-label"><%= image_tag '/icons/64/13505.png', size: "48x48", class: "gearset_ring2" %></label>
     <div class="col-10">
       <%= f.collection_select(:ring2, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**13).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_back" class="col-2 col-form-label"><%= image_tag '/icons/48/13606.png', size: "48x48", class: "gearset_back" %></label>
+    <label for="gearset_back" class="col-2 col-form-label"><%= image_tag '/icons/64/13606.png', size: "48x48", class: "gearset_back" %></label>
     <div class="col-10">
       <%= f.collection_select(:back, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**15).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_waist" class="col-2 col-form-label"><%= image_tag '/icons/48/13215.png', size: "48x48", class: "gearset_waist" %></label>
+    <label for="gearset_waist" class="col-2 col-form-label"><%= image_tag '/icons/64/13215.png', size: "48x48", class: "gearset_waist" %></label>
     <div class="col-10">
       <%= f.collection_select(:waist, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**10).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_legs" class="col-2 col-form-label"><%= image_tag '/icons/48/12807.png', size: "48x48", class: "gearset_legs" %></label>
+    <label for="gearset_legs" class="col-2 col-form-label"><%= image_tag '/icons/64/12807.png', size: "48x48", class: "gearset_legs" %></label>
     <div class="col-10">
      <%= f.collection_select(:legs, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**7).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
   <div class="form-group row">
-    <label for="gearset_feet" class="col-2 col-form-label"><%= image_tag '/icons/48/12935.png', size: "48x48", class: "gearset_feet" %></label>
+    <label for="gearset_feet" class="col-2 col-form-label"><%= image_tag '/icons/64/12935.png', size: "48x48", class: "gearset_feet" %></label>
     <div class="col-10">
       <%= f.collection_select(:feet, Item.where('job & ? > 0 and slot & ? > 0', 2**current_user.jobid, 2**8).order(current_user.lang), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
@@ -124,7 +124,7 @@
   function setIcon() {
     document.querySelectorAll('#gearset .form-control').forEach(function(data) {
       // TO-DO: Judgeシリーズのアイコン色を薄くして初期設定
-      $(`.${data.id}`).attr("src", `/icons/48/${data.value || 0}.png`);
+      $(`.${data.id}`).attr("src", `/icons/64/${data.value || 0}.png`);
     });
   }
   // render partial -> Icon描画
