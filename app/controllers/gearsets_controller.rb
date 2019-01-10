@@ -1,5 +1,6 @@
 class GearsetsController < ApplicationController
-  before_action :authenticate_user!, only: :update
+  before_action :authenticate_user!, only: [:update]
+  # before_action :authenticate_user!, only: [:show :update]
   before_action :require_gearset, only: [:show, :update]
 
   def index

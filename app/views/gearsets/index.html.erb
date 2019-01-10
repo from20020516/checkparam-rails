@@ -45,6 +45,18 @@
       <div class="col-12">
         <%= button_to 'Twitterアカウントで登録', user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg my-5", id: "signup" %>
       </div>
+      <div class="col-12 my-4">
+        <p>FINAL FANTASY XI の装備セットを登録 & 公開できます。<br>
+        試験運用中です。<%= link_to "Twitter", "https://twitter.com/from20020516" %>にフィードバックをお寄せください。</p>
+      </div>
+      <div class="col-12 text-left bg-dark pl-0">
+        <ul>
+          <li><b>Lv98以下</b>の装備は、一部を除き収録されていません。</li>
+          <li>以下の部位について、<b>IL118以下</b>の装備は一部を除き収録されていません。<br>
+            メイン / レンジ / 頭 / 胴 / 両手 / 両脚 / 両足</li>
+          <li><b>リクエストがあれば収録します。</b></li>
+        </ul>
+      </div>
     </div>
   <% end %>
 </div>

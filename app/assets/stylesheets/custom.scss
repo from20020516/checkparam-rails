@@ -7,7 +7,7 @@ body {
   color: grey!important;
   background-color: #00001F!important;
   a {
-    color: #777;
+    color: lightgray;
     &:hover {
       //color: #222;
     }
@@ -19,15 +19,13 @@ body {
       color: white;
     }
   }
+
   #show {
     vartical-align: middle;
     a {
       color: lightslategray;
       font-weight: bold;
-    } // img {
-    //   outline: 1px dashed gray;
-    //   outline-offset: -1px;
-    // }
+    }
   }
 }
 
@@ -76,13 +74,16 @@ body {
     outline: 1px solid gray;
     outline-offset: -1px;
   }
+  .amzn {
+    height: 250px;
+  }
 }
 
 .footer {
   border-top: 1px solid #eaeaea;
   color: #777;
   a {
-    color: #777;
+    color: lightgray;
     &:hover {
       //color: #222;
     }
