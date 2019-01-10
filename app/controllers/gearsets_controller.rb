@@ -1,7 +1,8 @@
 class GearsetsController < ApplicationController
-  before_action :authenticate_user!, only: [:update]
-  # before_action :authenticate_user!, only: [:show :update]
-  before_action :require_gearset, only: [:show, :update]
+  before_action :authenticate_user!, only: [:show, :update]
+  before_action :current_gearset, only: [:show, :update]
+
+  #require 'byebug'
 
   def index
   end
@@ -9,29 +10,26 @@ class GearsetsController < ApplicationController
   def about
   end
 
-  # 装備セット変更
-  def update
-    @gearset.update_attributes(params_int(params[:gearset]))
+  def update # 装備セット変更
+    @gearset.update_attributes(gearset_params)
   end
 
-  # 装備セット公開
-  def show
+  def show # 装備セット公開
   end
 
   private
 
-  def require_gearset
+  def current_gearset
     @gearset = Gearset.find(params[:id])
-    #require 'byebug'; byebug
   end
 
   def gearset_params
-     params.require(:gearset).permit(:id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet)
+    params.require(:gearset).permit(:id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet)
   end
 
-  def params_int(model_params)
-    model_params.each do |key,value|
-      model_params[key] = value.to_i
-    end
-  end
+  # def set_gearset
+  #   self.attributes[:gearset].each do |key,value|
+  #     self.attributes[key] = value ? value.to_i : 0
+  #   end
+  # end
 end

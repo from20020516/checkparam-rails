@@ -3,7 +3,6 @@ class User < ApplicationRecord
   # https://qiita.com/gakkie/items/6ef70c0788c3cbff81ee
   devise :database_authenticatable, :omniauthable, :rememberable, :trackable
   # :registerable, :validatable, :recoverable, :confirmable, :lockable, :timeoutable,
-
   has_many :gearsets, dependent: :destroy
 
   def self.find_for_oauth(auth)
