@@ -5,6 +5,8 @@ class User < ApplicationRecord
   # :registerable, :validatable, :recoverable, :confirmable, :lockable, :timeoutable,
   has_many :gearsets, dependent: :destroy
 
+  private
+
   def self.find_for_oauth(auth)
    user = User.where(uid: auth.uid, provider: auth.provider).first
 
