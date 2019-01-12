@@ -2,8 +2,6 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :user_params
 
-  require 'byebug'
-
   def update # Fire when job/set changed.
     @user.update_attributes(jobid: params[:user][:jobid] || @user[:jobid], setid: params[:user][:setid] || @user[:setid], lang:  params[:user][:lang]  || @user[:lang])
     Gearset.find_or_create_by(user_id: @user.id, jobid: @user.jobid, setid: @user.setid)

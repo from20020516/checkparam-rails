@@ -2,8 +2,6 @@ class GearsetsController < ApplicationController
   before_action :authenticate_user!, only: [:show, :update]
   before_action :gearset_params
 
-  require 'byebug'
-
   def index
   end
 
