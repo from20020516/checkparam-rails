@@ -4,13 +4,17 @@ class Gearset < ApplicationRecord
   # attr_accessor :id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet
   before_validation :set_gearset
 
-  #require 'byebug'
+  require 'byebug'
 
   private
   
   def set_gearset
-    self.attributes[:gearset].each do |key,value|
-      self.attributes[key] = value ? value.to_i : 0
+    h = self.attributes
+    h.each do |key,value|
+      if (h[key].class == NilClass || h[key].class == Integer) && key != "id"
+        h[key] = value.to_i
+      end
     end
+    self.attributes = h
   end
 end
