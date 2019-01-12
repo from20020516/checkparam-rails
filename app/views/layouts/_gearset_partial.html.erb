@@ -1,10 +1,8 @@
 <% if Rails.env.development? %>
   <div class="debug border border-secondary p-2">
-    Debug: <%= controller.controller_name %>#<%= controller.action_name %><br>
-    Job/Set: <%= Job.find(current_user.jobid)&.ja %>/<%= current_user&.setid %><br>
-    User.id: <%= current_user&.id %><br>
-    Gearset.id: <%= Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id %><br>
     <%= Time.now %><br>
+    Action: <%= controller.controller_name %>#<%= controller.action_name %><br>
+    Set: <%= Job.find(current_user.jobid)&.ja %> <%= current_user&.setid %> / User.id: <%= current_user&.id %> / Gearset.id: <%= Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id %><br>
   </div>
 <% end %>
 
