@@ -1,5 +1,5 @@
 class GearsetsController < ApplicationController
-  before_action :authenticate_user!, only: [:show, :update] # current_user使用条件??
+  before_action :authenticate_user!, only: [:show, :update]
   before_action :gearset_params
 
   require 'byebug'

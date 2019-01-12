@@ -5,11 +5,11 @@
     <div class="form-inline">
       <% if !["about","show"].include?(controller.action_name) %>
         <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
-          <%= f.collection_select(:jobid, Job.all.slice(1..22), :id, :ens, {selected: current_user.jobid || 1},
+          <%= f.collection_select(:jobid, Job.all.slice(1..22), :id, :ens, {selected: current_user.jobid},
             {class: 'form-control', onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
         <% end %>
         <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
-          <%= f.select(:setid, (1..5).to_a, {include_blank: false, selected: current_user.setid || 1},
+          <%= f.select(:setid, (1..5).to_a, {include_blank: false, selected: current_user.setid},
             {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
         <% end %>
       <% end %>
