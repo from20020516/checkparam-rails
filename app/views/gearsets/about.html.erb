@@ -25,6 +25,12 @@
 		</li>
 	</ul>
 </div>
+<% if user_signed_in? %>
+<div class="text-center border border-danger p-3 mb-3">
+  <%= link_to "退会する", "/users/#{current_user.id}", method: "DELETE" if user_signed_in? %><br>
+  （確認画面は表示されません。ユーザーが登録した全てのデータを削除します。）
+</div>
+<% end %>
 <div>
   <h1>License</h1>
   <h5>Resources / BSD 3-Clause "New" or "Revised" License</h5>

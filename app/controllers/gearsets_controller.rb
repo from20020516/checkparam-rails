@@ -1,35 +1,30 @@
 class GearsetsController < ApplicationController
-  before_action :authenticate_user!, only: [:show, :update]
-  before_action :current_gearset, only: [:show, :update]
+  before_action :authenticate_user!, only: [:show, :update] # current_user使用条件??
+  before_action :gearset_params
 
-  #require 'byebug'
+  require 'byebug'
 
   def index
+  end
+
+  def update # Fire when a equipment chenged.
+    @gearset.update_attributes(gearset_params)
+  end
+
+  def show
+    @viewset = Gearset.find(params[:id])
   end
 
   def about
   end
 
-  def update # 装備セット変更
-    @gearset.update_attributes(gearset_params)
-  end
-
-  def show # 装備セット公開
-  end
-
   private
 
-  def current_gearset
-    @gearset = Gearset.find(params[:id])
-  end
-
   def gearset_params
-    params.require(:gearset).permit(:id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet)
+    if current_user.present?
+      @gearset = Gearset.find_or_create_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)
+      params.require(:gearset).permit(
+        :id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet) if params[:gearset].present?
+    end
   end
-
-  # def set_gearset
-  #   self.attributes[:gearset].each do |key,value|
-  #     self.attributes[key] = value ? value.to_i : 0
-  #   end
-  # end
 end

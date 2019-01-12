@@ -4,10 +4,6 @@
     <%= link_to "Checkparam", root_path, class: "navbar-brand", data: {turbolinks: false} %>
     <div class="form-inline">
       <% if !["about","show"].include?(controller.action_name) %>
-        <!--
-        url: [URL] -> Controller & Action指定(要routes)
-        scope: :[NAME] -> Controller内でparams[:NAME]として分類
-        -->
         <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
           <%= f.collection_select(:jobid, Job.all.slice(1..22), :id, :ens, {selected: current_user.jobid || 1},
             {class: 'form-control', onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>

@@ -1,18 +1,19 @@
-<% if false #Rails.env.development? %>
+<% if Rails.env.development? %>
   <div class="debug border border-secondary p-2">
     Debug: <%= controller.controller_name %>#<%= controller.action_name %><br>
-    Job/Set: <%= Job.find(current_user.jobid).ja %>/<%= current_user.setid %><br>
-    User.id: <%= current_user.id %><br>
+    Job/Set: <%= Job.find(current_user.jobid)&.ja %>/<%= current_user&.setid %><br>
+    User.id: <%= current_user&.id %><br>
     Gearset.id: <%= Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id %><br>
     <%= Time.now %><br>
   </div>
 <% end %>
+
 <div class="my-2 text-center">
-  <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{Job.find(current_user.jobid).ja}&url=https://checkparam.com/gearsets/#{Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id.to_s}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+  <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{Job.find(current_user.jobid).ja}&url=https://checkparam.com/gearsets/#{Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
 </div>
 
 <div class="form-group">
-  <%= form_with model: Gearset.find_or_create_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid) do |f| %>
+  <%= form_with model: Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid) do |f| %>
   <div class="form-group row">
     <label for="gearset_main" class="col-2 col-form-label"><%= image_tag "/icons/64/0.png", size: "48x48", class: "gearset_main" %></label>
     <div class="col-10">
