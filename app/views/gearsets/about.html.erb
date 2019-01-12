@@ -26,9 +26,9 @@
 	</ul>
 </div>
 <% if user_signed_in? %>
-<div class="text-center border border-danger p-3 mb-3">
-  <%= link_to "退会する", "/users/#{current_user.id}", method: "DELETE" if user_signed_in? %><br>
-  （確認画面は表示されません。ユーザーが登録した全てのデータを削除します。）
+<div class="text-center border border-light p-3 mb-3">
+  <%= link_to "退会する", "/users/#{current_user.id}", method: "DELETE", style: "color: red;", data: {confirm: "本当に削除しますか？（最終確認です！）"} if user_signed_in? %><br>
+  （全てのデータを削除します。）
 </div>
 <% end %>
 <div>
