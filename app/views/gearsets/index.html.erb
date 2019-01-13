@@ -41,13 +41,13 @@
     </script>
   <% else %>
     <div class="col-lg-12 text-center" id="landing-page">
-      <h1><span>/checkparam</span> your Ideas.</h1>
-      <div class="col-12">
-        <%= button_to 'Twitterアカウントで登録', user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg my-5", id: "signup" %>
-      </div>
+      <h1><span style="color: white">/checkparam</span> your Ideas.</h1>
       <div class="col-12 my-4">
-        <p>FINAL FANTASY XI の装備セットを登録 & 公開できます。<br>
+        <p><b>FINAL FANTASY XI</b> の装備セットを登録 & 公開できるサービスです。<br>
         試験運用中です。<%= link_to "Twitter", "https://twitter.com/from20020516" %>にフィードバックをお寄せください。</p>
+      </div>
+      <div class="col-12">
+        <%= button_to 'Twitterアカウントで登録', user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg mt-3 mb-5", id: "signup" %>
       </div>
       <div class="col-12 text-left bg-dark pl-0">
         <ul>
@@ -57,6 +57,17 @@
           <li><b>リクエストがあれば収録します。</b></li>
         </ul>
       </div>
+      <h2>TO-DO</h2>
+      <div class="col-12 text-left bg-dark pl-0">
+        <ul>
+          <li>ステータス合計値の計算</li>
+          <li>オーグメント値の入力/保存</li>
+          <li>ユーザーコメントの入力/保存</li>
+          <li>装備セットの公開/非公開設定</li>
+          <li>装備テキストのマウスオーバー表示</li>
+        </ul>
+      </div>
+      機能追加の要望も随時募集しています。
     </div>
   <% end %>
 </div>
