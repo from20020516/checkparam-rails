@@ -23,9 +23,13 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= render 'layouts/shim' %>
   </head>
+
   <body>
-    <%= render 'layouts/header' %>
-    <div class="container">
+    <header>
+      <%= render 'layouts/header' %>
+    </header>
+
+    <main role="main" class="container">
       <div class="row">
         <div class="col-lg-8">
           <%= yield %>
@@ -34,7 +38,24 @@
           <%= render 'layouts/sidebar' %>
         </div>
       </div>
-    </div>
-    <%= render 'layouts/footer' %>
+    </main>
+
+    <footer class="footer py-2">
+      <div class="d-flex justify-content-md-between text-center row mx-0">
+        <div class="col-md-2">
+          <small>
+            <%= link_to "About", "/about", data: {turbolinks: false} %>
+          </small>
+        </div>
+        <div class="col-md-8">
+          <small>
+            記載されている会社名・製品名・システム名などは、各社の商標、または登録商標です。<br>Copyright (C) 2002 - 2018 SQUARE ENIX CO., LTD. All Rights Reserved.
+          </small>
+        </div>
+        <div class="col-md-2 text-md-right pr-3">
+          <a href="https://rubyonrails.org/"><img src="/rails-logo.gif"></a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
