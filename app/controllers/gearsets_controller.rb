@@ -13,6 +13,7 @@ class GearsetsController < ApplicationController
 
   def show
     @viewset = Gearset.find(params[:id])
+    byebug
   end
 
   def about
