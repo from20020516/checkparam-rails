@@ -1,6 +1,7 @@
 class GearsetsController < ApplicationController
   before_action :authenticate_user!, only: [:show, :update]
   before_action :gearset_params
+  require 'byebug'
 
   def index
   end
@@ -19,8 +20,12 @@ class GearsetsController < ApplicationController
   private
 
   def gearset_params
+    @sets_limit = 20 # header
+
     if current_user.present?
       @gearset = Gearset.find_or_create_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)
+      @gears = Item.where('job & ? > 0', 2**current_user.jobid).order(current_user.lang)
+
       params.require(:gearset).permit(
         :id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet) if params[:gearset].present?
     end
