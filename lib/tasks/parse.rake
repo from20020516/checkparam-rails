@@ -3,6 +3,25 @@ namespace :parse do
   require 'colorized_string'
   require 'rufus-lua'
 
+  desc "get JSON from specific lua table."
+  task :job => :environment do
+    @state = Rufus::Lua::State.new
+    res = @state.eval('
+      local json = require("lib.assets.json")
+      local table = require("lib.assets.Resources.resources_data.jobs")
+      return json.stringify(table)
+    ')
+    JSON.parse(res).each do |data|
+      @job = Job.find_or_initialize_by(id: data[0])
+      @job.update(
+        ja:   data[1]["ja"],
+        en:   data[1]["en"],
+        jas:  data[1]["jas"],
+        ens:  data[1]["ens"],
+      )
+    end
+  end
+
   desc "get Items from lua."
   task :items => :environment do
     @state = Rufus::Lua::State.new
@@ -60,7 +79,7 @@ namespace :parse do
           lv:     data[1][0]["level"],
           itemlv: data[1][0]["item_level"],
         )
-  
+
         @description = Description.find_or_initialize_by(id: data[0])
         @description.update(
           ja:  data[1][1]["ja"] || "",
@@ -79,25 +98,6 @@ namespace :parse do
       for t in nya
         p t.scan(/([+-]?[0-9]+)%?/)
       end
-    end
-  end
-
-  desc "get JSON from specific lua table."
-  task :job => :environment do
-    @state = Rufus::Lua::State.new
-    res = @state.eval('
-      local json = require("lib.assets.json")
-      local table = require("lib.assets.Resources.resources_data.jobs")
-      return json.stringify(table)
-    ')
-    JSON.parse(res).each do |data|
-      @job = Job.find_or_initialize_by(id: data[0])
-      @job.update(
-        ja:   data[1]["ja"],
-        en:   data[1]["en"],
-        jas:  data[1]["jas"],
-        ens:  data[1]["ens"],        
-      )
     end
   end
 

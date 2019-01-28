@@ -127,9 +127,9 @@ ActiveRecord::Schema.define(version: 2019_01_05_103750) do
     t.string "name"
     t.string "nickname"
     t.string "image"
-    t.string "lang"
-    t.integer "jobid"
-    t.integer "setid"
+    t.string "lang", default: "ja", null: false
+    t.integer "jobid", default: 1, null: false
+    t.integer "setid", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
