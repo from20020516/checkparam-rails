@@ -3,8 +3,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
 
-  ###
-  config.reload_classes_only_on_change = false
+  # config.reload_classes_only_on_change = false
+  config.file_watcher = ActiveSupport::FileUpdateChecker
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -12,7 +12,8 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  # config.eager_load = false
+  config.eager_load = true
 
   # Show full error reports.
   config.consider_all_requests_local = true

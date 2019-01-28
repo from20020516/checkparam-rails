@@ -38,11 +38,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string    :name
       t.string    :nickname
       t.string    :image
-      t.string    :lang
-      
+      t.string    :lang, null: false, default: "ja"
+
       ## AppParamaters
-      t.integer   :jobid
-      t.integer   :setid
+      t.integer   :jobid, null: false, default: 1
+      t.integer   :setid, null: false, default: 1
 
       t.timestamps null: false
     end

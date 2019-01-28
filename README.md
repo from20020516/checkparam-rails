@@ -1,6 +1,6 @@
 # TO-DO
 
-- N+1問題
+- N+1問題（解決?)
 - checkparam
 - コメント追加
 - /anon

@@ -1,7 +1,7 @@
 <nav class="navbar fixed-top navbar-expand navbar-dark">
   <div class="container">
     <% if user_signed_in? %>
-    <%= link_to "Checkparam", root_path, class: "navbar-brand", data: {turbolinks: false} %>
+    <%= link_to "Checkparam", root_path, class: "navbar-brand d-none d-sm-block", data: {turbolinks: false} %>
     <div class="form-inline">
       <% if !["about","show"].include?(controller.action_name) %>
         <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
