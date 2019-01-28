@@ -25,19 +25,13 @@ html {
   min-height: 100%;
 }
 
-body>.container {
-  //border: 1px solid red;
-  padding: 60px 15px 0;
-}
-
 body {
   margin-top: 65px;
   margin-bottom: 65px;
   color: grey;
   background-color: #00001F;
-
-  .container {
-    //border: 1px dashed blue;
+  .title {
+     padding: 60px 15px 0;
   }
   a {
     color: lightgray;

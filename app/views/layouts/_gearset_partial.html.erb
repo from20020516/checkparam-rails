@@ -122,7 +122,6 @@
 <script>
   function setIcon() {
     document.querySelectorAll('#gearset .form-control').forEach(function(data) {
-      // TO-DO: Judgeシリーズのアイコン色を薄くして初期設定
       $(`.${data.id}`).attr("src", `/icons/64/${data.value || arr[data.id]}.png`);
     });
   }
