@@ -1,8 +1,9 @@
-<% if false #Rails.env.development? %>
+<% if Rails.env.development? %>
   <div class="debug border border-secondary p-2">
     <%= Time.now %><br>
     Action: <%= controller.controller_name %>#<%= controller.action_name %><br>
     Set: <%= Job.find(current_user.jobid)&.ja %> <%= current_user&.setid %> / User.id: <%= current_user&.id %> / Gearset.id: <%= Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id %><br>
+    <%= Item.first.description.ja %>
   </div>
 <% end %>
 
@@ -13,14 +14,14 @@
 <div class="form-group">
   <%= form_with model: Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid) do |f| %>
   <div class="form-group row">
-    <label for="gearset_main" class="col-2 col-form-label"><%= image_tag "/icons/64/0.png", size: "48x48", class: "gearset_main" %></label>
+
+    <label for="gearset_main" class="col-2 col-form-label"><%= image_tag "/icons/64/0.png", size: "48x48", class: "gearset_main",
+    data: { toggle: "tooltip", html: "true", "original-title": "" } %></label>
+
     <div class="col-10">
       <%= f.collection_select(:main, gearlist(current_user).where('slot & ? > 0', 2**0), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
     </div>
   </div>
-
-<!--Comment Begin-->
-<%# if false %>
 
   <div class="form-group row">
     <label for="gearset_sub" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_sub" %></label>
@@ -113,18 +114,26 @@
     </div>
   </div>
 
-<%# end %>
-<!--Comment End-->
-
 <% end %>
 </div>
 
 <script>
   function setIcon() {
+    // data.id : gearset_main
+    // data.value : 20695
     document.querySelectorAll('#gearset .form-control').forEach(function(data) {
+      // console.log(data.id, data.value);
+      // console.log(data);
       $(`.${data.id}`).attr("src", `/icons/64/${data.value || arr[data.id]}.png`);
+      // Require popper.js
+      $(`.${data.id}`).attr("data-original-title", `${data.id} : ${data.value} : <%#= Item.find(${data.value}).description.en %>`); // JS内埋め込み?
     });
   }
-  // render partial -> Icon描画
+  // render partial -> set Icons
   setIcon();
+
+  // Item.description
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 </script>
