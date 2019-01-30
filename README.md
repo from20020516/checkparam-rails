@@ -4,7 +4,6 @@
 - checkparam
 - コメント追加
 - /anon
-- readme
 - アイコン:hover => description表示
 
 # Clone時の注意:
