@@ -1,16 +1,14 @@
 class UsersController < ApplicationController
-  require 'byebug'
   include ApplicationHelper
   before_action :authenticate_user!
   before_action :user_params
+  before_action :active_user
 
-  def update # Fire when job/set changed.
-    @user.update_attributes(
-      jobid: params[:user][:jobid] || @user[:jobid],
-      setid: params[:user][:setid] || @user[:setid],
-      lang:  params[:user][:lang]  || @user[:lang])
-    Gearset.find_or_create_by(user_id: @user.id, jobid: @user.jobid, setid: @user.setid)
-    #@gearlist = Item.where('job & ? > 0', 2**@user.jobid).order(@user.lang)
+  # Fire when job/set changed.
+  def update
+    @user.update_attributes(user_params)
+    @items = Item.where('job & ? > 0', 2**@user.job_id).order(@user.lang)
+    Gearset.find_or_create_by(user_id: @user.id, job_id: @user.job_id, index: @user.index)
     render partial: 'layouts/gearset_partial', locals: {current_user: @user} # Refresh #{current_user} on partial.
   end
 
@@ -21,8 +19,11 @@ class UsersController < ApplicationController
 
   private
 
-  def user_params
+  def active_user
     @user = User.find(current_user.id)
-    params.require(:user).permit(:id, :jobid, :setid, :lang) if params[:user].present?
+  end
+
+  def user_params
+    return params.require(:user).permit(:id, :job_id, :index, :lang) if params[:user].present?
   end
 end

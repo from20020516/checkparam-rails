@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   root 'gearsets#index'
   get  '/about', to: 'gearsets#about'
+  get  '/descriptions', to: 'descriptions#index'
   post '/gearsets', to: 'gearsets#update' # merge 'new' and 'update' by find_or_create_by
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -1,10 +1,16 @@
 # TO-DO
 
 - N+1問題（解決?)
+- DB restructure(json型?)
 - checkparam
+  - DBで予め定義
 - コメント追加
 - /anon
-- アイコン:hover => description表示
+- JOBごとのdefault Icon set (AF?)
+
+# Refactor
+
+- 
 
 # Clone時の注意:
 

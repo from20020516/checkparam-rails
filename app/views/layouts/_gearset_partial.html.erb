@@ -1,139 +1,45 @@
-<% if Rails.env.development? %>
-  <div class="debug border border-secondary p-2">
-    <%= Time.now %><br>
-    Action: <%= controller.controller_name %>#<%= controller.action_name %><br>
-    Set: <%= Job.find(current_user.jobid)&.ja %> <%= current_user&.setid %> / User.id: <%= current_user&.id %> / Gearset.id: <%= Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id %><br>
-    <%= Item.first.description.ja %>
-  </div>
-<% end %>
-
-<div class="my-2 text-center">
-  <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{Job.find(current_user.jobid).ja}&url=https://checkparam.com/gearsets/#{Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid)&.id}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
-</div>
-
-<div class="form-group">
-  <%= form_with model: Gearset.find_by(user_id: current_user.id, jobid: current_user.jobid, setid: current_user.setid) do |f| %>
-  <div class="form-group row">
-
-    <label for="gearset_main" class="col-2 col-form-label"><%= image_tag "/icons/64/0.png", size: "48x48", class: "gearset_main",
-    data: { toggle: "tooltip", html: "true", "original-title": "" } %></label>
-
-    <div class="col-10">
-      <%= f.collection_select(:main, gearlist(current_user).where('slot & ? > 0', 2**0), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="mx-auto" id="gearmenu">
+      <div class="row">
+        <% slots.all.each do |slot| %>
+          <div class="col-3">
+            <%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
+          </div>
+        <% end %>
+      </div>
     </div>
+    <%= render 'layouts/flash_messages' %>
   </div>
 
-  <div class="form-group row">
-    <label for="gearset_sub" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_sub" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:sub, gearlist(current_user).where('slot & ? > 0', 2**1), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+  <div class="col-lg-6">
+    <div class="my-2 text-center">
+      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{current_user.job[current_user.lang]}&url=https://checkparam.com/gearsets/#{Gearset.find_by(user_id: current_user.id, job_id: current_user.job_id, index: current_user.index)&.id}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do", class: "font-weight-bold"} %>
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_range" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_range" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:range, gearlist(current_user).where('slot & ? > 0', 2**2), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_ammo" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_ammo" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:ammo, gearlist(current_user).where('slot & ? > 0', 2**3), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_head" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_head" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:head, gearlist(current_user).where('slot & ? > 0', 2**4), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_neck" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_neck" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:neck, gearlist(current_user).where('slot & ? > 0', 2**9), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_ear1" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_ear1" %></label>
-    <div class="col-10">
-       <%= f.collection_select(:ear1, gearlist(current_user).where('slot & ? > 0', 2**11), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_ear2" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_ear2" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:ear2, gearlist(current_user).where('slot & ? > 0', 2**12), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_body" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_body" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:body, gearlist(current_user).where('slot & ? > 0', 2**5), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_hands" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_hands" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:hands, gearlist(current_user).where('slot & ? > 0', 2**6), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_ring1" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_ring1" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:ring1, gearlist(current_user).where('slot & ? > 0', 2**13), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_ring2" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_ring2" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:ring2, gearlist(current_user).where('slot & ? > 0', 2**13), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_back" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_back" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:back, gearlist(current_user).where('slot & ? > 0', 2**15), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_waist" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_waist" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:waist, gearlist(current_user).where('slot & ? > 0', 2**10), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_legs" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_legs" %></label>
-    <div class="col-10">
-     <%= f.collection_select(:legs, gearlist(current_user).where('slot & ? > 0', 2**7), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="gearset_feet" class="col-2 col-form-label"><%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_feet" %></label>
-    <div class="col-10">
-      <%= f.collection_select(:feet, gearlist(current_user).where('slot & ? > 0', 2**8), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
-    </div>
-  </div>
 
-<% end %>
+    <div class="form-group">
+      <%= form_with model: Gearset.find_by(user_id: current_user.id, job_id: current_user.job_id, index: current_user.index) do |f| %>
+        <% slots.all.each do |slot| %>
+          <div class="form-group row">
+            <label for="gearset_<%= slot.en %>" class="col-2 col-form-label">
+              <%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
+            </label>
+            <div class="col-10">
+              <%= f.collection_select(slot.en, @items.where('slot & ? > 0', 2**slot.pos), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
 </div>
 
 <script>
-  function setIcon() {
-    // data.id : gearset_main
-    // data.value : 20695
-    document.querySelectorAll('#gearset .form-control').forEach(function(data) {
-      // console.log(data.id, data.value);
-      // console.log(data);
-      $(`.${data.id}`).attr("src", `/icons/64/${data.value || arr[data.id]}.png`);
-      // Require popper.js
-      $(`.${data.id}`).attr("data-original-title", `${data.id} : ${data.value} : <%#= Item.find(${data.value}).description.en %>`); // JS内埋め込み?
-    });
-  }
-  // render partial -> set Icons
   setIcon();
-
-  // Item.description
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+  // console.log(new Date());
+  // define tooltip for descriptions. require popper.js a.k.a. bootstrap.bundle.js
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
   })
 </script>

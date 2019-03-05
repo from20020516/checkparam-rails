@@ -33,11 +33,19 @@ body {
   .title {
      padding: 60px 15px 0;
   }
+  .tooltip-inner{
+    max-width: 370px;
+    text-align: left;
+    //white-space: nowrap;
+    //overflow: hidden;
+    //text-overflow: ellipsis;
+    opacity: 0.9;
+  }
   a {
     color: lightgray;
   }
   #show {
-    vartical-align: middle;
+    vertical-align: middle;
     a {
       color: lightslategray;
       font-weight: bold;
