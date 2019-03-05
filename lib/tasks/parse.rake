@@ -115,26 +115,26 @@ namespace :parse do
   task :slots => :environment do
     # parse Job data.
     slots = {
-      "1": {pos: 0, en: "main"},
-      "2": {pos: 1, en: "sub"},
-      "3": {pos: 2, en: "range"},
-      "4": {pos: 3, en: "ammo"},
-      "5": {pos: 4, en: "head"},
-      "6": {pos: 9, en: "neck"},
-      "7": {pos: 11, en: "ear1"},
-      "8": {pos: 12, en: "ear2"},
-      "9": {pos: 5, en: "body"},
-      "10": {pos: 6, en: "hands"},
-      "11": {pos: 13, en: "ring1"},
-      "12": {pos: 14, en: "ring2"},
-      "13": {pos: 15, en: "back"},
-      "14": {pos: 10, en: "waist"},
-      "15": {pos: 7, en: "legs"},
-      "16": {pos: 8, en: "feet"},
+      "1": {pos: 0, en: "main", ja: "メイン", img: 16622},
+      "2": {pos: 1, en: "sub", ja: "サブ", img: 12332},
+      "3": {pos: 2, en: "range", ja: "レンジ", img: 17174},
+      "4": {pos: 3, en: "ammo", ja: "矢弾", img: 17326},
+      "5": {pos: 4, en: "head", ja: "頭", img: 12523},
+      "6": {pos: 9, en: "neck", ja: "首", img: 13074},
+      "7": {pos: 11, en: "ear1", ja: "左耳", img: 13358},
+      "8": {pos: 12, en: "ear2", ja: "右耳", img: 13358},
+      "9": {pos: 5, en: "body", ja: "胴", img: 12551},
+      "10": {pos: 6, en: "hands", ja: "両手", img: 12679},
+      "11": {pos: 13, en: "ring1", ja: "左指", img: 13505},
+      "12": {pos: 14, en: "ring2", ja: "右指", img: 13505},
+      "13": {pos: 15, en: "back", ja: "背", img: 13606},
+      "14": {pos: 10, en: "waist", ja: "腰", img: 13215},
+      "15": {pos: 7, en: "legs", ja: "両脚", img: 12807},
+      "16": {pos: 8, en: "feet", ja: "両足", img: 12935},
     }
     slots.each {|k,v|
       @slot = Slot.find_or_create_by(id: k)
-      @slot.update(pos: v[:pos], en: v[:en])
+      @slot.update(pos: v[:pos], en: v[:en], ja: v[:ja], img: v[:img])
     }
   end
 end

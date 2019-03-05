@@ -1,6 +1,6 @@
 class GearsetsController < ApplicationController
   include ApplicationHelper
-  before_action :authenticate_user!, only: [:show, :update]
+  before_action :authenticate_user!
   before_action :gearset_params
   before_action :gear_list
 
@@ -14,9 +14,6 @@ class GearsetsController < ApplicationController
 
   def show
     @set = Gearset.find(params[:id])
-  end
-
-  def about
   end
 
   private

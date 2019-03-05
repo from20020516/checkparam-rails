@@ -9,7 +9,8 @@
         <% end %>
       </div>
     </div>
-    <%= render 'layouts/flash_messages' %>
+    <%#= render 'layouts/flash_messages' %>
+    <%= @set.inspect if Rails.env == 'development' %>
   </div>
 
   <div class="col-lg-6">
