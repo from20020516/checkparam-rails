@@ -1,9 +1,12 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # https://qiita.com/gakkie/items/6ef70c0788c3cbff81ee
-  devise :database_authenticatable, :omniauthable, :rememberable, :trackable
-  # :registerable, :validatable, :recoverable, :confirmable, :lockable, :timeoutable,
+  # Include default devise modules. Others available are: https://qiita.com/gakkie/items/6ef70c0788c3cbff81ee
+  devise :database_authenticatable, :omniauthable, :rememberable, :trackable # :registerable, :validatable, :recoverable, :confirmable, :lockable, :timeoutable
   has_many :gearsets, dependent: :destroy
+  has_one :job, primary_key: :job_id, foreign_key: :id
+
+  ## 以下の2つは同じ意味 # job_id columnがあればjobidを省略可能
+  # belongs_to :job, primary_key: :id, foreign_key: :jobid
+  # has_one :job, primary_key: :jobid, foreign_key: :id
 
   private
 
@@ -20,8 +23,8 @@ class User < ApplicationRecord
        image:    auth.info.image.gsub("http","https"),
        nickname: auth.info.nickname,
        name:     auth.info.name,
-       jobid:    1,
-       setid:    1,
+       job_id:   1,
+       index:    1,
      )
    end
 

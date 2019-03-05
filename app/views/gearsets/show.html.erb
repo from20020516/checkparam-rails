@@ -1,147 +1,31 @@
 <div class="row align-items-center text-center">
   <div class="col-12 my-3">
-    <h3><%= Job.find(@viewset.jobid)[current_user&.lang || "ja"] %> / <%= @viewset.user.name %> (<%= link_to "@#{@viewset.user.nickname}", "https://twitter.com/#{@viewset.user.nickname}" %>)</h3>
+    <h3><%= @set.job[current_user.lang] %> / <%= @set.user.name %> (<%= link_to "@#{@set.user.nickname}", "https://twitter.com/#{@set.user.nickname}" %>)</h3>
   </div>
 </div>
-<div class="row">
+<div class="row" id="gearset">
   <div class="col-md-6">
     <div class="mx-auto" id="gearmenu">
       <div class="row">
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:main]}.png", size: "64x64", class: "gearset_main" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:sub]}.png", size: "64x64", class: "gearset_sub" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:range]}.png", size: "64x64", class: "gearset_range" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:ammo]}.png", size: "64x64", class: "gearset_ammo" %></div>
-      </div>
-      <div class="row">
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:head]}.png", size: "64x64", class: "gearset_head" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:neck]}.png", size: "64x64", class: "gearset_neck" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:ear1]}.png", size: "64x64", class: "gearset_ear1" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:ear2]}.png", size: "64x64", class: "gearset_ear2" %></div>
-      </div>
-      <div class="row">
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:body]}.png", size: "64x64", class: "gearset_body" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:hands]}.png", size: "64x64",class: "gearset_hands" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:ring1]}.png", size: "64x64", class: "gearset_ring1" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:ring2]}.png", size: "64x64", class: "gearset_ring2" %></div>
-      </div>
-      <div class="row">
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:back]}.png", size: "64x64", class: "gearset_back" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:waist]}.png", size: "64x64", class: "gearset_waist" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:legs]}.png", size: "64x64", class: "gearset_legs" %></div>
-        <div class="col-3"><%= image_tag "/icons/64/#{@viewset[:feet]}.png", size: "64x64", class: "gearset_feet" %></div>
+        <% slots.each do |slot| %>
+          <div class="col-3">
+            <%= image_tag "/icons/64/#{@set[slot.en]}.png", id: @set[slot.en], size: "64x64", class: "gearset_#{slot.en}", data: { toggle: "tooltip", "original-title": items.find_by_id(@set[slot.en])&.description&.[](current_user.lang) } %>
+          </div>
+        <% end %>
       </div>
       <div class="py-4 text-center">
-        <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{Job.find(@viewset.jobid)[current_user&.lang]}%20@#{@viewset.user.nickname}&url=https://checkparam.com/gearsets/#{@viewset.id.to_s}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+        <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[current_user.lang]}%20@#{@set.user.nickname}&url=https://checkparam.com/gearsets/#{@set.id.to_s}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
       </div>
     </div>
   </div>
   <div class="col-md-6 mt-2" id="show">
-    
-    <% if false#Rails.env.development? %>
-    <div class="row align-items-center">
-      <div class="debug border border-secondary p-2 col-12">
-        <%= Time.now %><br>
-        Action: <%= controller.controller_name %>#<%= controller.action_name %><br>
-        @viewset.id: <%= @viewset.id %> / @viewset.main: <%= @viewset.main %>
+    <% slots.all.each do |slot| %>
+      <div class="row align-items-center text-center">
+        <div class="col-3 py-1">
+          <%= image_tag "/icons/64/#{@set[slot.en]}.png", size: "48x48", class: "gearset_#{slot.en}" %>
+        </div>
+        <%= link_to_if items.find_by_id(@set[slot.en]), items.find_by_id(@set[slot.en])&.[](current_user.lang), URI.encode("https://google.com/search?q=\"#{items.find_by_id(@set[slot.en])&.[](current_user.lang)}\""), {target: "_blank"} %>
       </div>
-    </div>
     <% end %>
-
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:main]}.png", size: "48x48", class: "gearset_main" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:main]), Item.find_by(id: @viewset[:main])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:main])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:sub]}.png", size: "48x48", class: "gearset_sub" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:sub]), Item.find_by(id: @viewset[:sub])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:sub])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:range]}.png", size: "48x48", class: "gearset_range" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:range]), Item.find_by(id: @viewset[:range])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:range])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:ammo]}.png", size: "48x48", class: "gearset_ammo" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:ammo]), Item.find_by(id: @viewset[:ammo])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:ammo])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:head]}.png", size: "48x48", class: "gearset_head" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:head]), Item.find_by(id: @viewset[:head])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:head])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:neck]}.png", size: "48x48", class: "gearset_neck" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:neck]), Item.find_by(id: @viewset[:neck])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:neck])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:ear1]}.png", size: "48x48", class: "gearset_ear1" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:ear1]), Item.find_by(id: @viewset[:ear1])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:ear1])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:ear2]}.png", size: "48x48", class: "gearset_ear2" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:ear2]), Item.find_by(id: @viewset[:ear2])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:ear2])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:body]}.png", size: "48x48", class: "gearset_body" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:body]), Item.find_by(id: @viewset[:body])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:body])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:hands]}.png", size: "48x48", class: "gearset_hands" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:hands]), Item.find_by(id: @viewset[:hands])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:hands])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:ring1]}.png", size: "48x48", class: "gearset_ring1" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:ring1]), Item.find_by(id: @viewset[:ring1])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:ring1])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:ring2]}.png", size: "48x48", class: "gearset_ring2" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:ring2]), Item.find_by(id: @viewset[:ring2])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:ring2])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:back]}.png", size: "48x48", class: "gearset_back" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:back]), Item.find_by(id: @viewset[:back])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:back])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:waist]}.png", size: "48x48", class: "gearset_waist" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:waist]), Item.find_by(id: @viewset[:waist])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:waist])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:legs]}.png", size: "48x48", class: "gearset_legs" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:legs]), Item.find_by(id: @viewset[:legs])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:legs])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
-    <div class="row align-items-center text-center">
-      <div class="col-3 py-1">
-        <%= image_tag "/icons/64/#{@viewset[:feet]}.png", size: "48x48", class: "gearset_feet" %>
-      </div>
-        <%= link_to_if Item.find_by(id: @viewset[:feet]), Item.find_by(id: @viewset[:feet])&.[](current_user.lang), "http://wiki.ffo.jp/search.cgi?CCC=愛&Command=Search&command=search&qf=#{Item.find_by(id: @viewset[:feet])&.ja&.sub(/\+[0-9]/,'')}&order=match&ffotype=title&type=title" %>
-    </div>
   </div>
 </div>

@@ -1,72 +1,40 @@
-<div class="row">
-  <% if user_signed_in? %>
-    <div class="col-lg-6">
-      <div class="mx-auto" id="gearmenu">
-      <%#= render 'layouts/flash_messages' %>
-        <div class="row">
-          <div class="col-3" id="gearset_main"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_main" %></div>
-          <div class="col-3" id="gearset_sub"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_sub" %></div>
-          <div class="col-3" id="gearset_range"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_range" %></div>
-          <div class="col-3" id="gearset_ammo"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_ammo" %></div>
-        </div>
-        <div class="row">
-          <div class="col-3" id="gearset_head"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_head" %></div>
-          <div class="col-3" id="gearset_neck"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_neck" %></div>
-          <div class="col-3" id="gearset_ear1"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_ear1" %></div>
-          <div class="col-3" id="gearset_ear2"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_ear2" %></div>
-        </div>
-        <div class="row">
-          <div class="col-3" id="gearset_body"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_body" %></div>
-          <div class="col-3" id="gearset_hands"><%= image_tag '/icons/64/0.png', size: "64x64",class: "gearset_hands" %></div>
-          <div class="col-3" id="gearset_ring1"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_ring1" %></div>
-          <div class="col-3" id="gearset_ring2"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_ring2" %></div>
-        </div>
-        <div class="row">
-          <div class="col-3" id="gearset_back"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_back" %></div>
-          <div class="col-3" id="gearset_waist"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_waist" %></div>
-          <div class="col-3" id="gearset_legs"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_legs" %></div>
-          <div class="col-3" id="gearset_feet"><%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_feet" %></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6" id="gearset">
-      <%= render 'layouts/gearset_partial' %>
-    </div>
+<% if user_signed_in? %>
+  <div id="gearset">
+    <%= render 'layouts/gearset_partial' %>
     <script>
-      // 装備変更時 Icon描画 //
+      // Set Icon when a Equipment changed. //
       document.querySelector("#gearset").addEventListener("change", function() {
         setIcon();
       }, { passive: true });
     </script>
-  <% else %>
-    <div class="col-lg-12 text-center" id="landing-page">
-      <h1 class="title"><span style="color: white">/checkparam</span> your Ideas.</h1>
-      <div class="col-12 my-4">
-        <p><b>FINAL FANTASY XI</b> の装備セットを登録 & 公開できるサービスです。<br>
-        試験運用中です。<%= link_to "Twitter", "https://twitter.com/from20020516" %>にフィードバックをお寄せください。</p>
-      </div>
-      <div class="col-12">
-        <%= button_to 'Twitterアカウントで登録', user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg mt-3 mb-5", id: "signup" %>
-      </div>
-      <div class="col-12 text-left bg-dark pl-0">
-        <ul>
-          <li><b>Lv98以下</b>の装備は、一部を除き収録されていません。</li>
-          <li>以下の部位について、<b>IL118以下</b>の装備は一部を除き収録されていません。<br>
-            メイン / サブ / レンジ / 頭 / 胴 / 両手 / 両脚 / 両足</li>
-          <li><b>リクエストがあれば収録します。</b></li>
-        </ul>
-      </div>
-      <h2>TO-DO</h2>
-      <div class="col-12 text-left bg-dark pl-0">
-        <ul>
-          <li>ステータス合計値の計算</li>
-          <li>オーグメント値の入力/保存</li>
-          <li>ユーザーコメントの入力/保存</li>
-          <li>装備セットの公開/非公開設定</li>
-          <li>装備テキストのマウスオーバー表示</li>
-        </ul>
-      </div>
-      機能追加の要望も随時募集しています。
+  </div>
+<% else %>
+  <div class="col-lg-12 text-center" id="landing-page">
+    <h1 class="title"><span style="color: white">/checkparam</span> your Ideas.</h1>
+    <div class="col-12 my-4">
+      <p><%= t('welcome') %><br>
+      <%= t('beta_test') %><%= link_to "Twitter", "https://twitter.com/from20020516" %>にフィードバックをお寄せください。</p>
     </div>
-  <% end %>
-</div>
+    <div class="col-12">
+      <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg mt-3 mb-5", id: "signup" %>
+    </div>
+    <div class="col-12 text-left bg-dark pl-0">
+      <ul>
+        <li><b>Lv98以下</b>の装備は、一部を除き収録されていません。</li>
+        <li>以下の部位について、<b>IL118以下</b>の装備は一部を除き収録されていません。<br>
+          メイン / サブ / レンジ / 頭 / 胴 / 両手 / 両脚 / 両足</li>
+        <li><b>リクエストがあれば収録します。</b></li>
+      </ul>
+    </div>
+    <h2>TO-DO</h2>
+    <div class="col-12 text-left bg-dark pl-0">
+      <ul>
+        <li>ステータス合計値の計算</li>
+        <li>オーグメント値の入力/保存</li>
+        <li>ユーザーコメントの入力/保存</li>
+        <li>装備セットの公開/非公開設定</li>
+      </ul>
+    </div>
+    機能追加の要望も随時募集しています。
+  </div>
+<% end %>

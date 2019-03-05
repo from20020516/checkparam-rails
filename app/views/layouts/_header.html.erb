@@ -5,11 +5,11 @@
     <div class="form-inline">
       <% if !["about","show"].include?(controller.action_name) %>
         <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
-          <%= f.collection_select(:jobid, Job.all.slice(1..22), :id, :ens, {selected: current_user.jobid},
+          <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id},
             {class: 'form-control', onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
         <% end %>
         <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
-          <%= f.select(:setid, (1..@sets_limit).to_a, {include_blank: false, selected: current_user.setid},
+          <%= f.select(:index, (1..20).to_a, {include_blank: false, selected: current_user.index},
             {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
         <% end %>
       <% end %>
@@ -23,7 +23,7 @@
           <div class="dropdown-item">
             <%= "@#{current_user.nickname}" %>
           </div>
-          <% if controller.action_name != "about" %>
+          <% if !["about","show"].include?(controller.action_name) %>
           <div id="language">
             <%= form_with model: User.find(current_user.id), class: "watch" do |f| %>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -38,7 +38,7 @@
           </div>
           <% end %>
           <div class="dropdown-divider"></div>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item", style: "color: red;" %>
+          <%= link_to t('logout'), destroy_user_session_path, method: :delete, class: "dropdown-item", style: "color: red;" %>
         </div>
       </li>
     </ul>

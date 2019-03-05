@@ -1,8 +1,9 @@
 class Gearset < ApplicationRecord
-  belongs_to :user
   ## overwrite default attr_accessor??
   # attr_accessor :id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet
   before_validation :set_gearset
+  belongs_to :user
+  belongs_to :job
 
   private
 

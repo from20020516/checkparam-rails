@@ -58,7 +58,7 @@ Rails.application.configure do
   # when problems arise.
   config.log_level = :debug
   ## puts SQL debug log in Production ENV.
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
+  # ActiveRecord::Base.logger = Logger.new(STDOUT)
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
