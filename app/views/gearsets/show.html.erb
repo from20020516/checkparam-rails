@@ -9,12 +9,16 @@
       <div class="row">
         <% slots.each do |slot| %>
           <div class="col-3">
-            <%= image_tag "/icons/64/#{@set[slot.en]}.png", id: @set[slot.en], size: "64x64", class: "gearset_#{slot.en}", data: { toggle: "tooltip", "original-title": items.find_by_id(@set[slot.en])&.description&.[](current_user.lang) } %>
+            <% if @set[slot.en].present? %>
+              <%= image_tag "/icons/64/#{@set[slot.en]}.png", size: "64x64", data: { toggle: "tooltip", "original-title": items.find_by(id: @set[slot.en]).description[current_user.lang] } %>
+            <% else %>
+              <%= image_tag "/icons/64/#{slot[:img]}.png", size: "64x64" %>
+            <% end %>
           </div>
         <% end %>
       </div>
       <div class="py-4 text-center">
-        <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[current_user.lang]}%20@#{@set.user.nickname}&url=https://checkparam.com/gearsets/#{@set.id.to_s}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+        <%= link_to "[この装備セットをシェアする]","https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[current_user.lang]}%20@#{@set.user.nickname}&url=https://checkparam.com/gearsets/#{@set.id.to_s}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
       </div>
     </div>
   </div>
@@ -22,9 +26,11 @@
     <% slots.all.each do |slot| %>
       <div class="row align-items-center text-center">
         <div class="col-3 py-1">
-          <%= image_tag "/icons/64/#{@set[slot.en]}.png", size: "48x48", class: "gearset_#{slot.en}" %>
+          <%= image_tag "/icons/64/#{@set[slot.en] || slot[:img]}.png", size: "48x48" %>
         </div>
-        <%= link_to_if items.find_by_id(@set[slot.en]), items.find_by_id(@set[slot.en])&.[](current_user.lang), URI.encode("https://google.com/search?q=\"#{items.find_by_id(@set[slot.en])&.[](current_user.lang)}\""), {target: "_blank"} %>
+        <% if @set[slot.en].present? %>
+          <%= link_to items.find_by(id: @set[slot.en])[current_user.lang], URI.encode("https://google.com/search?q=FF11+\"#{items.find_by(id: @set[slot.en])[current_user.lang]}\""), {target: "_blank"} %>
+        <% end %>
       </div>
     <% end %>
   </div>
