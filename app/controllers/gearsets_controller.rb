@@ -1,15 +1,19 @@
 class GearsetsController < ApplicationController
   include ApplicationHelper
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:create, :update]
   before_action :gearset_params
-  before_action :gear_list
 
   def index
   end
 
+  # Fire when a Equipment changed with new set.
+  def create
+    gearset.update(gearset_params)
+  end
+
   # Fire when a Equipment chenged.
   def update
-    @set.update(gearset_params)
+    gearset.update(gearset_params)
   end
 
   def show
@@ -17,13 +21,6 @@ class GearsetsController < ApplicationController
   end
 
   private
-
-  def gear_list
-    if current_user.present?
-      @set = Gearset.find_or_create_by(user_id: current_user.id, job_id: current_user.job_id, index: current_user.index)
-      @items ||= Item.where('job & ? > 0', 2**current_user.job_id).order(current_user.lang)
-    end
-  end
 
   def gearset_params
     if current_user.present?

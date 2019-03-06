@@ -1,9 +1,8 @@
 class DescriptionsController < ApplicationController
+  include ApplicationHelper
   def index
     # return JSON with /?id=[ITEM_ID]
-    if current_user.present?
-      @description = Description.find(params[:id]).slice(:id, current_user.lang)
-      render json: @description
-    end
+    @description = Description.find(params[:id]).slice(:id, lang)
+    render json: @description
   end
 end
