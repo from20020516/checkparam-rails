@@ -10,23 +10,26 @@
       </div>
     </div>
     <%#= render 'layouts/flash_messages' %>
-    <%= @set.inspect if Rails.env == 'development' %>
+    <% if Rails.env == 'development' %>
+      <%= "Job: #{user.job_id} / Set: #{user.index} / Lang: #{lang} / Act: #{controller.controller_name}\##{controller.action_name}" %><br>
+      <%= gearset.inspect %>
+    <% end %>
   </div>
 
   <div class="col-lg-6">
     <div class="my-2 text-center">
-      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{current_user.job[current_user.lang]}&url=https://checkparam.com/gearsets/#{Gearset.find_by(user_id: current_user.id, job_id: current_user.job_id, index: current_user.index)&.id}&hashtags=FF11,checkparam",{onclick: "window.open(this.href,'hoge','height=400,width=600');return false do", class: "font-weight-bold"} %>
+      <%= link_to t('share_this_set'), "https://twitter.com/intent/tweet?text=Checkparam｜#{user.job[lang]}&url=https://checkparam.com/gearsets/#{gearset.id}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600'); return false do", class: "font-weight-bold"} %>
     </div>
 
     <div class="form-group">
-      <%= form_with model: Gearset.find_by(user_id: current_user.id, job_id: current_user.job_id, index: current_user.index) do |f| %>
+      <%= form_with model: Gearset.find_or_initialize_by(user_id: user.id, job_id: user.job_id, index: user.index) do |f| %>
         <% slots.all.each do |slot| %>
           <div class="form-group row">
             <label for="gearset_<%= slot.en %>" class="col-2 col-form-label">
               <%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
             </label>
             <div class="col-10">
-              <%= f.collection_select(slot.en, @items.where('slot & ? > 0', 2**slot.pos), :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+              <%= f.collection_select(slot.en, current_gears.where('slot & ? > 0', 2**slot.pos), :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
             </div>
           </div>
         <% end %>

@@ -1,6 +1,5 @@
 Rails.application.configure do
-## $ rails restart required. ##
-
+  ## $ rails restart required. ##
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

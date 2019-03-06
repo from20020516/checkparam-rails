@@ -36,14 +36,14 @@ namespace :parse do
       'クラーケンクラブ','玄武盾',
       '守りの指輪',
       '妖蟲の髪飾り+1', 'アルコンリング',
-      '胡蝶のイヤリング', '素破の耳', '磁界の耳', '幽界の耳', 'ラジャスリング', 'ブルタルピアス', 'ロケイシャスピアス', 'エボカーリング',
+      '胡蝶のイヤリング', '素破の耳', '磁界の耳', '幽界の耳', 'ラジャスリング', 'ブルタルピアス', 'ロケイシャスピアス', 'エボカーリング', 'ラジャスリング',
       '八輪の帯', '火輪の帯', '土輪の帯', '水輪の帯', '風輪の帯', '氷輪の帯', '雷輪の帯', '光輪の帯', '闇輪の帯',
       'フォシャゴルゲット', 'フォシャベルト', 'ノーヴィオピアス', 'ノーヴィアピアス', 'ニヌルタサッシュ',
       'ガネーシャマーラー', 'ウィトフルベルト', 'インカントストーン', 'ジーゲルサッシュ', 'ストロファデピアス', 'プロリクスリング',
       'シェルターリング', 'ブラキュラピアス',
       'エフェドラリング', 'ハオマリング', 'マリソンメダル', 'デビリスメダル',
       'エポナリング', 'ギフトピアス', 'ヘカテーピアス',
-      'ラベジャーゴルジェ', 'タントラネックレス', 'オリゾンケープ', 'ゴエティアチェーン', 'エストクルカラー', 'レイダーベルト', 'クリードカラー', 'ベイルベルト', 'フェリンマント', 'アエドベルト', 'シルバンスカーフ', '雲海喉輪', '伊賀襟巻', 'ランサートルク', 'コーラーサッシュ', 'マーヴィスカーフ', 'ナバーチチョーカー', 'チルコネックレス', 'カリスネックレス', 'サバントテーシス', 'ラベジャーオーブ', 'タントラタスラム', 'オリゾンロケット', 'ゴエティアマント', 'エストクルケープ', 'レイダーブーメラン', 'クリードボードリエ', 'ベイルチョーカー', 'フェリンネックレス', 'アエドマティネ', 'シルバンクラミュス', '雲海菅蓑', '伊賀道中合羽', 'ランサーペルリーヌ', 'コーラーペンダント', 'マーヴィタスラム', 'ナバーチマント', 'チルコサッシュ', 'カリスフェザー', 'サバントチェーン', 'ラベジャーピアス', 'タントラピアス', 'オリゾンピアス', 'ゴエティアピアス', 'エストクルピアス', 'レイダーピアス', 'クリードピアス', 'ベイルピアス', 'フェリンピアス', 'アエドピアス', 'シルバンピアス', '雲海耳飾', '伊賀耳飾', 'ランサーピアス', 'コーラーピアス', 'マーヴィピアス', 'ナバーチピアス', 'チルコピアス', 'カリスピアス', 'サバントピアス'
+      'ラベジャーゴルジェ', 'タントラネックレス', 'オリゾンケープ', 'ゴエティアチェーン', 'エストクルカラー', 'レイダーベルト', 'クリードカラー', 'ベイルベルト', 'フェリンマント', 'アエドベルト', 'シルバンスカーフ', '雲海喉輪', '伊賀襟巻', 'ランサートルク', 'コーラーサッシュ', 'マーヴィスカーフ', 'ナバーチチョーカー', 'チルコネックレス', 'カリスネックレス', 'サバントテーシス', 'ラベジャーオーブ', 'タントラタスラム', 'オリゾンロケット', 'ゴエティアマント', 'エストクルケープ', 'レイダーブーメラン', 'クリードボードリエ', 'ベイルチョーカー', 'フェリンネックレス', 'アエドマティネ', 'シルバンクラミュス', '雲海菅蓑', '伊賀道中合羽', 'ランサーペルリーヌ', 'コーラーペンダント', 'マーヴィタスラム', 'ナバーチマント', 'チルコサッシュ', 'カリスフェザー', 'サバントチェーン', 'ラベジャーピアス', 'タントラピアス', 'オリゾンピアス', 'ゴエティアピアス', 'エストクルピアス', 'レイダーピアス', 'クリードピアス', 'ベイルピアス', 'フェリンピアス', 'アエドピアス', 'シルバンピアス', '雲海耳飾', '伊賀耳飾', 'ランサーピアス', 'コーラーピアス', 'マーヴィピアス', 'ナバーチピアス', 'チルコピアス', 'カリスピアス', 'サバントピアス',
     ]
 
     ignore_list = %w[
@@ -136,5 +136,73 @@ namespace :parse do
       @slot = Slot.find_or_create_by(id: k)
       @slot.update(pos: v[:pos], en: v[:en], ja: v[:ja], img: v[:img])
     }
+  end
+
+  task :sample => :environment do
+    Gearset.find_or_create_by(id: 1).update(
+      user_id: User.first.id,
+      index: 1,
+      job_id: Job.find_by_jas("青")&.id,
+      main: Item.find_by_ja("セクエンス")&.id,
+      sub: Item.find_by_ja("アルマス")&.id,
+      range: Item.find_by_ja("")&.id,
+      ammo: Item.find_by_ja("銀銭")&.id,
+      head: Item.find_by_ja("アデマボンネット+1")&.id,
+      neck: Item.find_by_ja("コンバタントトルク")&.id,
+      ear1: Item.find_by_ja("素破の耳")&.id,
+      ear2: Item.find_by_ja("テロスピアス")&.id,
+      body: Item.find_by_ja("アデマジャケット+1")&.id,
+      hands: Item.find_by_ja("アデマリスト+1")&.id,
+      ring1: Item.find_by_ja("エポナリング")&.id,
+      ring2: Item.find_by_ja("イラブラットリング")&.id,
+      back: Item.find_by_ja("ロスメルタケープ")&.id,
+      waist: Item.find_by_ja("ウィンバフベルト+1")&.id,
+      legs: Item.find_by_ja("サムヌータイツ")&.id,
+      feet: Item.find_by_ja("ヘルクリアブーツ")&.id
+    )
+
+    Gearset.find_or_create_by(id: 2).update(
+      user_id: User.first.id,
+      index: 1,
+      job_id: Job.find_by_jas("忍")&.id,
+      main: Item.find_by_ja("凪")&.id,
+      sub: Item.find_by_ja("鬼哭")&.id,
+      range: Item.find_by_ja("")&.id,
+      ammo: Item.find_by_ja("世鬼手裏剣")&.id,
+      head: Item.find_by_ja("極蜂屋半首")&.id,
+      neck: Item.find_by_ja("忍者の喉輪+2")&.id,
+      ear1: Item.find_by_ja("素破の耳")&.id,
+      ear2: Item.find_by_ja("ブルタルピアス")&.id,
+      body: Item.find_by_ja("極蜂屋鎖帷子")&.id,
+      hands: Item.find_by_ja("極蜂屋手甲")&.id,
+      ring1: Item.find_by_ja("守りの指輪")&.id,
+      ring2: Item.find_by_ja("ラジャスリング")&.id,
+      back: Item.find_by_ja("伊賀道中合羽")&.id,
+      waist: Item.find_by_ja("ウィンバフベルト+1")&.id,
+      legs: Item.find_by_ja("蓐収佩楯")&.id,
+      feet: Item.find_by_ja("極蜂屋脚絆")&.id
+    )
+
+    Gearset.find_or_create_by(id: 3).update(
+      user_id: User.first.id,
+      index: 1,
+      job_id: Job.find_by_jas("白")&.id,
+      main: Item.find_by_ja("ヤグルシュ")&.id,
+      sub: Item.find_by_ja("玄冥盾")&.id,
+      range: Item.find_by_ja("")&.id,
+      ammo: Item.find_by_ja("ホミリアリ")&.id,
+      head: Item.find_by_ja("ＥＢキャップ+1")&.id,
+      neck: Item.find_by_ja("アケソチョーカー+1")&.id,
+      ear1: Item.find_by_ja("朝露の耳飾")&.id,
+      ear2: Item.find_by_ja("メンデカントピアス")&.id,
+      body: Item.find_by_ja("ＥＢブリオー+1")&.id,
+      hands: Item.find_by_ja("ＥＢミトン+1")&.id,
+      ring1: Item.find_by_ja("守りの指輪")&.id,
+      ring2: Item.find_by_ja("ＶＣリング+1")&.id,
+      back: Item.find_by_ja("メンディングケープ")&.id,
+      waist: Item.find_by_ja("八輪の帯")&.id,
+      legs: Item.find_by_ja("ＥＢパンタロン+1")&.id,
+      feet: Item.find_by_ja("ＥＢダックビル+1")&.id
+    )
   end
 end
