@@ -5,7 +5,8 @@ class UsersController < ApplicationController
 
   # Fire when job/set changed.
   def update
-    user.update_attributes(user_params)
+    user.update(user_params)
+    I18n.locale = user.lang
     render partial: 'layouts/gearset_partial' # Refresh #{current_user} on partial.
   end
 

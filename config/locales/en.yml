@@ -30,7 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  share_this_set: "[ Share this Gearset ]"
+  share_this_set: "[ Share on Twitter ]"
   sign_in_with_twitter: "Sign in with Twitter"
   welcome: "Welcome to /checkparam, a Web site that provides gearset save and share for Final Fantasy XI."
   beta_test: "Now that we're in Open Beta. "
