@@ -9,11 +9,13 @@
         <% end %>
       </div>
     </div>
-    <%#= render 'layouts/flash_messages' %>
     <% if Rails.env == 'development' %>
-      <%= "Job: #{user.job_id} / Set: #{user.index} / Lang: #{lang} / Act: #{controller.controller_name}\##{controller.action_name}" %><br>
-      <%= gearset.inspect %>
+      <div class="bg-light p-2">
+        <%= "Job: #{user.job_id}, Set: #{user.index}, Lang: #{lang}, Act: #{controller.controller_name}\##{controller.action_name}" %><br>
+        <%= gearset.inspect %>
+      </div>
     <% end %>
+    <%= render 'layouts/flash_messages' %>
   </div>
 
   <div class="col-lg-6">

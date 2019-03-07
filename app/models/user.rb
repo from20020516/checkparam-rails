@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are: https://qiita.com/gakkie/items/6ef70c0788c3cbff81ee
-  devise :database_authenticatable, :omniauthable, :rememberable, :trackable # :registerable, :validatable, :recoverable, :confirmable, :lockable, :timeoutable
+  devise :database_authenticatable, :omniauthable, :rememberable, :trackable
+  #, :registerable, :validatable, :recoverable, :confirmable, :lockable, :timeoutable
+
   has_many :gearsets, dependent: :destroy
   has_one :job, primary_key: :job_id, foreign_key: :id
 

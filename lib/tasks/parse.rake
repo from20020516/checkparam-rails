@@ -16,6 +16,29 @@ namespace :parse do
       @job.update(ja: data[1]['ja'], en: data[1]['en'], jas: data[1]['jas'], ens: data[1]['ens'])
     end
 
+    # parse Slot data.
+    slots = {
+      1 => {pos: 0, en: "main", ja: "メイン", img: 16622},
+      2 => {pos: 1, en: "sub", ja: "サブ", img: 12332},
+      3 => {pos: 2, en: "range", ja: "レンジ", img: 17174},
+      4 => {pos: 3, en: "ammo", ja: "矢弾", img: 17326},
+      5 => {pos: 4, en: "head", ja: "頭", img: 12523},
+      6 => {pos: 9, en: "neck", ja: "首", img: 13074},
+      7 => {pos: 11, en: "ear1", ja: "左耳", img: 13358},
+      8 => {pos: 12, en: "ear2", ja: "右耳", img: 13358},
+      9 => {pos: 5, en: "body", ja: "胴", img: 12551},
+      10 => {pos: 6, en: "hands", ja: "両手", img: 12679},
+      11 => {pos: 13, en: "ring1", ja: "左指", img: 13505},
+      12 => {pos: 14, en: "ring2", ja: "右指", img: 13505},
+      13 => {pos: 15, en: "back", ja: "背", img: 13606},
+      14 => {pos: 10, en: "waist", ja: "腰", img: 13215},
+      15 => {pos: 7, en: "legs", ja: "両脚", img: 12807},
+      16 => {pos: 8, en: "feet", ja: "両足", img: 12935},
+    }
+    slots.each {|k,v|
+      Slot.find_or_initialize_by(id: k).update(pos: v[:pos], en: v[:en], ja: v[:ja], img: v[:img])
+    }
+
     # parse Gear data.
     @state = Rufus::Lua::State.new
     res = @state.eval('
@@ -111,35 +134,38 @@ namespace :parse do
     puts h.sort { |(_k1, v1), (_k2, v2)| v2 <=> v1 }.reverse.to_json
   end
 
-  desc 'get Slots from lua.'
-  task :slots => :environment do
-    # parse Job data.
-    slots = {
-      "1": {pos: 0, en: "main", ja: "メイン", img: 16622},
-      "2": {pos: 1, en: "sub", ja: "サブ", img: 12332},
-      "3": {pos: 2, en: "range", ja: "レンジ", img: 17174},
-      "4": {pos: 3, en: "ammo", ja: "矢弾", img: 17326},
-      "5": {pos: 4, en: "head", ja: "頭", img: 12523},
-      "6": {pos: 9, en: "neck", ja: "首", img: 13074},
-      "7": {pos: 11, en: "ear1", ja: "左耳", img: 13358},
-      "8": {pos: 12, en: "ear2", ja: "右耳", img: 13358},
-      "9": {pos: 5, en: "body", ja: "胴", img: 12551},
-      "10": {pos: 6, en: "hands", ja: "両手", img: 12679},
-      "11": {pos: 13, en: "ring1", ja: "左指", img: 13505},
-      "12": {pos: 14, en: "ring2", ja: "右指", img: 13505},
-      "13": {pos: 15, en: "back", ja: "背", img: 13606},
-      "14": {pos: 10, en: "waist", ja: "腰", img: 13215},
-      "15": {pos: 7, en: "legs", ja: "両脚", img: 12807},
-      "16": {pos: 8, en: "feet", ja: "両足", img: 12935},
-    }
-    slots.each {|k,v|
-      @slot = Slot.find_or_create_by(id: k)
-      @slot.update(pos: v[:pos], en: v[:en], ja: v[:ja], img: v[:img])
-    }
-  end
-
   task :sample => :environment do
+    User.find_or_create_by(id: 1).update(
+      email: 'admin@example.com',
+      password: 'password',
+      image: '/icons/64/22284.png',
+      nickname: 'SAMPLE_USER',
+      job_id: 3
+    )
+
     Gearset.find_or_create_by(id: 1).update(
+      user_id: User.first.id,
+      index: 1,
+      job_id: Job.find_by_jas("戦")&.id,
+      main: Item.find_by_ja("ウコンバサラ")&.id,
+      sub: Item.find_by_ja("ウトゥグリップ")&.id,
+      range: Item.find_by_ja("")&.id,
+      ammo: Item.find_by_ja("ノブキエリ")&.id,
+      head: Item.find_by_ja("ＰＭマスク+3")&.id,
+      neck: Item.find_by_ja("戦士の数珠+2")&.id,
+      ear1: Item.find_by_ja("ブルタルピアス")&.id,
+      ear2: Item.find_by_ja("テロスピアス")&.id,
+      body: Item.find_by_ja("ＰＭロリカ+3")&.id,
+      hands: Item.find_by_ja("ＰＭマフラ+3")&.id,
+      ring1: Item.find_by_ja("守りの指輪")&.id,
+      ring2: Item.find_by_ja("ラジャスリング")&.id,
+      back: Item.find_by_ja("シコルマント")&.id,
+      waist: Item.find_by_ja("イオスケハベルト+1")&.id,
+      legs: Item.find_by_ja("ＰＭクウィス+3")&.id,
+      feet: Item.find_by_ja("ＰＭカリガ+3")&.id
+    )
+
+    Gearset.find_or_create_by(id: 2).update(
       user_id: User.first.id,
       index: 1,
       job_id: Job.find_by_jas("青")&.id,
@@ -161,7 +187,7 @@ namespace :parse do
       feet: Item.find_by_ja("ヘルクリアブーツ")&.id
     )
 
-    Gearset.find_or_create_by(id: 2).update(
+    Gearset.find_or_create_by(id: 3).update(
       user_id: User.first.id,
       index: 1,
       job_id: Job.find_by_jas("忍")&.id,
@@ -183,7 +209,7 @@ namespace :parse do
       feet: Item.find_by_ja("極蜂屋脚絆")&.id
     )
 
-    Gearset.find_or_create_by(id: 3).update(
+    Gearset.find_or_create_by(id: 4).update(
       user_id: User.first.id,
       index: 1,
       job_id: Job.find_by_jas("白")&.id,
