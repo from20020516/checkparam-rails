@@ -51,7 +51,7 @@ function setIcon() {
   })
 }
 
-// define tooltip for descriptions. require popper.js
+// define tooltip for descriptions. require jQuery and popper.js
 $(function() {
   $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
 })

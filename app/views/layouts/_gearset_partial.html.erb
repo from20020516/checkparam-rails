@@ -9,13 +9,7 @@
         <% end %>
       </div>
     </div>
-    <% if Rails.env == 'development' %>
-      <div class="bg-light p-2">
-        <%= "Job: #{user.job_id}, Set: #{user.index}, Lang: #{lang}, Act: #{controller.controller_name}\##{controller.action_name}" %><br>
-        <%= gearset.inspect %>
-      </div>
-    <% end %>
-    <%= render 'layouts/flash_messages' %>
+    <%#= render 'layouts/debug' if Rails.env == 'development' %>
   </div>
 
   <div class="col-lg-6">
@@ -31,7 +25,7 @@
               <%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
             </label>
             <div class="col-10">
-              <%= f.collection_select(slot.en, current_gears.where('slot & ? > 0', 2**slot.pos), :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+              <%= f.collection_select(slot.en, current_gears.where('slot & ? > 0', 2**slot.pos), :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
             </div>
           </div>
         <% end %>
@@ -43,8 +37,7 @@
 
 <script>
   setIcon();
-  // console.log(new Date());
-  // define tooltip for descriptions. require popper.js a.k.a. bootstrap.bundle.js
+  // define tooltip for descriptions. require jQuery and bootstrap.bundle.js
   $(function() {
     $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
   })

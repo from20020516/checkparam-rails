@@ -31,3 +31,6 @@ yarn-error.log
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+app/assets/images/special.png
+app/views/layouts/_special.html.erb

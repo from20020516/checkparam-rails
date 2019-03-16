@@ -6,11 +6,11 @@
       <% if !["about","show"].include?(controller.action_name) %>
         <%= form_with model: user, class: "watch" do |f| %>
           <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id},
-            {class: 'form-control', onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+            {class: 'form-control', onchange: 'Rails.fire(this.form, "submit")'}) %>
         <% end %>
         <%= form_with model: user, class: "watch" do |f| %>
           <%= f.select(:index, (1..20).to_a, {include_blank: false, selected: current_user.index},
-            {class: "form-control", onchange: 'Rails.fire($(this).closest("form")[0], "submit")'}) %>
+            {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
         <% end %>
       <% end %>
     </div>
@@ -26,14 +26,14 @@
           <% if !["about","show"].include?(controller.action_name) %>
           <div id="language">
             <%= form_with model: user, class: "watch" do |f| %>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>">JP
-                <%= f.radio_button :lang, :ja, onchange: 'Rails.fire($(this).closest("form")[0], "submit")' %>
-              </label>
-              <label class="btn btn-secondary <%= 'active' if current_user.lang == 'en' %>">EN
-                <%= f.radio_button :lang, :en, onchange: 'Rails.fire($(this).closest("form")[0], "submit")' %>
-              </label>
-            </div>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>">JP
+                  <%= f.radio_button :lang, :ja, onchange: 'Rails.fire(this.form, "submit")' %>
+                </label>
+                <label class="btn btn-secondary <%= 'active' if current_user.lang == 'en' %>">EN
+                  <%= f.radio_button :lang, :en, onchange: 'Rails.fire(this.form, "submit")' %>
+                </label>
+              </div>
             <% end %>
           </div>
           <% end %>
