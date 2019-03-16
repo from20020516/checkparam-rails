@@ -3,6 +3,10 @@
 //   outline-offset: -1px;
 // }
 
+.console {
+  opacity: 0.8;
+}
+
 img[src^="/icons/64/16622.png"],
 img[src^="/icons/64/12332.png"],
 img[src^="/icons/64/17174.png"],
@@ -28,18 +32,15 @@ html {
 body {
   margin-top: 65px;
   margin-bottom: 65px;
-  color: grey;
+  color: silver;
   background-color: #00001F;
-  .title {
-     padding: 60px 15px 0;
-  }
   .tooltip-inner{
     max-width: 370px;
     text-align: left;
-    //white-space: nowrap;
-    //overflow: hidden;
-    //text-overflow: ellipsis;
     opacity: 0.9;
+  }
+  span {
+    color: white;
   }
   a {
     color: lightgray;
@@ -93,6 +94,10 @@ body {
   }
 }
 
+#toast-container {
+  margin-top: 50px;
+}
+
 .navbar {
   background-color: black;
   height: 50px;
@@ -102,22 +107,18 @@ body {
 }
 
 .sidebar {
-  .borderless img {
-    outline: 1px solid gray;
+  .img {
+    outline: 1px solid grey;
     outline-offset: -1px;
-  }
-  .amazon {
-    height: 250px;
-    background-color: black;
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  line-height: 1;
+h1,h2,h5 {
+  margin: 15px 0;
   text-align: center;
+}
+
+h3,h4 {
+  color: gainsboro;
+  border-bottom: solid 1px grey;
 }

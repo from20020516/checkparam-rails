@@ -1,0 +1,14 @@
+<table class="table table-striped table-dark text-center mt-3">
+  <thead class="thead">
+    <tr>
+      <th>Action</th>
+      <th><%= "#{controller.controller_name}\##{controller.action_name}" %></th>
+    </tr>
+  </thead>
+  <% gearset.attributes.each do |att| %>
+    <tr>
+      <td><%= att[0] %></td>
+      <td><%= att[1] %></td>
+    </tr>
+  <% end %>
+</table>

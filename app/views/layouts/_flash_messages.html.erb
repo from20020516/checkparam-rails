@@ -1,11 +1,12 @@
-<% flash.each do |message_type, message| %>
-<div class="alert alert-<%= message_type %>">
-  <%= message %>
-</div>
+<% flash.each do |type, message| %>
+  <% type = 'info' if type == 'notice' %>
+  <% type = 'error' if type == 'alert' %>
+  <script>
+    toastr.options = {
+      "positionClass" : "toast-top-center",
+      "timeOut" : 3000,
+      // "debug" : true,
+    }
+    toastr.<%= type %>("<%= message %>")
+  </script>
 <% end %>
-<script>
-  $(function(){
-    // fadeout
-    setTimeout("$('.alert').fadeOut('slow')", 3000)
-  })
-</script>

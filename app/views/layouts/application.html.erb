@@ -15,11 +15,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= yield(:title) %></title>
     <%= csrf_meta_tags %>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
     <%= render 'layouts/shim' %>
   </head>
   <body>
@@ -45,14 +50,15 @@
         </div>
         <div class="col-md-8">
           <small>
-            記載されている会社名・製品名・システム名などは、各社の商標、または登録商標です。<br>Copyright (C) 2002 - 2018 SQUARE ENIX CO., LTD. All Rights Reserved.
+            記載されている会社名・製品名・システム名などは、各社の商標、または登録商標です。<br>Copyright (C) 2002 - 2019 SQUARE ENIX CO., LTD. All Rights Reserved.
           </small>
         </div>
         <div class="col-md-2 text-md-right pr-3">
-          <a href="https://rubyonrails.org/"><img src="/rails-logo.gif"></a>
+          <%= link_to image_tag('rails_logo.gif'), "https://rubyonrails.org/" %>
         </div>
       </div>
     </footer>
-    <% console if Rails.env == 'development' %>
+  <%= render 'layouts/flash_messages' %>
+  <%# console if Rails.env == 'development' %>
   </body>
 </html>

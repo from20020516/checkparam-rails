@@ -136,7 +136,7 @@ namespace :parse do
 
   task :sample => :environment do
     User.find_or_create_by(id: 1).update(
-      email: 'admin@example.com',
+      email: 'user@checkparam.com',
       password: 'password',
       image: '/icons/64/22284.png',
       nickname: 'SAMPLE_USER',
