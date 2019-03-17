@@ -6,6 +6,7 @@
 
 /public/assets/*
 /public/icons/*
+/public/icons.7z
 /vendor/*
 /node_modules/*
 yarn-error.log
