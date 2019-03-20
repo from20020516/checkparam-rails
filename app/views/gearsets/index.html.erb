@@ -10,8 +10,7 @@
   <div class="text-center">
     <h1><span>/checkparam</span> your Ideas.</h1>
     <div class="my-4">
-      <p><%= t('welcome') %><br>
-      <%= t('beta_test') %><%= link_to "Twitter", "https://twitter.com/from20020516" %>にフィードバックをお寄せください。</p>
+      <%= t('welcome_html') %>
     </div>
     <div class="">
       <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg mt-3 mb-5", id: "signup" %>
