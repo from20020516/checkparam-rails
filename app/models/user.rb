@@ -23,8 +23,8 @@ class User < ApplicationRecord
    end
 
    user.update(
-     image:     auth.info.image.gsub('http', 'https'),
-     email:     auth.info.email, # require APIs permission.
+     image:     auth.extra.raw_info.profile_image_url_https,
+     email:     auth.info.email,
      nickname:  auth.info.nickname,
      name:      auth.info.name,
     )

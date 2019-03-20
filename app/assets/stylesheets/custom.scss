@@ -4,7 +4,7 @@
 // }
 
 .console {
-  opacity: 0.8;
+  opacity: .8;
 }
 
 html {
@@ -31,7 +31,7 @@ body {
   .tooltip-inner{
     max-width: 370px;
     text-align: left;
-    opacity: 0.9;
+    opacity: .9;
   }
   span,
   a {
@@ -46,6 +46,9 @@ body {
   }
   #toast-container {
     margin-top: 50px;
+    div {
+      opacity: 1;
+    }
   }
 }
 
@@ -111,7 +114,7 @@ img[src^="/icons/64/13606.png"],
 img[src^="/icons/64/13215.png"],
 img[src^="/icons/64/12807.png"],
 img[src^="/icons/64/12935.png"] {
-  opacity: 0.3;
+  opacity: .3;
 }
 
 h1,h2,h5 {
