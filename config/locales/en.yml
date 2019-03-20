@@ -32,6 +32,5 @@
 en:
   share_this_set: "[ Share on Twitter ]"
   sign_in_with_twitter: "Sign in with Twitter"
-  welcome: "Welcome to /checkparam, a Web site that provides gearset save and share for Final Fantasy XI."
-  beta_test: "Now that we're in Open Beta. "
+  welcome_html: "Welcome to <span>/checkparam</span>, a Web site that provides gearset save and share for <span>Final Fantasy XI</span>.<br>Now that we're in Open Beta. Please <a href='https://twitter.com/from20020516'>Tweet</a> your feedback."
   logout: "Logout"
