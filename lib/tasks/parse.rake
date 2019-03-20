@@ -138,7 +138,7 @@ namespace :parse do
     User.find_or_create_by(id: 1).update(
       email: 'user@checkparam.com',
       password: 'password',
-      image: '/icons/64/22284.png',
+      image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile_200x200.png',
       nickname: 'SAMPLE_USER',
       job_id: 3
     )

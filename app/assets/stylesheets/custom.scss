@@ -7,26 +7,20 @@
   opacity: 0.8;
 }
 
-img[src^="/icons/64/16622.png"],
-img[src^="/icons/64/12332.png"],
-img[src^="/icons/64/17174.png"],
-img[src^="/icons/64/17326.png"],
-img[src^="/icons/64/12523.png"],
-img[src^="/icons/64/13074.png"],
-img[src^="/icons/64/13358.png"],
-img[src^="/icons/64/12551.png"],
-img[src^="/icons/64/12679.png"],
-img[src^="/icons/64/13505.png"],
-img[src^="/icons/64/13606.png"],
-img[src^="/icons/64/13215.png"],
-img[src^="/icons/64/12807.png"],
-img[src^="/icons/64/12935.png"] {
-  opacity: 0.3;
-}
-
 html {
   position: relative;
   min-height: 100%;
+}
+
+.navbar {
+  background-color: black;
+  height: 50px;
+  .btn-group {
+    width: 50%;
+  }
+  #twitter_icon {
+    outline: 1px solid grey;
+  }
 }
 
 body {
@@ -39,11 +33,9 @@ body {
     text-align: left;
     opacity: 0.9;
   }
-  span {
-    color: white;
-  }
+  span,
   a {
-    color: lightgray;
+    color: white;
   }
   #show {
     vertical-align: middle;
@@ -51,6 +43,17 @@ body {
       color: lightslategray;
       font-weight: bold;
     }
+  }
+  #toast-container {
+    margin-top: 50px;
+  }
+}
+
+.sidebar {
+  padding: 0 10px;
+  .img {
+    outline: 1px solid grey;
+    outline-offset: -1px;
   }
 }
 
@@ -94,23 +97,21 @@ body {
   }
 }
 
-#toast-container {
-  margin-top: 50px;
-}
-
-.navbar {
-  background-color: black;
-  height: 50px;
-  .btn-group {
-    width: 50%;
-  }
-}
-
-.sidebar {
-  .img {
-    outline: 1px solid grey;
-    outline-offset: -1px;
-  }
+img[src^="/icons/64/16622.png"],
+img[src^="/icons/64/12332.png"],
+img[src^="/icons/64/17174.png"],
+img[src^="/icons/64/17326.png"],
+img[src^="/icons/64/12523.png"],
+img[src^="/icons/64/13074.png"],
+img[src^="/icons/64/13358.png"],
+img[src^="/icons/64/12551.png"],
+img[src^="/icons/64/12679.png"],
+img[src^="/icons/64/13505.png"],
+img[src^="/icons/64/13606.png"],
+img[src^="/icons/64/13215.png"],
+img[src^="/icons/64/12807.png"],
+img[src^="/icons/64/12935.png"] {
+  opacity: 0.3;
 }
 
 h1,h2,h5 {
