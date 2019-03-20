@@ -1,49 +1,48 @@
 <nav class="navbar fixed-top navbar-expand navbar-dark">
   <div class="container">
-    <% if user_signed_in? %>
     <%= link_to "Checkparam", root_path, class: "navbar-brand", data: {turbolinks: false} %>
-    <div class="form-inline">
-      <% if !["about","show"].include?(controller.action_name) %>
-        <%= form_with model: user, class: "watch" do |f| %>
-          <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id},
-            {class: 'form-control', onchange: 'Rails.fire(this.form, "submit")'}) %>
-        <% end %>
-        <%= form_with model: user, class: "watch" do |f| %>
-          <%= f.select(:index, (1..20).to_a, {include_blank: false, selected: current_user.index},
-            {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
-        <% end %>
-      <% end %>
-    </div>
-    <ul class="navbar-nav" id="header-menu">
-      <li class="nav-item dropleft">
-        <a class="nav-link dropleft-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= image_tag current_user.image, id: "twitter_icon", size: '48x48' %>
-        </a>
-        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-          <div class="dropdown-item">
-            <%= "@#{current_user.nickname}" %>
-          </div>
-          <% if !["about","show"].include?(controller.action_name) %>
-          <div id="language">
-            <%= form_with model: user, class: "watch" do |f| %>
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>">JP
-                  <%= f.radio_button :lang, :ja, onchange: 'Rails.fire(this.form, "submit")' %>
-                </label>
-                <label class="btn btn-secondary <%= 'active' if current_user.lang == 'en' %>">EN
-                  <%= f.radio_button :lang, :en, onchange: 'Rails.fire(this.form, "submit")' %>
-                </label>
-              </div>
-            <% end %>
-          </div>
+    <% if user_signed_in? %>
+      <div class="form-inline">
+        <% if !["about","show"].include?(controller.action_name) %>
+          <%= form_with model: user, class: "watch" do |f| %>
+            <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id},
+              {class: 'form-control', onchange: 'Rails.fire(this.form, "submit")'}) %>
           <% end %>
-          <div class="dropdown-divider"></div>
-          <%= link_to t('logout'), destroy_user_session_path, method: :delete, class: "dropdown-item", style: "color: red;" %>
-        </div>
-      </li>
-    </ul>
+          <%= form_with model: user, class: "watch" do |f| %>
+            <%= f.select(:index, (1..20).to_a, {include_blank: false, selected: current_user.index},
+              {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
+          <% end %>
+        <% end %>
+      </div>
+      <ul class="navbar-nav" id="header-menu">
+        <li class="nav-item dropleft">
+          <a class="nav-link dropleft-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= image_tag current_user.image, id: "twitter_icon", size: '48x48' %>
+          </a>
+          <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+            <div class="dropdown-item">
+              <%= "@#{current_user.nickname}" %>
+            </div>
+            <% if !["about","show"].include?(controller.action_name) %>
+            <div id="language">
+              <%= form_with model: user, class: "watch" do |f| %>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>">JP
+                    <%= f.radio_button :lang, :ja, onchange: 'Rails.fire(this.form, "submit")' %>
+                  </label>
+                  <label class="btn btn-secondary <%= 'active' if current_user.lang == 'en' %>">EN
+                    <%= f.radio_button :lang, :en, onchange: 'Rails.fire(this.form, "submit")' %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+            <% end %>
+            <div class="dropdown-divider"></div>
+            <%= link_to t('logout'), destroy_user_session_path, method: :delete, class: "dropdown-item", style: "color: red;" %>
+          </div>
+        </li>
+      </ul>
     <% else %>
-      <%= link_to "Checkparam", root_path, class: "navbar-brand" %>
       <%= button_to 'Login with Twitter', user_twitter_omniauth_authorize_path, class: "btn btn-outline-secondary" %>
     <% end %>
   </div>
