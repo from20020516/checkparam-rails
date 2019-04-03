@@ -2,3 +2,7 @@
 - `Resources`
 - `public/icons`
 - `config/master.key`
+
+# TO-DO
+
+- DB Restructure with JSON.
