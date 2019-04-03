@@ -12,6 +12,7 @@
 yarn-error.log
 .byebug_history
 /.vscode/*
+/bin/*
 
 # Ignore bundler config.
 /.bundle

@@ -1,6 +1,7 @@
 namespace :parse do
   require 'rufus-lua'
   require 'byebug'
+  require 'colorize'
 
   desc 'get Items from lua.'
   task :items => :environment do
@@ -108,34 +109,39 @@ namespace :parse do
     end
   end
 
-  # TO-DO: ペット対応
-  desc 'restructure equipment descriptions.'
-  task :rest => :environment do
-    Description.all.each do |data|
-      puts data.id.to_s.light_black, data.ja.yellow
-      nya = data.ja.gsub(/\n/, ' ').split(/\s/)
-      for t in nya
-        p t.scan(/([+-]?[0-9]+)%?/)
-      end
+  desc 'parse equipment description to stat.'
+  task :stats => :environment do
+    allow_stat = Stat.attribute_names
+    Description.all.each do |item|
+      # TO-DO: ペット対応 >> split with "pet:" and adds prefix to each.
+      description = item.ja.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)[0]
+      description.split(/<br>|\s/).each {|stats|
+        stat = stats.split(/([+-]?[0-9]+)%?$/)
+        # p stat if stat.length == 2
+        Stat.find_or_initialize_by(id: item.id).update([stat].to_h) if stat.length == 2 && allow_stat.include?(stat[0])
+      }
     end
   end
 
   desc 'counts frequency of property name usage.'
-  task :property => :environment do
+  task :statlist => :environment do
     h = Hash.new
     h.default = 0
-
-    Description.all.each do |data|
-      str = data.ja.gsub(/<br>/, ' ').gsub(/<b>.+<\/b>|[+-][0-9～]+%?|[防Ｄ隔率][0-9]+%?|:.+|.*。/, '').split(' ')
-      str.each do |prop|
-        h[prop] += 1
-      end
+    allow_stats = Stat.column_names
+    Description.all.each do |item|
+      item.ja = item.ja.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)[0]
+      item.ja.split(/<br>|\s/).each {|str|
+        stats = str.split(/([+-]?[0-9]+)%?$/)
+        h[stats[0]] += 1 if stats.length == 2
+      }
     end
-    puts h.sort { |(_k1, v1), (_k2, v2)| v2 <=> v1 }.reverse.to_json
+    h.sort {|(_k1, v1),(_k2, v2)|v2 <=> v1}.reverse.each {|stat|
+      p stat unless allow_stats.include?(stat[0]) || stat[0].match(/スキル/)
+    }
   end
 
   task :sample => :environment do
-    User.find_or_create_by(id: 1).update(
+    User.find_or_initialize_by(id: 1).update(
       email: 'user@checkparam.com',
       password: 'password',
       image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile_200x200.png',
@@ -143,7 +149,7 @@ namespace :parse do
       job_id: 3
     )
 
-    Gearset.find_or_create_by(id: 1).update(
+    Gearset.find_or_initialize_by(id: 1).update(
       user_id: User.first.id,
       index: 1,
       job_id: Job.find_by_jas("戦")&.id,
@@ -165,7 +171,7 @@ namespace :parse do
       feet: Item.find_by_ja("ＰＭカリガ+3")&.id
     )
 
-    Gearset.find_or_create_by(id: 2).update(
+    Gearset.find_or_initialize_by(id: 2).update(
       user_id: User.first.id,
       index: 1,
       job_id: Job.find_by_jas("青")&.id,
@@ -187,7 +193,7 @@ namespace :parse do
       feet: Item.find_by_ja("ヘルクリアブーツ")&.id
     )
 
-    Gearset.find_or_create_by(id: 3).update(
+    Gearset.find_or_initialize_by(id: 3).update(
       user_id: User.first.id,
       index: 1,
       job_id: Job.find_by_jas("忍")&.id,
@@ -209,7 +215,7 @@ namespace :parse do
       feet: Item.find_by_ja("極蜂屋脚絆")&.id
     )
 
-    Gearset.find_or_create_by(id: 4).update(
+    Gearset.find_or_initialize_by(id: 4).update(
       user_id: User.first.id,
       index: 1,
       job_id: Job.find_by_jas("白")&.id,

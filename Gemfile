@@ -19,6 +19,7 @@ gem 'whenever', require: false
 gem 'hirb'
 gem 'hirb-unicode'
 gem 'rails-i18n'
+gem 'colorize'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
