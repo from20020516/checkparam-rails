@@ -1,51 +1,13 @@
 namespace :parse do
-  require 'rufus-lua'
-  require 'byebug'
-  require 'colorize'
+  task :test => :environment do
+  end
 
-  desc 'get Items from lua.'
   task :items => :environment do
-    # parse Job data.
     @state = Rufus::Lua::State.new
     res = @state.eval('
       local json = require("lib.assets.json")
-      local table = require("lib.assets.Resources.resources_data.jobs")
-      return json.stringify(table)
-    ')
-    JSON.parse(res).each do |data|
-      @job = Job.find_or_initialize_by(id: data[0])
-      @job.update(ja: data[1]['ja'], en: data[1]['en'], jas: data[1]['jas'], ens: data[1]['ens'])
-    end
-
-    # parse Slot data.
-    slots = {
-      1 => {pos: 0, en: "main", ja: "メイン", img: 16622},
-      2 => {pos: 1, en: "sub", ja: "サブ", img: 12332},
-      3 => {pos: 2, en: "range", ja: "レンジ", img: 17174},
-      4 => {pos: 3, en: "ammo", ja: "矢弾", img: 17326},
-      5 => {pos: 4, en: "head", ja: "頭", img: 12523},
-      6 => {pos: 9, en: "neck", ja: "首", img: 13074},
-      7 => {pos: 11, en: "ear1", ja: "左耳", img: 13358},
-      8 => {pos: 12, en: "ear2", ja: "右耳", img: 13358},
-      9 => {pos: 5, en: "body", ja: "胴", img: 12551},
-      10 => {pos: 6, en: "hands", ja: "両手", img: 12679},
-      11 => {pos: 13, en: "ring1", ja: "左指", img: 13505},
-      12 => {pos: 14, en: "ring2", ja: "右指", img: 13505},
-      13 => {pos: 15, en: "back", ja: "背", img: 13606},
-      14 => {pos: 10, en: "waist", ja: "腰", img: 13215},
-      15 => {pos: 7, en: "legs", ja: "両脚", img: 12807},
-      16 => {pos: 8, en: "feet", ja: "両足", img: 12935},
-    }
-    slots.each {|k,v|
-      Slot.find_or_initialize_by(id: k).update(pos: v[:pos], en: v[:en], ja: v[:ja], img: v[:img])
-    }
-
-    # parse Gear data.
-    @state = Rufus::Lua::State.new
-    res = @state.eval('
-      local json = require("lib.assets.json")
-      local item = require("lib.assets.Resources.resources_data.items")
-      local desc = require("lib.assets.Resources.resources_data.item_descriptions")
+      local item = require("Resources.resources_data.items")
+      local desc = require("Resources.resources_data.item_descriptions")
       local ary = {}
 
       for i,v in pairs(item) do -- FILTER
@@ -80,57 +42,57 @@ namespace :parse do
       23058 23393 28262 23326 23661 27982 23192 23527 18571 18572
     ] # Old RMEs and Male DNC. Class "String".
 
-    def convert_job(job)
-      ja = %w['' 戦 モ 白 黒 赤 シ ナ 暗 獣 詩 狩 侍 忍 竜 召 青 コ か 踊 学 風 剣 MON]
-      en = %w[NON WAR MNK WHM BLM RDM THF PLD DRK BST BRD RNG SAM NIN DRG SMN BLU COR PUP DNC SCH GEO RUN MON]
-      bin = ('%#024b' % job).split('').map(&:to_i).reverse
-      return job == 8388606 ? ['All Jobs', 'All Jobs'] : [ja.zip(bin).to_h.select { |_k, v| v == 1 }.keys.join, en.zip(bin).to_h.select { |_k, v| v == 1 }.keys.join('/')]
+    def convert_job(jobs)
+      if jobs == 8388606
+        ['All Jobs', 'All Jobs']
+      else
+        bin = ('%#024b' % jobs).split('').map(&:to_i).reverse
+        [Job.pluck("jas").zip(bin).to_h.select { |_k, v| v == 1 }.keys.join, Job.pluck("ens").zip(bin).to_h.select { |_k, v| v == 1 }.keys.join('/')]
+      end
     end
 
     JSON.parse(res).each do |data|
       # IL119 gears and slots w/o IL or Instrument, Bell
-      if (data[1][0]['item_level'] == 119 ||
-        data[1][0]['level'] == 99 && ([2, 8, 512, 1024, 6144, 24576, 32768].include?(data[1][0]['slots']) || [41, 42, 45].include?(data[1][0]['skill'])) ||
-          keep_list.include?(data[1][0]['ja'])) &&
-        !ignore_list.include?(data[0])
-
-        # TODO: JSON型で配列化?
-        # ex. Item = {{id: 20645, name: {ja: 'エクスカリバー', en: 'Excalibur'}, description: {ja: ...}, {id: 20646, name: ...
-        @item = Item.find_or_initialize_by(id: data[0])
-        @item.update(ja: data[1][0]['ja'], en: data[1][0]['en'], slot: data[1][0]['slots'], job: data[1][0]['jobs'])
+      if (data[1][0]['item_level'] == 119 || data[1][0]['level'] == 99 && ([2, 8, 512, 1024, 6144, 24576, 32768].include?(data[1][0]['slots']) || [41, 42, 45].include?(data[1][0]['skill'])) || keep_list.include?(data[1][0]['ja'])) && !ignore_list.include?(data[0])
 
         jobs = convert_job(data[1][0]['jobs'])
-
-        @description = Description.find_or_initialize_by(id: data[0])
-        @description.update(
-          ja: "<b>#{data[1][0]['ja']}</b><br>#{data[1][1]['ja']&.gsub(/\n/, '<br>')}<br>#{jobs[0]}", # TODO: オグメ対応
-          en: "<b>#{data[1][0]['en']}</b><br>#{data[1][1]['en']&.gsub(/\n/, '<br>')}<br>#{jobs[1]}")
+        Item.find_or_initialize_by(id: data[0]).update(
+          slot: data[1][0]['slots'],
+          job: data[1][0]['jobs'],
+          ja: data[1][0]['ja'],
+          en: data[1][0]['en'],
+          description: {
+            ja: "<b>#{data[1][0]['ja']}</b><br>#{data[1][1]['ja']&.gsub(/\n/, '<br>')}<br>#{jobs[0]}",
+            en: "<b>#{data[1][0]['en']}</b><br>#{data[1][1]['en']&.gsub(/\n/, '<br>')}<br>#{jobs[1]}",
+            data: data[1][1]['ja']&.gsub(/\n/, ' ')
+          },
+        )
       end
     end
   end
 
-  desc 'parse equipment description to stat.'
   task :stats => :environment do
     allow_stat = Stat.attribute_names
-    Description.all.each do |item|
-      # TO-DO: ペット対応 >> split with "pet:" and adds prefix to each.
-      description = item.ja.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)[0]
-      description.split(/<br>|\s/).each {|stats|
-        stat = stats.split(/([+-]?[0-9]+)%?$/)
-        # p stat if stat.length == 2
-        Stat.find_or_initialize_by(id: item.id).update([stat].to_h) if stat.length == 2 && allow_stat.include?(stat[0])
-      }
+    Item.all.each do |item|
+      Stat.find_or_create_by(id: item.id)
+      .update(item.description["data"]
+        .split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)[0] #TO-DO: ペット対応 >> split with "pet:" and adds prefix to each.
+        .split(/\s/)
+        .select{|str| value = str.split(/([+-]?[0-9]+)%?$/)
+            value if value.length == 2}
+        .map{|str|str.scan(/(.+?)([+-]?[0-9]+)%?$/)[0]}
+        .select{|i| allow_stat.include?(i[0])}
+        .to_h) if item.description["data"].present?
     end
   end
 
-  desc 'counts frequency of property name usage.'
   task :statlist => :environment do
     h = Hash.new
     h.default = 0
     allow_stats = Stat.column_names
-    Description.all.each do |item|
-      item.ja = item.ja.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)[0]
-      item.ja.split(/<br>|\s/).each {|str|
+    Item.all.each do |item|
+      item.description["ja"] = item.description["ja"].split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)[0]
+      item.description["ja"].split(/<br>|\s/).each {|str|
         stats = str.split(/([+-]?[0-9]+)%?$/)
         h[stats[0]] += 1 if stats.length == 2
       }
@@ -141,100 +103,20 @@ namespace :parse do
   end
 
   task :sample => :environment do
-    User.find_or_initialize_by(id: 1).update(
-      email: 'user@checkparam.com',
-      password: 'password',
-      image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile_200x200.png',
-      nickname: 'SAMPLE_USER',
-      job_id: 3
-    )
+    #User.find_or_initialize_by(id: 1)
+    #.update(email: 'user@checkparam.com', password: 'password')
 
-    Gearset.find_or_initialize_by(id: 1).update(
-      user_id: User.first.id,
-      index: 1,
-      job_id: Job.find_by_jas("戦")&.id,
-      main: Item.find_by_ja("ウコンバサラ")&.id,
-      sub: Item.find_by_ja("ウトゥグリップ")&.id,
-      range: Item.find_by_ja("")&.id,
-      ammo: Item.find_by_ja("ノブキエリ")&.id,
-      head: Item.find_by_ja("ＰＭマスク+3")&.id,
-      neck: Item.find_by_ja("戦士の数珠+2")&.id,
-      ear1: Item.find_by_ja("ブルタルピアス")&.id,
-      ear2: Item.find_by_ja("テロスピアス")&.id,
-      body: Item.find_by_ja("ＰＭロリカ+3")&.id,
-      hands: Item.find_by_ja("ＰＭマフラ+3")&.id,
-      ring1: Item.find_by_ja("守りの指輪")&.id,
-      ring2: Item.find_by_ja("ラジャスリング")&.id,
-      back: Item.find_by_ja("シコルマント")&.id,
-      waist: Item.find_by_ja("イオスケハベルト+1")&.id,
-      legs: Item.find_by_ja("ＰＭクウィス+3")&.id,
-      feet: Item.find_by_ja("ＰＭカリガ+3")&.id
-    )
+    Gearset.find_or_initialize_by(id: 1)
+    .update(id: 1, user_id: 1, job_id: 1, set_id: 1, main: 21758, sub: 22212, range: nil, ammo: 22281, head: 23375, neck: 25419, ear1: 14813, ear2:
+      27545, body: 23442, hands: 23509, ring1: 13566, ring2: 15543, back: 26246, waist: 26334, legs: 23576, feet: 23643)
 
-    Gearset.find_or_initialize_by(id: 2).update(
-      user_id: User.first.id,
-      index: 1,
-      job_id: Job.find_by_jas("青")&.id,
-      main: Item.find_by_ja("セクエンス")&.id,
-      sub: Item.find_by_ja("アルマス")&.id,
-      range: Item.find_by_ja("")&.id,
-      ammo: Item.find_by_ja("銀銭")&.id,
-      head: Item.find_by_ja("アデマボンネット+1")&.id,
-      neck: Item.find_by_ja("コンバタントトルク")&.id,
-      ear1: Item.find_by_ja("素破の耳")&.id,
-      ear2: Item.find_by_ja("テロスピアス")&.id,
-      body: Item.find_by_ja("アデマジャケット+1")&.id,
-      hands: Item.find_by_ja("アデマリスト+1")&.id,
-      ring1: Item.find_by_ja("エポナリング")&.id,
-      ring2: Item.find_by_ja("イラブラットリング")&.id,
-      back: Item.find_by_ja("ロスメルタケープ")&.id,
-      waist: Item.find_by_ja("ウィンバフベルト+1")&.id,
-      legs: Item.find_by_ja("サムヌータイツ")&.id,
-      feet: Item.find_by_ja("ヘルクリアブーツ")&.id
-    )
+    Gearset.find_or_initialize_by(id: 2)
+    .update(id: 2, user_id: 1, job_id: 16, set_id: 1, main: 20695, sub: 20689, range: nil, ammo: 21371, head: 25614, neck: 26015, ear1: 14739, ear2: 27545, body: 25687, hands: 27118, ring1: 11651, ring2: 26186, back: 26261, waist: 28440, legs: 27295, feet: 27496)
 
-    Gearset.find_or_initialize_by(id: 3).update(
-      user_id: User.first.id,
-      index: 1,
-      job_id: Job.find_by_jas("忍")&.id,
-      main: Item.find_by_ja("凪")&.id,
-      sub: Item.find_by_ja("鬼哭")&.id,
-      range: Item.find_by_ja("")&.id,
-      ammo: Item.find_by_ja("世鬼手裏剣")&.id,
-      head: Item.find_by_ja("極蜂屋半首")&.id,
-      neck: Item.find_by_ja("忍者の喉輪+2")&.id,
-      ear1: Item.find_by_ja("素破の耳")&.id,
-      ear2: Item.find_by_ja("ブルタルピアス")&.id,
-      body: Item.find_by_ja("極蜂屋鎖帷子")&.id,
-      hands: Item.find_by_ja("極蜂屋手甲")&.id,
-      ring1: Item.find_by_ja("守りの指輪")&.id,
-      ring2: Item.find_by_ja("ラジャスリング")&.id,
-      back: Item.find_by_ja("伊賀道中合羽")&.id,
-      waist: Item.find_by_ja("ウィンバフベルト+1")&.id,
-      legs: Item.find_by_ja("蓐収佩楯")&.id,
-      feet: Item.find_by_ja("極蜂屋脚絆")&.id
-    )
+    Gearset.find_or_initialize_by(id: 3)
+    .update(id: 3, user_id: 1, job_id: 13, set_id: 1, main: 21907, sub: 21906, range: nil, ammo: 21391, head: 23387, neck: 25491, ear1: 14739, ear2: 14813, body: 23454, hands: 23521, ring1: 13566, ring2: 15543, back: 16207, waist: 28440, legs: 27318, feet: 23655)
 
-    Gearset.find_or_initialize_by(id: 4).update(
-      user_id: User.first.id,
-      index: 1,
-      job_id: Job.find_by_jas("白")&.id,
-      main: Item.find_by_ja("ヤグルシュ")&.id,
-      sub: Item.find_by_ja("玄冥盾")&.id,
-      range: Item.find_by_ja("")&.id,
-      ammo: Item.find_by_ja("ホミリアリ")&.id,
-      head: Item.find_by_ja("ＥＢキャップ+1")&.id,
-      neck: Item.find_by_ja("アケソチョーカー+1")&.id,
-      ear1: Item.find_by_ja("朝露の耳飾")&.id,
-      ear2: Item.find_by_ja("メンデカントピアス")&.id,
-      body: Item.find_by_ja("ＥＢブリオー+1")&.id,
-      hands: Item.find_by_ja("ＥＢミトン+1")&.id,
-      ring1: Item.find_by_ja("守りの指輪")&.id,
-      ring2: Item.find_by_ja("ＶＣリング+1")&.id,
-      back: Item.find_by_ja("メンディングケープ")&.id,
-      waist: Item.find_by_ja("八輪の帯")&.id,
-      legs: Item.find_by_ja("ＥＢパンタロン+1")&.id,
-      feet: Item.find_by_ja("ＥＢダックビル+1")&.id
-    )
+    Gearset.find_or_initialize_by(id: 4)
+    .update(id: 4, user_id: 1, job_id: 3, set_id: 1, main: 21078, sub: 27645, range: nil, ammo: 22268, head: 26745, neck: 28357, ear1: 28480, ear2: 28474, body: 26903, hands: 27057, ring1: 13566, ring2: 26200, back: 28619, waist: 28419, legs: 27242, feet: 27416)
   end
 end

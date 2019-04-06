@@ -17,6 +17,6 @@ module ApplicationHelper
   end
 
   def gearset
-    Gearset.find_or_initialize_by(user_id: user.id, job_id: user.job_id, index: user.index)
+    Gearset.find_or_initialize_by(user_id: user.id, job_id: user.job_id, set_id: user.set_id)
   end
 end
