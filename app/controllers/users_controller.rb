@@ -18,6 +18,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    return params.require(:user).permit(:id, :job_id, :index, :lang) if params[:user].present?
+    return params.require(:user).permit(:id, :job_id, :set_id, :lang) if params[:user].present?
   end
 end

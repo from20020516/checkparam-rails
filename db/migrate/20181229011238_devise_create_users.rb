@@ -33,16 +33,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       # t.datetime :locked_at
 
       ## Omniauthable
-      t.string    :provider
-      t.string    :uid #session戻り値はstring?
+      t.string   :provider
+      t.string   :uid #session戻り値はstring?
       t.string    :name
       t.string    :nickname
       t.string    :image
       t.string    :lang, null: false, default: "ja"
-
-      ## AppParamaters
       t.integer   :job_id, null: false, default: 1
-      t.integer   :index, null: false, default: 1
+      t.integer   :set_id, null: false, default: 1
 
       t.timestamps null: false
     end

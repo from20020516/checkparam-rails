@@ -18,7 +18,7 @@ class User < ApplicationRecord
        provider: auth.provider,
        lang:     auth.extra.raw_info.lang == 'ja' ? 'ja' : 'en',
        job_id:   1,
-       index:    1,
+       set_id:   1,
      )
    end
 

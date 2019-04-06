@@ -9,7 +9,7 @@
               {class: 'form-control', onchange: 'Rails.fire(this.form, "submit")'}) %>
           <% end %>
           <%= form_with model: user, class: "watch" do |f| %>
-            <%= f.select(:index, (1..20).to_a, {include_blank: false, selected: current_user.index},
+            <%= f.select(:set_id, (1..20).to_a, {include_blank: false, selected: current_user.set_id},
               {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
           <% end %>
         <% end %>

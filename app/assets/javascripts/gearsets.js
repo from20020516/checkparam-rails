@@ -41,8 +41,8 @@ function setIcon() {
     if (data.value) {
       $.getJSON(api_url, `id=${data.value}`)
       .done(function(item) {
-        // console.log(item.id, data.id, `${ item.ja || item.en }`);
-        $(`.${data.id}`).attr("data-original-title", `${ item.ja || item.en }`);
+        // console.log(item, item.id, data.id, `${ item.description.ja || item.description.en }`);
+        $(`.${data.id}`).attr("data-original-title", `${ item[1] }`); // Array
       })
     }
     else {

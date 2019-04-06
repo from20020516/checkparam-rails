@@ -4,7 +4,7 @@
       <div class="row">
         <% slots.all.each do |slot| %>
           <div class="col-3">
-            <%= image_tag '/icons/64/0.png', size: "64x64", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
+            <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", class: "gearset_#{slot.name["en"]}", data: { toggle: "tooltip" } %>
           </div>
         <% end %>
       </div>
@@ -18,14 +18,14 @@
     </div>
 
     <div class="form-group">
-      <%= form_with model: Gearset.find_or_initialize_by(user_id: user.id, job_id: user.job_id, index: user.index) do |f| %>
+      <%= form_with model: Gearset.find_or_initialize_by(user_id: user.id, job_id: user.job_id, set_id: user.set_id) do |f| %>
         <% slots.all.each do |slot| %>
           <div class="form-group row">
-            <label for="gearset_<%= slot.en %>" class="col-2 col-form-label">
-              <%= image_tag '/icons/64/0.png', size: "48x48", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
+            <label for="gearset_<%= slot.name["en"] %>" class="col-2 col-form-label">
+              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", class: "gearset_#{slot.name["en"]}", data: { toggle: "tooltip" } %>
             </label>
             <div class="col-10">
-              <%= f.collection_select(slot.en, current_gears.where('slot & ? > 0', 2**slot.pos), :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
+              <%= f.collection_select(slot.name["en"], current_gears.where('slot & ? > 0', 2**slot.pos), :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
             </div>
           </div>
         <% end %>

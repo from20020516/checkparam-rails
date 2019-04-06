@@ -12,17 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2019_04_03_065055) do
 
-  create_table "descriptions", force: :cascade do |t|
-    t.text "ja"
-    t.text "en"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "gearsets", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "job_id", default: 1, null: false
-    t.integer "index", default: 1, null: false
+    t.integer "set_id", default: 1, null: false
     t.integer "main"
     t.integer "sub"
     t.integer "range"
@@ -48,26 +41,21 @@ ActiveRecord::Schema.define(version: 2019_04_03_065055) do
     t.integer "job"
     t.string "ja"
     t.string "en"
+    t.json "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.text "ja"
-    t.text "en"
-    t.text "ens"
-    t.text "jas"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.json "name"
+    t.string "ens"
+    t.string "jas"
   end
 
   create_table "slots", force: :cascade do |t|
     t.integer "pos"
-    t.string "en"
-    t.string "ja"
+    t.json "name"
     t.integer "img"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "stats", force: :cascade do |t|
@@ -142,7 +130,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_065055) do
     t.string "image"
     t.string "lang", default: "ja", null: false
     t.integer "job_id", default: 1, null: false
-    t.integer "index", default: 1, null: false
+    t.integer "set_id", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

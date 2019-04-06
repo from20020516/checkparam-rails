@@ -3,7 +3,7 @@ class CreateGearsets < ActiveRecord::Migration[5.2]
     create_table :gearsets do |t|
       t.integer   :user_id, null: false
       t.integer   :job_id, default: 1, null: false
-      t.integer   :index, default: 1, null: false
+      t.integer   :set_id, default: 1, null: false
       t.integer   :main
       t.integer   :sub
       t.integer   :range
