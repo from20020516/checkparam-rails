@@ -1,35 +1,50 @@
-<div class="row align-items-center text-center">
-  <div class="col-12 my-3">
-    <h3><%= @set.job.ens %> / <%= @set.user.name %> (<%= link_to "@#{@set.user.nickname}", "https://twitter.com/#{@set.user.nickname}" %>)</h3>
-  </div>
+<div class="text-center my-2">
+  <h3><%= @set.job.ens %> / <%= @set.user.auth['info']['name'] %> (<%= link_to "@#{@set.user.auth['info']['nickname']}", "https://twitter.com/#{@set.user.auth['info']['nickname']}" %>)</h3>
 </div>
-<div class="row" id="gearset">
+<div class="row mx-auto" id="gearset">
   <div class="col-md-6">
     <div class="mx-auto" id="gearmenu">
       <div class="row">
         <% slots.each do |slot| %>
           <div class="col-3">
-            <% if @set[slot.name["en"]].present? %>
-              <%= image_tag "/icons/64/#{@set[slot.name["en"]]}.png", size: "64x64", data: { toggle: "tooltip", "original-title": Item.find_by(id: @set[slot.name["en"]]).description[lang] } %>
+            <% if @set[slot.name].present? %>
+              <%= image_tag "/icons/64/#{@set[slot.name]}.png", size: "64x64", data: { toggle: "tooltip", "original-title": Item.find_by(id: @set[slot.name]).description[lang] } %>
             <% else %>
               <%= image_tag "/icons/64/#{slot[:img]}.png", size: "64x64" %>
             <% end %>
           </div>
         <% end %>
       </div>
-      <div class="py-4 text-center">
-        <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[lang]}%20@#{@set.user.nickname}&url=https://checkparam.com/gearsets/#{@set.id.to_s}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
-      </div>
     </div>
+    <div class="py-2 text-center">
+      <%= link_to "Back", root_path, {class: "btn btn-primary btn-block my-2", data: {turbolinks: false}} %>
+      <%#= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job.name[lang]}%20@#{@set.user.auth['info']['nickname']}&url=https://checkparam.com/gearsets/#{@set.id.to_s}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+    </div>
+    <table class="table table-sm table-hover table-dark">
+      <tbody>
+        <% @set.checkparam.each do |stat| %>
+          <% unless stat[1] == 0 %>
+            <tr>
+              <td class="pl-3"><%= stat[0] %></td>
+              <td><%= stat[1] %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <div class="col-md-6 mt-2" id="show">
-    <% slots.all.each do |slot| %>
-      <div class="row align-items-center text-center">
-        <div class="col-3 py-1">
-          <%= image_tag "/icons/64/#{@set[slot.name["en"]] || slot[:img]}.png", size: "48x48" %>
-        </div>
-        <% if @set[slot.name["en"]].present? %>
-          <%= link_to Item.find_by(id: @set[slot.name["en"]])[lang], URI.encode("https://google.com/search?q=FF11+\"#{Item.find_by(id: @set[slot.name["en"]])[lang]}\""), {target: "_blank"} %>
+  <div class="col-md-6" id="show">
+    <% slots.each do |slot| %>
+      <div class="row align-items-center">
+        <% if @set[slot.name].present? %>
+          <div class="col-3 ml-2 py-2">
+            <%= image_tag "/icons/64/#{@set[slot.name] || slot[:img]}.png", size: "48x48", data: { toggle: "tooltip", "original-title": Item.find_by(id: @set[slot.name]).description[lang] } %>
+          </div>
+          <%= link_to Item.find_by(id: @set[slot.name])[lang], URI.encode("https://google.com/search?q=FF11+\"#{Item.find_by(id: @set[slot.name])[lang]}\""), {target: "_blank"} %>
+        <% else %>
+          <div class="col-3 ml-2 py-2">
+            <%= image_tag "/icons/64/#{slot[:img]}.png", size: "48x48" %>
+          </div>
         <% end %>
       </div>
     <% end %>

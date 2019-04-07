@@ -8,22 +8,22 @@
 
 Slot.delete_all
 Slot.create([
-  {id:1,pos:0,name:{en:"main",ja:"メイン"},img:16622},
-  {id:2,pos:1,name:{en:"sub",ja:"サブ"},img:12332},
-  {id:3,pos:2,name:{en:"range",ja:"レンジ"},img:17174},
-  {id:4,pos:3,name:{en:"ammo",ja:"矢弾"},img:17326},
-  {id:5,pos:4,name:{en:"head",ja:"頭"},img:12523},
-  {id:6,pos:9,name:{en:"neck",ja:"首"},img:13074},
-  {id:7,pos:11,name:{en:"ear1",ja:"左耳"},img:13358},
-  {id:8,pos:12,name:{en:"ear2",ja:"右耳"},img:13358},
-  {id:9,pos:5,name:{en:"body",ja:"胴"},img:12551},
-  {id:10,pos:6,name:{en:"hands",ja:"両手"},img:12679},
-  {id:11,pos:13,name:{en:"ring1",ja:"左指"},img:13505},
-  {id:12,pos:14,name:{en:"ring2",ja:"右指"},img:13505},
-  {id:13,pos:15,name:{en:"back",ja:"背"},img:13606},
-  {id:14,pos:10,name:{en:"waist",ja:"腰"},img:13215},
-  {id:15,pos:7,name:{en:"legs",ja:"両脚"},img:12807},
-  {id:16,pos:8,name:{en:"feet",ja:"両足"},img:12935},
+  {id:1,pos:0,name:"main",img:16622},
+  {id:2,pos:1,name:"sub",img:12332},
+  {id:3,pos:2,name:"range",img:17174},
+  {id:4,pos:3,name:"ammo",img:17326},
+  {id:5,pos:4,name:"head",img:12523},
+  {id:6,pos:9,name:"neck",img:13074},
+  {id:7,pos:11,name:"ear1",img:13358},
+  {id:8,pos:12,name:"ear2",img:13358},
+  {id:9,pos:5,name:"body",img:12551},
+  {id:10,pos:6,name:"hands",img:12679},
+  {id:11,pos:13,name:"ring1",img:13505},
+  {id:12,pos:14,name:"ring2",img:13505},
+  {id:13,pos:15,name:"back",img:13606},
+  {id:14,pos:10,name:"waist",img:13215},
+  {id:15,pos:7,name:"legs",img:12807},
+  {id:16,pos:8,name:"feet",img:12935},
 ])
 
 Job.delete_all

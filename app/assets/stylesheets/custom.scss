@@ -38,11 +38,13 @@ body {
     color: white;
   }
   #show {
-    vertical-align: middle;
     a {
       color: lightslategray;
       font-weight: bold;
     }
+  }
+  .table-small {
+    color: lightslategray;
   }
   #toast-container {
     margin-top: 50px;

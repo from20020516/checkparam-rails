@@ -28,12 +28,12 @@
   </head>
   <body>
     <header><%= render 'layouts/header' %></header>
-    <main role="main" class="container">
+    <main class="container">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-md-8">
           <%= yield %>
         </div>
-        <div class="col-lg-4 text-center sidebar">
+        <div class="col-md-4 text-center">
           <%= render 'layouts/sidebar' %>
         </div>
       </div>
@@ -52,6 +52,6 @@
       </div>
     </footer>
     <%= render 'layouts/flash_messages' %>
-    <% console if Rails.env == 'development' %>
+    <%# console if Rails.env == 'development' %>
   </body>
 </html>

@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_065055) do
 
   create_table "slots", force: :cascade do |t|
     t.integer "pos"
-    t.json "name"
+    t.string "name"
     t.integer "img"
   end
 
@@ -125,12 +125,10 @@ ActiveRecord::Schema.define(version: 2019_04_03_065055) do
     t.string "last_sign_in_ip"
     t.string "provider"
     t.string "uid"
-    t.string "name"
-    t.string "nickname"
-    t.string "image"
-    t.string "lang", default: "ja", null: false
-    t.integer "job_id", default: 1, null: false
-    t.integer "set_id", default: 1, null: false
+    t.string "lang", default: "ja"
+    t.integer "job_id", default: 1
+    t.integer "set_id", default: 1
+    t.json "auth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
