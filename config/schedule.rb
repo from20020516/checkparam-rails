@@ -23,5 +23,5 @@ every :monday, at: '5am' do
 end
 
 every :thursday, at: '5am' do
-  command "cd #{Rails.root}/public && wget https://github.com/ProjectTako/ffxi-addons/raw/master/equipviewer/icons.7z -O icons.7z && 7za x icons.7z -aoa icons/64 && cd ../Resources && git pull && cd .. && export RAILS_ENV=production && rails parse:items"
+  command "cd #{Rails.root}/public && wget https://github.com/ProjectTako/ffxi-addons/raw/master/equipviewer/icons.7z -O icons.7z && 7za x icons.7z -aoa icons/64 && cd ../Resources && git pull && cd .. && export RAILS_ENV=production && rails parse:items && rails parse:stats"
 end

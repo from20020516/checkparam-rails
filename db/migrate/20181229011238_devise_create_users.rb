@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class DeviseCreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users do |t|
@@ -33,14 +31,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       # t.datetime :locked_at
 
       ## Omniauthable
-      t.string   :provider
-      t.string   :uid #session戻り値はstring?
-      t.string    :name
-      t.string    :nickname
-      t.string    :image
-      t.string    :lang, null: false, default: "ja"
-      t.integer   :job_id, null: false, default: 1
-      t.integer   :set_id, null: false, default: 1
+      t.string    :provider
+      t.string    :uid
+      t.string    :lang, default: "ja"
+      t.integer   :job_id, default: 1
+      t.integer   :set_id, default: 1
+      t.json      :auth
 
       t.timestamps null: false
     end

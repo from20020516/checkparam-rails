@@ -2,43 +2,48 @@
   <div class="col-lg-6">
     <div class="mx-auto" id="gearmenu">
       <div class="row">
-        <% slots.all.each do |slot| %>
+        <% slots.each do |slot| %>
           <div class="col-3">
-            <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", class: "gearset_#{slot.name["en"]}", data: { toggle: "tooltip" } %>
+            <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", class: "gearset_#{slot.name}", data: { toggle: "tooltip" } %>
           </div>
         <% end %>
       </div>
     </div>
+    <%= link_to "Checkparam", gearset_path(gearset.id), {class: "btn btn-primary btn-block my-3", data: {turbolinks: false}} if gearset.id.present? %>
     <%#= render 'layouts/debug' if Rails.env == 'development' %>
+    <h3>TODO:</h3>
+    <ul>
+      <li>/checkparam Ajax化</li>
+      <li>Description 取得方法変更</li>
+      <li>find_or_initialize_by</li>
+      <li>ジョブ毎にcheckparamステータス変更</li>
+    </ul>
   </div>
-
   <div class="col-lg-6">
     <div class="my-2 text-center">
-      <%= link_to t('share_this_set'), "https://twitter.com/intent/tweet?text=Checkparam｜#{user.job[lang]}&url=https://checkparam.com/gearsets/#{gearset.id}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600'); return false do", class: "font-weight-bold"} %>
+      <%#= link_to t('share_this_set'), "https://twitter.com/intent/tweet?text=Checkparam｜#{current_user.job.name[lang]}&url=https://checkparam.com/gearsets/#{gearset.id}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600'); return false do", class: "font-weight-bold"} %>
     </div>
-
     <div class="form-group">
-      <%= form_with model: Gearset.find_or_initialize_by(user_id: user.id, job_id: user.job_id, set_id: user.set_id) do |f| %>
-        <% slots.all.each do |slot| %>
+      <%= form_with model: Gearset.find_or_initialize_by(user_id: current_user.id, job_id: current_user.job_id, set_id: current_user.set_id) do |f| %>
+        <% slots.each do |slot| %>
           <div class="form-group row">
-            <label for="gearset_<%= slot.name["en"] %>" class="col-2 col-form-label">
-              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", class: "gearset_#{slot.name["en"]}", data: { toggle: "tooltip" } %>
+            <label for="gearset_<%= slot.name %>" class="col-2 col-form-label">
+              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", class: "gearset_#{slot.name}", data: { toggle: "tooltip" } %>
             </label>
-            <div class="col-10">
-              <%= f.collection_select(slot.name["en"], current_gears.where('slot & ? > 0', 2**slot.pos), :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
+            <div class="col-9 ml-2">
+              <%= f.collection_select(slot.name, Item.where('job & ? > 0', 2**current_user.job_id).order(lang).where('slot & ? > 0', 2**slot.pos), :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
             </div>
           </div>
         <% end %>
       <% end %>
     </div>
-
   </div>
 </div>
 
 <script>
-  setIcon();
   // define tooltip for descriptions. require jQuery and bootstrap.bundle.js
   $(function() {
     $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
   })
+  setIcon();
 </script>
