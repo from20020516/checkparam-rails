@@ -30,23 +30,23 @@
     <header><%= render 'layouts/header' %></header>
     <main class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-lg-8">
           <%= yield %>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-lg-4 text-center">
           <%= render 'layouts/sidebar' %>
         </div>
       </div>
     </main>
     <footer class="footer py-2">
       <div class="d-flex justify-content-md-between text-center row mx-0">
-        <div class="col-md-2">
+        <div class="col-lg-2">
           <small><%= link_to "About", "/about", data: {turbolinks: false} %></small>
         </div>
-        <div class="col-md-8">
+        <div class="col-lg-8">
           <small>記載されている会社名・製品名・システム名などは、各社の商標、または登録商標です。<br>Copyright (C) 2002 - 2019 SQUARE ENIX CO., LTD. All Rights Reserved.</small>
         </div>
-        <div class="col-md-2 text-md-right pr-3">
+        <div class="col-lg-2 text-md-right pr-3">
           <%= link_to image_tag('rails_logo.gif'), "https://rubyonrails.org/" %>
         </div>
       </div>
