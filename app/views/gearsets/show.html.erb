@@ -2,7 +2,7 @@
   <h3><%= @set.job.ens %> / <%= @set.user.auth['info']['name'] %> (<%= link_to "@#{@set.user.auth['info']['nickname']}", "https://twitter.com/#{@set.user.auth['info']['nickname']}" %>)</h3>
 </div>
 <div class="row mx-auto" id="gearset">
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="mx-auto" id="gearmenu">
       <div class="row">
         <% slots.each do |slot| %>
@@ -29,7 +29,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-6" id="show">
+  <div class="col-lg-6" id="show">
     <% slots.each do |slot| %>
       <div class="row align-items-center">
         <div class="col-3 ml-2 py-2">
