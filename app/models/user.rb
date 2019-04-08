@@ -3,7 +3,7 @@ class User < ApplicationRecord
   #, :timeoutable, :trackable, :registerable, :validatable, :recoverable, :confirmable, :lockable
 
   has_many :gearsets, dependent: :destroy
-  has_one :job, primary_key: :job_id, foreign_key: :id
+  belongs_to :job
 
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first

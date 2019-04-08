@@ -18,6 +18,7 @@ class GearsetsController < ApplicationController
 
   def show
     @set = Gearset.find(params[:id])
+    @items = @set.items
   end
 
   private

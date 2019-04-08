@@ -35,23 +35,14 @@ const init_icon = {
 // Fire when Job/Set Changed.
 function setIcon() {
   const api_url = "/descriptions/"
-
-  // console.log(1, Date.now());
-  // ここでまとめてjson呼び出す？
-
   document.querySelectorAll('#gearset .form-control').forEach(function(data) {
-
   // console.log(2, data.id, data.value);
-  // data.id = "gearset_main" etc..
-  // data.value = 21758 etc..
-
-    $(`.${data.id}`).attr("src", `/icons/64/${data.value || init_icon[data.id]}.png`) // 画像セット
+  // data.id = "gearset_main", data.value = 21758 etc..
+    $(`.${data.id}`).attr("src", `/icons/64/${data.value || init_icon[data.id]}.png`) // set icon.
     if (data.value) {
-      $.getJSON(api_url, `id=${data.value}`) // 個別json取りに行く
+      $.getJSON(api_url, `id=${data.value}`) // get JSON of item description.
       .done(function(item) {
-
         // console.log(item);
-
         $(`.${data.id}`).attr("data-original-title", `${ item[1] }`); // Array
       })
     }
