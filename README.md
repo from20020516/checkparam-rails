@@ -1,8 +1,15 @@
-- `sudo apt-get install liblua5.1-0`
-- `Resources`
-- `public/icons`
+# Checkparam
+> a Web site that provides gearset save and share for <span>Final Fantasy XI
+
 - `config/master.key`
+- `git clone https://github.com/Windower/Resources`
+- `public/icons.7z`
+- `apt install liblua5.1-0`
+- `rails parse:init`
 
 # TO-DO
 
-- DB Restructure with JSON.
+- [x] DB Restructure with type JSON.
+- [ ] Change Description get method.
+- [ ] Ajax /checkparam score.
+- [ ] Use I18n instead lang.

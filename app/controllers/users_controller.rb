@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   # Fire when job/set changed.
   def update
     current_user.update(user_params)
+    session[:lang] = current_user.lang
     I18n.locale = current_user.lang
     render partial: 'layouts/gearset_partial' # Refresh #{current_user} on partial.
   end
