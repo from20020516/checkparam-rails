@@ -104,7 +104,12 @@ namespace :parse do
   end
 
   task :sample => :environment do
-    User.find_or_initialize_by(id: 1).update(email: 'user@checkparam.com', password: 'password') #, uid: 1042812468748156928, provider: "twitter")
+    User.find_or_initialize_by(id: 1).update(
+      email: 'user@checkparam.com',
+      password: 'password',
+      # uid: 1042812468748156928,
+      # provider: "twitter",
+      auth: {"info": {"nickname": "Your Name."}, "extra": {"raw_info": {"profile_image_url_https": "/default_profile_400x400.png"}}})
     Gearset.find_or_initialize_by(id: 1).update(id: 1, user_id: 1, job_id: 1, set_id: 1, main: 21758, sub: 22212, range: nil, ammo: 22281, head: 23375, neck: 25419, ear1: 14813, ear2:
       27545, body: 23442, hands: 23509, ring1: 13566, ring2: 15543, back: 26246, waist: 26334, legs: 23576, feet: 23643)
     Gearset.find_or_initialize_by(id: 2).update(id: 2, user_id: 1, job_id: 16, set_id: 1, main: 20695, sub: 20689, range: nil, ammo: 21371, head: 25614, neck: 26015, ear1: 14739, ear2: 27545, body: 25687, hands: 27118, ring1: 11651, ring2: 26186, back: 26261, waist: 28440, legs: 27295, feet: 27496)
