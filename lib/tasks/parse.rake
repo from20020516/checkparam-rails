@@ -1,6 +1,6 @@
 namespace :parse do
   task :init => :environment do
-    sh 'rails db:migrate:reset && rails db:seed && rails parse:items && rails parse:sample && rails parse:stats'
+    sh 'rails db:migrate:reset && rails db:seed && rails parse:items && rails parse:sample && rails parse:stats && rails ffo:import && rails ffo:init'
   end
 
   task :items => :environment do

@@ -10,6 +10,6 @@
 # TO-DO
 
 - [x] DB Restructure with type JSON.
-- [ ] Change Description get method.
+- [x] Change Description get method.
 - [ ] Ajax /checkparam score.
 - [ ] Use I18n instead lang.

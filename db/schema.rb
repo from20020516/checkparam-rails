@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_03_065055) do
+ActiveRecord::Schema.define(version: 2019_04_09_093104) do
+
+  create_table "ffos", force: :cascade do |t|
+    t.text "ja"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "item_id"
+  end
 
   create_table "gearsets", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -44,6 +51,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_065055) do
     t.json "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ffo_id"
   end
 
   create_table "jobs", force: :cascade do |t|
