@@ -32,23 +32,22 @@ const init_icon = {
   gearset_feet: 12935,
 }
 
-// Fire when Job/Set Changed.
+// Fire when after rendering or Job/Set changed.
 function setIcon() {
-  const api_url = "/descriptions/"
-  document.querySelectorAll('#gearset .form-control').forEach(function(data) {
-  // console.log(2, data.id, data.value);
-  // data.id = "gearset_main", data.value = 21758 etc..
-    $(`.${data.id}`).attr("src", `/icons/64/${data.value || init_icon[data.id]}.png`) // set icon.
-    if (data.value) {
-      $.getJSON(api_url, `id=${data.value}`) // get JSON of item description.
-      .done(function(item) {
-        // console.log(item);
-        $(`.${data.id}`).attr("data-original-title", `${ item[1] }`); // Array
+  const elInputList = document.querySelectorAll('#gearset .form-control');
+  const values = [...elInputList].map((el) => el.value);
+  console.log($.getJSON("/descriptions/", `id=${JSON.stringify(values)}`))
+
+  $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
+  .done(function(items) {
+    console.log(items);
+    elInputList.forEach(function(formEl) {
+      // console.log(formEl.id, formEl.value);
+      $(`.${formEl.id}`).attr({
+        "src": `/icons/64/${formEl.value || init_icon[formEl.id]}.png`,
+        "data-original-title": `${items[formEl.value] || ""}`,
       })
-    }
-    else {
-      $(`.${data.id}`).attr("data-original-title", "");
-    };
+    })
   })
 }
 
