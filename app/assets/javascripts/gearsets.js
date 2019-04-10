@@ -36,18 +36,19 @@ const init_icon = {
 function setIcon() {
   const elInputList = document.querySelectorAll('#gearset .form-control');
   const values = [...elInputList].map((el) => el.value);
-
   // console.log(values)
-
   $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
-  .done(function(items) {
-    console.log(items["checkparam"]);
+  .done(function(json) {
     elInputList.forEach(function(formEl) {
       // console.log(formEl.id, formEl.value);
       $(`.${formEl.id}`).attr({
         "src": `/icons/64/${formEl.value || init_icon[formEl.id]}.png`,
-        "data-original-title": `${items[formEl.value] ? items[formEl.value][items.lang] : ""}`,
+        "data-original-title": `${json["descriptions"][formEl.value] ? json["descriptions"][formEl.value] : ""}`,
       })
+    })
+    document.querySelectorAll('.param').forEach(function(param) {
+      // console.log(param.id, json["checkparam"][param.id]);
+      $(`#${param.id}`).text(json["checkparam"][param.id]);
     })
   })
 }

@@ -1,3 +1,4 @@
+include Common
 class GearsetsController < ApplicationController
   include ApplicationHelper
   before_action :authenticate_user!, only: [:create, :update]
@@ -18,6 +19,17 @@ class GearsetsController < ApplicationController
 
   def show
     @set = Gearset.find(params[:id])
+    item = Item.joins(:description).select("items.*, items.#{lang} AS name, descriptions.#{lang} AS description").where(id: @set.slot_item.values).to_a
+    @items = @set.slot_item.compact.invert.sort.to_h.values.zip(item.map {|i| i.attributes}).to_h.with_indifferent_access
+  end
+
+  def description
+    gear_id = JSON.parse(ajax_params)
+    results = {
+      descriptions: Description.where(item_id: gear_id).pluck(:item_id, session[:lang]).to_h,
+      checkparam: Gearset.checkparam(gear_id)
+    }
+    render json: results
   end
 
   private
@@ -26,5 +38,9 @@ class GearsetsController < ApplicationController
     if current_user.present?
       return params.require(:gearset).permit(:id, :main, :sub, :range, :ammo, :head, :neck, :ear1, :ear2, :body, :hands, :ring1, :ring2, :back, :waist, :legs, :feet) if params[:gearset].present?
     end
+  end
+
+  def ajax_params
+    return params.require(:id)
   end
 end
