@@ -11,5 +11,8 @@
 
 - [x] DB Restructure with type JSON.
 - [x] Change Description get method.
-- [ ] Ajax /checkparam score.
+- [x] Ajax /checkparam score.
+- [ ] Add wiki link to popup.
 - [ ] Use I18n instead lang.
+- [ ] Ranking/Recent posts
+- [ ] Users Comment

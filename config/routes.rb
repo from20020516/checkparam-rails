@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   resources :gearsets
 
   root 'gearsets#index'
-  get  '/about', to: 'descriptions#about'
-  get  '/descriptions', to: 'descriptions#index'
-
+  get  '/about', to: 'gearsets#about'
+  get  '/descriptions', to: 'gearsets#description'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

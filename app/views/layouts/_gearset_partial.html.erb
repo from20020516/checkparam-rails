@@ -4,27 +4,36 @@
       <div class="row">
         <% slots.each do |slot| %>
           <div class="col-3">
-            <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", class: "gearset_#{slot.name}", data: { toggle: "tooltip" } %>
+            <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
           </div>
         <% end %>
       </div>
     </div>
-    <%= link_to "Checkparam", gearset_path(gearset.id), {class: "btn btn-primary btn-block my-3", data: {turbolinks: false}} if gearset.id.present? %>
-    <%= render 'layouts/debug' if Rails.env == 'development' %>
+    <%#= link_to "Checkparam", gearset_path(gearset.id), {class: "btn btn-primary btn-block my-3", data: {turbolinks: false}} if gearset.id.present? %>
+    <table class="table table-sm table-hover table-dark mt-3 checkparam">
+      <tbody>
+        <% stat_columns.each do |stat| %>
+          <tr>
+            <td class='pl-4 text-center param' id='<%= stat %>'></td>
+            <td class='pl-4'><%= stat %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
   <div class="col-lg-6">
     <div class="my-2 text-center">
-      <%= link_to t('share_this_set'), "https://twitter.com/intent/tweet?text=Checkparam｜#{current_user.job.name[lang]}&url=https://checkparam.com/gearsets/#{gearset.id}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600'); return false do", class: "font-weight-bold"} %>
+      <%= link_to t('share_this_set'), "https://twitter.com/intent/tweet?text=Checkparam｜#{current_user.job[lang]}&url=https://checkparam.com/gearsets/#{gearset.id}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600'); return false do", class: "font-weight-bold"} %>
     </div>
     <div class="form-group">
       <%= form_with model: gearset do |f| %>
         <% slots.each do |slot| %>
           <div class="form-group row">
-            <label for="gearset_<%= slot.name %>" class="col-2 col-form-label">
-              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", class: "gearset_#{slot.name}", data: { toggle: "tooltip" } %>
+            <label for="gearset_<%= slot.en %>" class="col-2 col-form-label">
+              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
             </label>
             <div class="col-9 ml-2">
-              <%= f.collection_select(slot.name, items.select{|item| item.slot & 2**slot.pos > 0}, :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
+              <%= f.collection_select(slot.en, items.select{|item| item.slot & 2**slot.pos > 0}, :id, lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
             </div>
           </div>
         <% end %>

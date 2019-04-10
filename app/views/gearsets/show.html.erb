@@ -7,8 +7,8 @@
       <div class="row">
         <% slots.each do |slot| %>
           <div class="col-3">
-            <% if @set[slot.name].present? %>
-              <%= image_tag "/icons/64/#{@set[slot.name]}.png", size: "64x64", data: { toggle: "tooltip", "original-title": @set.items[slot.name][:description][lang] } %>
+            <% if @items[slot.en].present? %>
+              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "64x64", data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
             <% else %>
               <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", data: { toggle: "tooltip", "original-title": "" } %>
             <% end %>
@@ -17,8 +17,8 @@
       </div>
     </div>
     <div class="py-2 text-center">
-      <%= link_to "Back", root_path, {class: "btn btn-primary btn-block my-2", data: {turbolinks: false}} %>
-      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job.name[lang]}%20@#{@set.user.auth['info']['nickname']}&url=https://checkparam.com/gearsets/#{params[:id]}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+      <%#= link_to "Back", root_path, {class: "btn btn-primary btn-block my-2", data: {turbolinks: false}} %>
+      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[lang]}%20@#{@set.user.auth['info']['nickname']}&url=https://checkparam.com/gearsets/#{@set.id}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
     </div>
     <table class="table table-sm table-hover table-dark">
       <tbody>
@@ -36,11 +36,15 @@
   <div class="col-lg-6" id="show">
     <% slots.each do |slot| %>
       <div class="row align-items-center">
-        <div class="col-3 ml-2 py-2">
-          <%= image_tag "/icons/64/#{@set[slot.name] || slot.img}.png", size: "48x48", data: { toggle: "tooltip", "original-title": @set.items[slot.name]&.fetch(:description)&.fetch(lang) } %>
-        </div>
-        <% if @set[slot.name].present? %>
-          <%= link_to @set.items[slot.name][lang], "http://wiki.ffo.jp/html/#{@set.items[slot.name]["ffo_id"]}.html", {target: "_blank"} %>
+        <% if @items[slot.en].present? %>
+          <div class="col-3 ml-2 py-2">
+            <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "48x48", data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
+          </div>
+          <%= link_to @items[slot.en][:name], "http://wiki.ffo.jp/html/#{@items[slot.en][:wiki_id]}.html", {target: "_blank"} %>
+        <% else %>
+          <div class="col-3 ml-2 py-2">
+            <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", data: { toggle: "tooltip", "original-title": ""} %>
+          </div>
         <% end %>
       </div>
     <% end %>
