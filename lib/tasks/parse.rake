@@ -1,6 +1,10 @@
 namespace :parse do
   task :init => :environment do
-    sh 'rails db:migrate:reset && rails db:seed && rails parse:items && rails parse:sample && rails parse:stats && rails ffo:import && rails ffo:init'
+    sh 'rails db:migrate:reset &&
+      rails db:seed &&
+      rails parse:items &&
+      rails parse:sample &&
+      rails parse:stats'
   end
 
   task :items => :environment do
@@ -55,18 +59,17 @@ namespace :parse do
     JSON.parse(res).each do |data|
       # IL119 gears and slots w/o IL or Instrument, Bell
       if (data[1][0]['item_level'] == 119 || data[1][0]['level'] == 99 && ([2, 8, 512, 1024, 6144, 24576, 32768].include?(data[1][0]['slots']) || [41, 42, 45].include?(data[1][0]['skill'])) || keep_list.include?(data[1][0]['ja'])) && !ignore_list.include?(data[0])
-
         jobs = convert_job(data[1][0]['jobs'])
-        Item.find_or_initialize_by(id: data[0]).update(
+        Item.find_or_create_by(id: data[0]).update(
           slot: data[1][0]['slots'],
           job: data[1][0]['jobs'],
           ja: data[1][0]['ja'],
-          en: data[1][0]['en'],
-          description: {
-            ja: "<b>#{data[1][0]['ja']}</b><br>#{data[1][1]['ja']&.gsub(/\n/, '<br>')}<br>#{jobs[0]}",
-            en: "<b>#{data[1][0]['en']}</b><br>#{data[1][1]['en']&.gsub(/\n/, '<br>')}<br>#{jobs[1]}",
-            data: data[1][1]['ja']&.gsub(/\n/, ' ')
-          },
+          en: data[1][0]['en']
+        )
+        Description.find_or_create_by(item_id: data[0]).update(
+          ja: "<b>#{data[1][0]['ja']}</b><br>#{data[1][1]['ja']&.gsub(/\n/, '<br>')}<br>#{jobs[0]}",
+          en: "<b>#{data[1][0]['en']}</b><br>#{data[1][1]['en']&.gsub(/\n/, '<br>')}<br>#{jobs[1]}",
+          raw: data[1][1]['ja']&.gsub(/\n/, ' ')
         )
       end
     end
@@ -103,17 +106,48 @@ namespace :parse do
     }
   end
 
-  task :sample => :environment do
-    User.find_or_initialize_by(id: 1).update(
-      email: 'user@checkparam.com',
-      password: 'password',
-      # uid: 1042812468748156928,
-      # provider: "twitter",
-      auth: {"info": {"nickname": "from20020516"}, "extra": {"raw_info": {"profile_image_url_https": "/default_profile_400x400.png"}}})
-    Gearset.find_or_initialize_by(id: 1).update(user_id: 1, job_id: 1, set_id: 1, main: 21758, sub: 22212, range: nil, ammo: 22281, head: 23375, neck: 25419, ear1: 14813, ear2: 27545, body: 23442, hands: 23509, ring1: 13566, ring2: 15543, back: 26246, waist: 26334, legs: 23576, feet: 23643)
-    Gearset.find_or_initialize_by(id: 2).update(user_id: 1, job_id: 16, set_id: 1, main: 20695, sub: 20689, range: nil, ammo: 21371, head: 25614, neck: 26015, ear1: 14739, ear2: 27545, body: 25687, hands: 27118, ring1: 11651, ring2: 26186, back: 26261, waist: 28440, legs: 27295, feet: 27496)
-    Gearset.find_or_initialize_by(id: 3).update(user_id: 1, job_id: 13, set_id: 1, main: 21907, sub: 21906, range: nil, ammo: 21391, head: 23387, neck: 25491, ear1: 14739, ear2: 14813, body: 23454, hands: 23521, ring1: 13566, ring2: 15543, back: 16207, waist: 28440, legs: 27318, feet: 23655)
-    Gearset.find_or_initialize_by(id: 4).update(user_id: 1, job_id: 3, set_id: 1, main: 21078, sub: 27645, range: nil, ammo: 22268, head: 26745, neck: 28357, ear1: 28480, ear2: 28474, body: 26903, hands: 27057, ring1: 13566, ring2: 26200, back: 28619, waist: 28419, legs: 27242, feet: 27416)
-    Gearset.find_or_initialize_by(id: 5).update(user_id: 1, job_id: 7, set_id: 1, main: 20687, sub: 16200, range: nil, ammo: 22279, head: 26671, neck: 26002, ear1: 28483, ear2: 27549, body: 26847, hands: 27023, ring1: 13566, ring2: 26200, back: 26252, waist: 28437, legs: 27199, feet: 27375)
+  task :wiki => :environment do
+    require 'csv'
+    require 'open-uri'
+    require 'nokogiri'
+    require 'colorize'
+    def parser(page_id)
+      url = "http://wiki.ffo.jp/wiki.cgi?Command=ChangeList&pageid=#{page_id}"
+      charset = nil
+      html = open(url) do |f|
+        charset = f.charset
+        f.read
+      end
+      Nokogiri::HTML.parse(html, nil, charset)
+    end
+
+    max = Wiki.all.length > 0 ? 10 : parser(10000).xpath('//*[@id="article"]/div/dl[1]/dd[3]').children.text.delete("^0-9")
+    puts [max.present?, max].to_s
+
+    if max.present?
+      for page_id in 1..max.to_i do
+      doc = parser(page_id)
+        for i in 1..50 do
+          item = doc.xpath("//*[@id='article']/div/ul/li[#{i}]/a")
+          id = item.attribute("href").value.delete("^0-9")
+          ja = item.children.text
+          Wiki.find_or_create_by(id: id, ja: ja)
+        end
+      end
+
+      Item.all.each {|item|
+        if item.wiki.blank?
+          wiki_exact = Wiki.find_by(ja: item.ja)
+          if wiki_exact.present?
+            item.update(wiki_id: wiki_exact.id)
+            # puts [item.id, item.ja].to_s
+          else
+            wiki_alias = Wiki.find_by(ja: item.ja.gsub(/(\+[1-3]$|改$|^[真極])/, ''))
+            item.update(wiki_id: wiki_alias.id)
+            # puts [item.id, item.ja].to_s.colorize(:red)
+          end
+        end
+      }
+    end
   end
 end

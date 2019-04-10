@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FfoTest < ActiveSupport::TestCase
+class WikiTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

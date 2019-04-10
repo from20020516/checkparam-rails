@@ -22,7 +22,7 @@ Rails/DynamicFindBy:
 #   Enabled: false
 # Layout/SpaceAfterComma:
 #   Enabled: false
-# Metrics/LineLength:
-#   Enabled: false
+Metrics/LineLength:
+  Enabled: false
 # Metrics/BlockLength:
 #   Enabled: false
