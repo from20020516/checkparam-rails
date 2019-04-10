@@ -37,13 +37,13 @@ function setIcon() {
   const elInputList = document.querySelectorAll('#gearset .form-control');
   const values = [...elInputList].map((el) => el.value);
 
-  console.log(values)
+  // console.log(values)
 
   $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
   .done(function(items) {
-    console.log(items);
+    console.log(items["checkparam"]);
     elInputList.forEach(function(formEl) {
-      console.log(formEl.id, formEl.value);
+      // console.log(formEl.id, formEl.value);
       $(`.${formEl.id}`).attr({
         "src": `/icons/64/${formEl.value || init_icon[formEl.id]}.png`,
         "data-original-title": `${items[formEl.value] ? items[formEl.value][items.lang] : ""}`,
