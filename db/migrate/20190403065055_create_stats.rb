@@ -1,6 +1,7 @@
 class CreateStats < ActiveRecord::Migration[5.2]
   def change
-    create_table :stats do |t|
+    create_table :stats, id: false do |t|
+      t.column :item_id, 'INTEGER PRIMARY KEY NOT NULL'
       t.integer     :HP
       t.integer     :MP
       t.integer     :STR

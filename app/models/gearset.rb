@@ -5,7 +5,7 @@ class Gearset < ApplicationRecord
 
   def items
     gear_id = self.slice(slots.pluck(:name)) # e.g."main" => 21758
-    gears = Item.where(id: gear_id.values).to_a.map { |item| [item.id, {ja: item.ja, en: item.en, ffo_id: item.ffo_id, description: item.description}] }.to_h
+    gears = Item.where(id: gear_id.values).to_a.map { |item| [item.id, {ja: item.ja, en: item.en, wiki_id: item.wiki_id, description: item.description}] }.to_h
     gear_id.map { |k, v| [k, gears[v]] }.to_h.with_indifferent_access
   end
 

@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_09_093104) do
+ActiveRecord::Schema.define(version: 2019_04_10_044530) do
 
-  create_table "ffos", force: :cascade do |t|
+  create_table "descriptions", primary_key: "item_id", force: :cascade do |t|
     t.text "ja"
+    t.text "en"
+    t.text "raw"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "item_id"
   end
 
   create_table "gearsets", force: :cascade do |t|
@@ -48,25 +49,25 @@ ActiveRecord::Schema.define(version: 2019_04_09_093104) do
     t.integer "job"
     t.string "ja"
     t.string "en"
-    t.json "description"
+    t.integer "wiki_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "ffo_id"
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.json "name"
+    t.string "ja"
+    t.string "en"
     t.string "ens"
     t.string "jas"
   end
 
   create_table "slots", force: :cascade do |t|
     t.integer "pos"
-    t.string "name"
+    t.string "en"
     t.integer "img"
   end
 
-  create_table "stats", force: :cascade do |t|
+  create_table "stats", primary_key: "item_id", force: :cascade do |t|
     t.integer "HP"
     t.integer "MP"
     t.integer "STR"
@@ -137,6 +138,13 @@ ActiveRecord::Schema.define(version: 2019_04_09_093104) do
     t.integer "job_id", default: 1
     t.integer "set_id", default: 1
     t.json "auth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wikis", force: :cascade do |t|
+    t.integer "item_id"
+    t.text "ja"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
