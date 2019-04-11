@@ -149,7 +149,7 @@ namespace :parse do
       {id: 22, ja: "魔導剣士", en: "RuneFencer", ens: "RUN", jas: "剣"},
       {id: 23},
     ])
-    User.find(1)&.delete
+    User.where(id: 1).first&.delete
     User.create(id: 1).update(
       email: 'user@checkparam.com',
       password: 'password',

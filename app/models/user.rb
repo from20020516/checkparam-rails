@@ -12,7 +12,7 @@ class User < ApplicationRecord
           uid:      auth.uid,
           password: Devise.friendly_token[0, 20],
           provider: auth.provider,
-          lang:     auth.extra.raw_info.lang == 'ja' ? 'ja' : 'en',
+          lang:     auth&.extra&.raw_info&.[](:lang) == 'ja' ? 'ja' : 'en',
         )
       end
       user.update(

@@ -1,12 +1,3 @@
-// * {
-//   outline: 1px dashed gray;
-//   outline-offset: -1px;
-// }
-
-.console {
-  opacity: .8;
-}
-
 html {
   position: relative;
   min-height: 100%;
@@ -50,6 +41,19 @@ body {
     margin-top: 50px;
     div {
       opacity: .9;
+    }
+  }
+  .checkparam {
+    .col-3 {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    div[data-present="true"] {
+      color: silver!important;
+    }
+    div[data-present="false"] {
+      color: grey!important;
     }
   }
 }
@@ -127,7 +131,7 @@ h1,h2,h5 {
 h3,h4 {
   color: gainsboro;
   border-bottom: solid 1px grey;
-  line-height: 3;
+  line-height: 1.5;
 }
 
 .amzn {

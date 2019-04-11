@@ -1,5 +1,6 @@
 <div class="text-center my-2">
-  <h3><%= @set.job.ens %> / <%= @set.user.auth['info']['name'] %> (<%= link_to "@#{@set.user.auth['info']['nickname']}", "https://twitter.com/#{@set.user.auth['info']['nickname']}" %>)</h3>
+  <h3><%= @set.job[:ens] %> / <%= @set.user.auth['info']['name'] %> <%= @set.user.auth['info']['nickname'] %><br>
+  (<%= link_to "@#{@set.user.auth['info']['nickname']}", "https://twitter.com/#{@set.user.auth['info']['nickname']}" %>)</h3>
 </div>
 <div class="row mx-auto" id="gearset">
   <div class="col-lg-6">
@@ -17,21 +18,18 @@
       </div>
     </div>
     <div class="py-2 text-center">
-      <%#= link_to "Back", root_path, {class: "btn btn-primary btn-block my-2", data: {turbolinks: false}} %>
-      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[lang]}%20@#{@set.user.auth['info']['nickname']}&url=https://checkparam.com/gearsets/#{@set.id}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[I18n.locale]}%20@#{@set.user.auth['info']['nickname']}&url=#{gearset_url}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
     </div>
-    <table class="table table-sm table-hover table-dark">
-      <tbody>
-        <% @set.checkparam.each do |stat| %>
-          <% unless stat[1] == 0 %>
-            <tr>
-              <td class="pl-3"><%= stat[0] %></td>
-              <td><%= stat[1] %></td>
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="row checkparam my-3">
+      <% @set.checkparam.each do |key,value| %>
+        <div class="col-3 px-0 text-center" id="<%= key %>_title" data-toggle="tooltip" data-original-title="<%= key %>" data-present="<%= value.present? %>">
+          <%= key %>
+        </div>
+        <div class="col-3 px-0 text-center param" id="<%= key %>">
+          <%= value %>
+        </div>
+      <% end %>
+    </div>
   </div>
   <div class="col-lg-6" id="show">
     <% slots.each do |slot| %>
