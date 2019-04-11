@@ -2,7 +2,7 @@
 <div class="row mx-auto">
   <div class="col-lg-6">
     <div class="mx-auto" id="gearmenu">
-      <div class="row">
+      <div class="row m-0">
         <% slots.each do |slot| %>
           <div class="col-3">
             <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
@@ -11,40 +11,35 @@
       </div>
     </div>
     <div class="py-2 text-center">
-      <%= link_to t('share_this_set'), "https://twitter.com/intent/tweet?text=Checkparam｜#{gearset.job[current_user.lang]}&url=#{gearset_url(gearset.id)}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600'); return false do", class: "font-weight-bold"} %>
+      <%= link_to t('share_this_set'), gearset_path(gearset.id) %>
     </div>
-    <div class="row checkparam my-3">
+    <div class="row checkparam">
       <% stat_columns.each do |stat| %>
-        <div class="col-3 px-0 text-center" id="<%= stat %>_title" data-toggle="tooltip" data-original-title="<%= stat %>">
+        <div class="col-4 px-0 text-center key" id="<%= stat %>_title" data-toggle="tooltip" data-original-title="<%= stat %>">
           <%= stat %>
         </div>
-        <div class="col-3 px-0 text-center param" id="<%= stat %>">
+        <div class="col-2 px-0 text-center param" id="<%= stat %>">
         </div>
       <% end %>
     </div>
   </div>
   <div class="col-lg-6">
-    <div class="form-group">
-      <%= form_with model: gearset do |f| %>
+    <%= form_with model: gearset do |f| %>
+      <div class="form-group row align-items-center">
         <% slots.each do |slot| %>
-          <div class="form-group row">
-            <label for="gearset_<%= slot.en %>" class="col-2 col-form-label">
+          <div class="col-3 col-form-label text-center my-0">
+            <label for="gearset_<%= slot.en %>">
               <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", class: "gearset_#{slot.en}", data: { toggle: "tooltip" } %>
             </label>
-            <div class="col-9 ml-2">
-              <%= f.collection_select(slot.en, items.select{|item| item.slot & 2**slot.pos > 0}, :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
-            </div>
+          </div>
+          <div class="col-9 px-0">
+            <%= f.collection_select(slot.en, items.select{|item| item.slot & 2**slot.pos > 0}, :id, current_user.lang, {include_blank: true}, {class: "form-control", onchange: 'Rails.fire(this.form, "submit")'}) %>
           </div>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
 <script>
-  // define tooltip for descriptions. require jQuery and bootstrap.bundle.js
-  $(function() {
-    $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
-  })
   setIcon();
 </script>

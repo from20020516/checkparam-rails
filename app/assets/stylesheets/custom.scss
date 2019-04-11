@@ -1,141 +1,99 @@
 html {
   position: relative;
   min-height: 100%;
-}
-
-.navbar {
-  background-color: black;
-  height: 50px;
-  .btn-group {
-    width: 50%;
-  }
-  #twitter_icon {
-    outline: 1px solid grey;
-  }
-}
-
-body {
-  margin-top: 65px;
-  margin-bottom: 65px;
-  color: silver;
-  background-color: #00001F;
-  .tooltip-inner{
-    max-width: 370px;
-    text-align: left;
-    opacity: .9;
-  }
-  span,
-  a {
-    color: white;
-  }
-  #show {
-    a {
-      color: lightslategray;
-      font-weight: bold;
+  body {
+    background-color: #00001F;
+    color: silver;
+    margin-bottom: 50px;
+    span {
+      color: white;
     }
-  }
-  .table-small {
-    color: lightslategray;
-  }
-  #toast-container {
-    margin-top: 50px;
-    div {
+    .navbar {
+      background-color: black;
+      height: 50px;
+      #twitter_icon {
+        outline: 1px solid grey;
+      }
+    }
+    .container{
+      a {
+        color: lightslategray;
+        font-weight: bold;
+      }
+    }
+    #gearmenu {
+      width: (64+1+1)*4+5*2px;
+      height: 274px;
+      border: 5px solid #003366;
+
+      div[class^="col"] {
+        outline: 1px solid #003366;
+        outline-offset: -1px;
+        background-color: lightslategray;
+        padding: 1px 1px;
+      }
+    }
+    main.container {
+      padding-top: 60px;
+      .form-control {
+        color: #00001F;
+        font-weight: bold;
+        background-color: silver;
+      }
+      .checkparam {
+        .col-4,
+        .col-2 {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          outline: 1px solid #00001F;
+          outline-offset: -1px;
+          &.key {
+            background-color: #212529;
+          }
+          &.param {
+            background-color: #32383D;
+          }
+          &[data-present="true"] {
+            color: silver;
+          }
+          &[data-present="false"] {
+            color: grey;
+          }
+        }
+      }
+    }
+    @each $num in 16622,12332,17174,17326,12523,13074,13358,12551,12679,13505,13606,13215,12807,12935 {
+      img[src^='/icons/64/#{$num}.png'] {
+        opacity: .5;
+      }
+    }
+    .tooltip-inner {
+      max-width: 370px;
+      text-align: left;
       opacity: .9;
     }
-  }
-  .checkparam {
-    .col-3 {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    #toast-container {
+        opacity: .9;
     }
-    div[data-present="true"] {
-      color: silver!important;
+    .footer {
+      font-size: small;
+      color: #777;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 50px;
+      padding-top: 9px;
     }
-    div[data-present="false"] {
-      color: grey!important;
-    }
   }
-}
-
-.sidebar {
-  padding: 0 10px;
-  .img {
-    outline: 1px solid grey;
-    outline-offset: -1px;
+  h1,
+  h2,
+  h3 {
+    text-align: center;
   }
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  border-top: 1px solid #eaeaea;
-  color: #777;
-  a {
-    color: lightgray;
+  h4,
+  h5 {
+    text-align: center;
+    color: gainsboro;
   }
-}
-
-#gearset {
-  .row {
-    margin-bottom: 0;
-  }
-  .form-control {
-    margin-top: 10px;
-    color: #00001F;
-    font-weight: bold;
-    background-color: #8B9FB3;
-  }
-}
-
-#gearmenu {
-  width: 274px; //(64+1+1)*4+border*2
-  height: 274px;
-  border: 5px solid #003366;
-
-  div[class^="col"] {
-    outline: 1px solid #003366;
-    outline-offset: -1px;
-    background-color: lightslategray;
-    padding: 1px 1px;
-  }
-  .row {
-    margin: 0 0;
-  }
-}
-
-img[src^="/icons/64/16622.png"],
-img[src^="/icons/64/12332.png"],
-img[src^="/icons/64/17174.png"],
-img[src^="/icons/64/17326.png"],
-img[src^="/icons/64/12523.png"],
-img[src^="/icons/64/13074.png"],
-img[src^="/icons/64/13358.png"],
-img[src^="/icons/64/12551.png"],
-img[src^="/icons/64/12679.png"],
-img[src^="/icons/64/13505.png"],
-img[src^="/icons/64/13606.png"],
-img[src^="/icons/64/13215.png"],
-img[src^="/icons/64/12807.png"],
-img[src^="/icons/64/12935.png"] {
-  opacity: .3;
-}
-
-h1,h2,h5 {
-  margin: 15px 0;
-  text-align: center;
-}
-
-h3,h4 {
-  color: gainsboro;
-  border-bottom: solid 1px grey;
-  line-height: 1.5;
-}
-
-.amzn {
-  width: 300px;
-  height: 250px;
-  border: dashed 1px grey
 }

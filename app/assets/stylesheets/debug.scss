@@ -3,11 +3,13 @@
   outline-offset: -1px;
 }
 .console {
-  opacity: .8;
+  opacity: .9;
 }
 [class*="console"] {
-  font-size: 18px!important;
+  font-size: 18px !important;
 }
 .debug_dump {
-  background: white;
+  background: silver;
+  outline: 1px solid white;
+  outline-offset: -1px;
 }

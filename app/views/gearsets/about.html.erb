@@ -2,8 +2,8 @@
   <h1>About</h1>
   <ul>
     <li>利用には<%= link_to "Twitter", "https://twitter.com/" %>アカウントが必要です。</li>
-    <li><%= link_to "Amazon EC2", "https://aws.amazon.com/jp/ec2/" %>上で稼働しています。</li>
-    <li>エンジニア&lt;見習&gt;<%= link_to "@from20020516", "https://twitter.com/from20020516" %> がスキル上げ目的で合成しました。</li>
+    <li><%= link_to "Amazon EC2", "https://aws.amazon.com/jp/ec2/" %>上で動作しています。</li>
+    <li>フルスタックエンジニア&lt;見習&gt;<%= link_to "@from20020516", "https://twitter.com/from20020516" %> がスキル上げを目的として合成しました。</li>
   </ul>
 </div>
 <div>
@@ -26,10 +26,10 @@
 	</ul>
 </div>
 <% if user_signed_in? %>
-<div class="text-center border border-light p-3 mb-3">
-  <%= link_to "退会する", user_path(current_user), method: "DELETE", style: "color: red;", data: {confirm: "本当に削除しますか？（最終確認です！）"} if user_signed_in? %><br>
-  （全てのデータを削除します。）
-</div>
+  <div class="text-center border border-light p-3 mb-3">
+    <%= link_to "退会する", user_path(current_user), method: :delete, class: "text-danger", data: {confirm: "本当に削除しますか？（最終確認です！）"} if user_signed_in? %><br>
+    （全てのデータを削除します。）
+  </div>
 <% end %>
 <div>
   <h1>License</h1>

@@ -1,11 +1,16 @@
-<div class="text-center my-2">
-  <h3><%= @set.job[:ens] %> / <%= @set.user.auth['info']['name'] %> <%= @set.user.auth['info']['nickname'] %><br>
+<script>
+$(function() {
+  $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
+})
+</script>
+<div class="text-center border-bottom mb-3">
+  <h3><%= @set.job[:ens] %> / <%= @set.user.auth['info']['name'] %><br>
   (<%= link_to "@#{@set.user.auth['info']['nickname']}", "https://twitter.com/#{@set.user.auth['info']['nickname']}" %>)</h3>
 </div>
 <div class="row mx-auto" id="gearset">
   <div class="col-lg-6">
     <div class="mx-auto" id="gearmenu">
-      <div class="row">
+      <div class="row m-0">
         <% slots.each do |slot| %>
           <div class="col-3">
             <% if @items[slot.en].present? %>
@@ -20,31 +25,35 @@
     <div class="py-2 text-center">
       <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[I18n.locale]}%20@#{@set.user.auth['info']['nickname']}&url=#{gearset_url}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
     </div>
-    <div class="row checkparam my-3">
+    <div class="row checkparam">
       <% @set.checkparam.each do |key,value| %>
-        <div class="col-3 px-0 text-center" id="<%= key %>_title" data-toggle="tooltip" data-original-title="<%= key %>" data-present="<%= value.present? %>">
+        <div class="col-4 px-0 text-center key" id="<%= key %>_title" data-toggle="tooltip" data-original-title="<%= key %>" data-present="<%= value.present? %>">
           <%= key %>
         </div>
-        <div class="col-3 px-0 text-center param" id="<%= key %>">
+        <div class="col-2 px-0 text-center param" id="<%= key %>">
           <%= value %>
         </div>
       <% end %>
     </div>
   </div>
-  <div class="col-lg-6" id="show">
-    <% slots.each do |slot| %>
-      <div class="row align-items-center">
-        <% if @items[slot.en].present? %>
-          <div class="col-3 ml-2 py-2">
-            <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "48x48", data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
-          </div>
-          <%= link_to @items[slot.en][:name], "http://wiki.ffo.jp/html/#{@items[slot.en][:wiki_id]}.html", {target: "_blank"} %>
-        <% else %>
-          <div class="col-3 ml-2 py-2">
-            <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", data: { toggle: "tooltip", "original-title": ""} %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+  <div class="col-lg-6 show">
+      <% slots.each do |slot| %>
+        <div class="form-group row align-items-center py-1 mb-0">
+          <% if @items[slot.en].present? %>
+            <div class="col-3 col-form-label text-center">
+              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "48x48", data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
+            </div>
+            <div class="col-9 pl-0">
+              <%= link_to @items[slot.en][:name], "http://wiki.ffo.jp/html/#{@items[slot.en][:wiki_id]}.html", {target: "_blank"} %>
+            </div>
+          <% else %>
+            <div class="col-3 col-form-label text-center">
+              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", data: { toggle: "tooltip", "original-title": ""} %>
+            </div>
+            <div class="col-9">
+            </div>
+          <% end %>
+        </div>
+      <% end %>
   </div>
 </div>
