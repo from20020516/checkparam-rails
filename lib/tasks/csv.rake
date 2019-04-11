@@ -2,7 +2,7 @@ namespace :csv do
   require 'csv'
 
   def tables
-    ActiveRecord::Base.connection.tables - ["schema_migrations","ar_internal_metadata"]
+    ActiveRecord::Base.connection.tables - ["schema_migrations","ar_internal_metadata","users"]
   end
 
   task :check => :environment do

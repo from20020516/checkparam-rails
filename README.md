@@ -13,6 +13,7 @@
 - [x] Change Description get method.
 - [x] Ajax /checkparam score.
 - [ ] Add wiki link to popup.
-- [ ] Use I18n instead lang.
+- [x] Use I18n instead lang.
+- [x] Stats translation.
 - [ ] Ranking/Recent posts
 - [ ] Users Comment

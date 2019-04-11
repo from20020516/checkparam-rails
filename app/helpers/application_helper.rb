@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def stat_columns
-    Stat.column_names - %w[id item_id created_at updated_at Ｄ 隔]
+    Stat.column_names - %w[id item_id created_at updated_at Ｄ]
   end
 
   def allow_sets

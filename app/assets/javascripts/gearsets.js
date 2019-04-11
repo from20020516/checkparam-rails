@@ -1,18 +1,5 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-
-// Turbolinks: Js NOT RELOAD after "link_to" at default.
-// <%= link_to "TEXT", "PATH", data: {turbolinks: false} %>
-
-// Ajax Callback for switch Job/Set
-(function() {
-  $(function() {
-    return $('.watch').on('ajax:complete', function(event) { // .watch -> Ajaxのcallback対象
-      return $('#gearset').html(event.detail[0].response);
-    })
-  })
-}).call(this)
-
 const init_icon = {
   gearset_main: 16622,
   gearset_sub: 12332,
@@ -31,9 +18,10 @@ const init_icon = {
   gearset_legs: 12807,
   gearset_feet: 12935,
 }
-
 // Fire when after rendering or Job/Set changed.
 function setIcon() {
+  // define tooltip for descriptions. require jQuery and popper.js
+  $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
   const elInputList = document.querySelectorAll('#gearset .form-control');
   const values = [...elInputList].map((el) => el.value);
   $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
@@ -46,18 +34,16 @@ function setIcon() {
     })
     document.querySelectorAll('.param').forEach(function(param) {
       let stat = json["checkparam"][param.id] // integer or undefined
-      // console.log(param.id, stat);
       $(`#${param.id}`).text(stat || "")
       $(`#${param.id}_title`).attr('data-present', Boolean(stat));
     })
-    // Object.keys(json["checkparam"]).forEach(function(key) {
-    //   console.log(key, json["checkparam"][key]);
-    //   $(`#${key}`).text(json["checkparam"][key]); // it dosen't work when value == 0
-    // })
   })
 }
-
-// define tooltip for descriptions. require jQuery and popper.js
-$(function() {
-  $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
-})
+// Ajax callback for refresh #gearset when user change Job/Set.
+(function() {
+  $(function() {
+    return $('.watch').on('ajax:complete', function(event) { // when .watch changed,
+      return $('#gearset').html(event.detail[0].response);
+    })
+  })
+}).call(this)

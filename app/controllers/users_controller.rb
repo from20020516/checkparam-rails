@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def update
     current_user.update(user_params)
     I18n.locale = current_user.lang.to_sym
+    #redirect_to request.referer
     render partial: 'layouts/gearset_partial', locals: {current_user: current_user}
   end
 

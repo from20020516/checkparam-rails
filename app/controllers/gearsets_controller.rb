@@ -25,7 +25,7 @@ class GearsetsController < ApplicationController
   def descriptions
     gear_id = JSON.parse(ajax_params)
     results = {
-      descriptions: Description.where(item_id: gear_id).pluck(:item_id, I18n.locale).to_h,
+      descriptions: Description.where(item_id: gear_id).pluck(:item_id, current_user.lang).to_h,
       checkparam: Gearset.checkparam(gear_id)
     }
     render json: results
