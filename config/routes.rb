@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
   root 'gearsets#index'
   get  '/about', to: 'gearsets#about'
-  get  '/descriptions', to: 'gearsets#description'
+  get  '/descriptions', to: 'gearsets#descriptions'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

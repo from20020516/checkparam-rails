@@ -36,20 +36,24 @@ const init_icon = {
 function setIcon() {
   const elInputList = document.querySelectorAll('#gearset .form-control');
   const values = [...elInputList].map((el) => el.value);
-  // console.log(values)
   $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
   .done(function(json) {
     elInputList.forEach(function(formEl) {
-      // console.log(formEl.id, formEl.value);
       $(`.${formEl.id}`).attr({
         "src": `/icons/64/${formEl.value || init_icon[formEl.id]}.png`,
         "data-original-title": `${json["descriptions"][formEl.value] ? json["descriptions"][formEl.value] : ""}`,
       })
     })
     document.querySelectorAll('.param').forEach(function(param) {
-      // console.log(param.id, json["checkparam"][param.id]);
-      $(`#${param.id}`).text(json["checkparam"][param.id]);
+      let stat = json["checkparam"][param.id] // integer or undefined
+      // console.log(param.id, stat);
+      $(`#${param.id}`).text(stat || "")
+      $(`#${param.id}_title`).attr('data-present', Boolean(stat));
     })
+    // Object.keys(json["checkparam"]).forEach(function(key) {
+    //   console.log(key, json["checkparam"][key]);
+    //   $(`#${key}`).text(json["checkparam"][key]); // it dosen't work when value == 0
+    // })
   })
 }
 

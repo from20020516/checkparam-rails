@@ -1,14 +1,7 @@
-<table class="table table-sm table-dark table-hover text-center mt-2">
-  <thead class="thead">
-    <tr>
-      <th>DEBUG</th>
-      <th><%= "#{controller.controller_name}\##{controller.action_name}" %></th>
-    </tr>
-  </thead>
-  <% gearset.attributes.each do |att| %>
-    <tr>
-      <td><%= att[0] %></td>
-      <td><%= att[1] %></td>
-    </tr>
-  <% end %>
-</table>
+<div>
+  <%= debug params.inspect %>
+  <%= debug gearset.inspect %>
+</div>
+<div>
+  <%= link_to "共有用ページ", gearset_path(gearset.id), class: 'btn btn-primary', data: {turbolinks: false} %>
+</div>

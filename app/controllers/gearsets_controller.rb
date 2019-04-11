@@ -1,8 +1,7 @@
 include Common
 class GearsetsController < ApplicationController
   include ApplicationHelper
-  before_action :authenticate_user!, only: [:create, :update]
-  before_action :gearset_params
+  before_action :authenticate_user!, only: [:create, :update, :descriptions]
 
   def index
   end
@@ -19,14 +18,14 @@ class GearsetsController < ApplicationController
 
   def show
     @set = Gearset.find(params[:id])
-    item = Item.joins(:description).select("items.*, items.#{lang} AS name, descriptions.#{lang} AS description").where(id: @set.slot_item.values).to_a
+    item = Item.joins(:description).select("items.*, items.#{I18n.locale} AS name, descriptions.#{I18n.locale} AS description").where(id: @set.slot_item.values).to_a
     @items = @set.slot_item.compact.invert.sort.to_h.values.zip(item.map {|i| i.attributes}).to_h.with_indifferent_access
   end
 
-  def description
+  def descriptions
     gear_id = JSON.parse(ajax_params)
     results = {
-      descriptions: Description.where(item_id: gear_id).pluck(:item_id, session[:lang]).to_h,
+      descriptions: Description.where(item_id: gear_id).pluck(:item_id, I18n.locale).to_h,
       checkparam: Gearset.checkparam(gear_id)
     }
     render json: results
