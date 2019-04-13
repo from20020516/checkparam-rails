@@ -5,7 +5,10 @@
   <%= link_to image_tag('refriender_logo.gif'), "https://refriender.finalfantasyxi.com/" %>
 </div>
 <h5>Advertisement</h5>
-<div class="my-4">
+<div class="my-4" style="height: 260px">
   <%= render 'layouts/amazon' if Rails.env == 'production' %>
 </div>
-<h5>Recommend</h5>
+<h5>Recent Gearsets</h5>
+<div class="my-4">
+  <%= render 'layouts/cards' %>
+</div>

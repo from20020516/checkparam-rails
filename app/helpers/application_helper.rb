@@ -19,4 +19,9 @@ module ApplicationHelper
   def allow_sets
     10
   end
+
+  def cards
+    Gearset.where('main > 0 & sub > 0 & ammo > 0 & head > 0 & neck > 0 & body > 0 & hands > 0 & ring1 > 0 & ring2 > 0 & back > 0 & waist > 0
+      & legs > 0 & feet > 0').last(3)
+  end
 end
