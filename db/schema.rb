@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_044530) do
+ActiveRecord::Schema.define(version: 2019_04_13_084507) do
 
   create_table "descriptions", primary_key: "item_id", force: :cascade do |t|
     t.text "ja"
@@ -119,8 +119,20 @@ ActiveRecord::Schema.define(version: 2019_04_10_044530) do
     t.integer "被ケアル回復量"
     t.integer "クリティカルヒット"
     t.integer "クリティカルヒットダメージ"
+    t.integer "ペット:命中"
+    t.integer "ペット:魔命"
+    t.integer "ペット:攻"
+    t.integer "ペット:魔攻"
+    t.integer "ペット:ダブルアタック"
+    t.integer "ペット:リジェネ"
+    t.integer "ペット:被ダメージ"
+    t.integer "ペット:被物理ダメージ"
+    t.integer "ペット:被魔法ダメージ"
+    t.integer "契約の履行使用間隔"
+    t.integer "契約の履行使用間隔II"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ペット:契約の履行ダメージ"
   end
 
   create_table "users", force: :cascade do |t|
@@ -143,7 +155,6 @@ ActiveRecord::Schema.define(version: 2019_04_10_044530) do
   end
 
   create_table "wikis", force: :cascade do |t|
-    t.integer "item_id"
     t.text "ja"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
