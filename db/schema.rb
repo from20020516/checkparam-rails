@@ -133,6 +133,8 @@ ActiveRecord::Schema.define(version: 2019_04_13_084507) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ペット:契約の履行ダメージ"
+    t.integer "召喚獣維持費"
+    t.integer "詠唱中断率"
   end
 
   create_table "users", force: :cascade do |t|

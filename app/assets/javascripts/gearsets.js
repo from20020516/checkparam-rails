@@ -44,7 +44,7 @@ function setIcon() {
     })
     document.querySelectorAll('.param').forEach(function(param) {
       let stat = json["checkparam"][param.id] // integer or undefined
-      console.log(param.id,stat);
+      // console.log(param.id,stat);
       $(`#${escStr(param.id)}`).text(stat || "")
       $(`#${escStr(param.id)}_title`).attr('data-present', Boolean(stat));
     })
