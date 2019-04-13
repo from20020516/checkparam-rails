@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 namespace :parse do
-  task init: :environment do
-    sh 'rails db:migrate:reset && rails db:seed'
-  end
-
   task items: :environment do
     return true if Wiki.all.blank?
 
@@ -84,7 +80,7 @@ namespace :parse do
           # get keys && values from text.
           hash = @item.description.raw.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/).map do |arg|
             arg.split(/\s/).flat_map do |stat|
-              stat.scan(/(.+?)([+-]?[0-9]+)%?$/)
+              stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?$/)
             end.to_h
           end
           # .to_i values && 'pet:' prefix to some keys.
@@ -102,19 +98,23 @@ namespace :parse do
   end
 
   task statlist: :environment do
-    h = {}
-    h.default = 0
-    allow_stats = Stat.column_names
+    result = {}
+    result.default = 0
     Item.all.each do |item|
-      item.description['ja'] = item.description['ja'].split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)[0]
-      item.description['ja'].split(/<br>|\s/).each do |str|
-        stats = str.split(/([+-]?[0-9]+)%?$/)
-        h[stats[0]] += 1 if stats.length == 2
-      end
+      description = item.description.raw
+
+      next if description.blank?
+      hash = description.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/).map { |arg|
+        arg.split(/\s/).flat_map { |stat|
+          stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?/)
+        }.to_h
+      }
+      hash = hash[0].merge(hash[1]&.map { |k, v| ["ペット:#{k}", v] }.to_h).transform_values(&:to_i)
+      hash.keys.each { |key| result[key] += 1 }
     end
-    h.sort { |(_k1, v1), (_k2, v2)| v2 <=> v1 }.reverse_each do |stat|
-      p stat unless allow_stats.include?(stat[0]) || stat[0].match(/スキル/)
-    end
+
+    result = result.reject{ |k, _v| Stat.column_names.member?(k) || k.include?("スキル") }
+    pp result.sort_by(&:last).to_h
   end
 
   task sample: :environment do
