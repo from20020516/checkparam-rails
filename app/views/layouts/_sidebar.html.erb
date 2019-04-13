@@ -5,10 +5,8 @@
   <%= link_to image_tag('refriender_logo.gif'), "https://refriender.finalfantasyxi.com/" %>
 </div>
 <h5>Advertisement</h5>
-<div class="my-4" style="height: 260px">
+<div class="my-4">
   <%= render 'layouts/amazon' if Rails.env == 'production' %>
 </div>
-<h5>Recent Gearsets</h5>
-<div class="my-4">
-  <%= render 'layouts/cards' %>
+  <%= render 'layouts/cards' unless !user_signed_in? && controller.action_name == 'index' %>
 </div>

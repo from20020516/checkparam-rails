@@ -7,9 +7,9 @@
     </script>
   </div>
 <% else %>
-  <div class="text-center">
+  <div class="text-center my-5">
     <h1><span>/checkparam</span> your Ideas.</h1>
-    <div class="my-4">
+    <div class="my-3">
       <%= t('welcome_html') %>
     </div>
     <div class="">
@@ -31,5 +31,19 @@
       </ul>
     </div>
     機能追加の要望も随時募集しています。
+  </div>
+  <div class="my-4 row">
+    <% cards.each do |set| %>
+      <a href="<%= gearset_path(set.id) %>" class="card col-lg-4 bg-transparent text-center my-2">
+        <div class="card-body bg-dark px-0">
+          <h5 class="card-title"><%= set.job[I18n.locale] %></h5>
+          <h6 class="card-subtitle mb-2 text-muted">@<%= set.user.auth["info"]["nickname"] %></h6>
+          <%= image_tag "/icons/64/#{set.main}.png", size: "64x64" %>
+          <%= image_tag "/icons/64/#{set.body}.png", size: "64x64" %>
+          <%= image_tag "/icons/64/#{set.neck}.png", size: "64x64" %>
+          <%# <p class="card-text"></p> %>
+        </div>
+      </a>
+    <% end %>
   </div>
 <% end %>
