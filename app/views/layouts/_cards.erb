@@ -1,0 +1,12 @@
+<% cards.each do |set| %>
+  <a href="<%= gearset_path(set.id) %>" class="card px-auto mx-auto mb-3" style="width: 18rem;">
+    <div class="card-body bg-dark">
+      <h5 class="card-title"><%= set.job[I18n.locale] %></h5>
+      <h6 class="card-subtitle mb-2 text-muted">@<%= set.user.auth["info"]["nickname"] %></h6>
+      <%= image_tag "/icons/64/#{set.main}.png", size: "64x64" %>
+      <%= image_tag "/icons/64/#{set.body}.png", size: "64x64" %>
+      <%= image_tag "/icons/64/#{set.neck}.png", size: "64x64" %>
+      <%# <p class="card-text"></p> %>
+    </div>
+  </a>
+<% end %>
