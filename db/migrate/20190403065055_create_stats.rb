@@ -53,6 +53,17 @@ class CreateStats < ActiveRecord::Migration[5.2]
       t.integer     :"被ケアル回復量"
       t.integer     :"クリティカルヒット"
       t.integer     :"クリティカルヒットダメージ"
+      t.integer     :"ペット:命中"
+      t.integer     :"ペット:魔命"
+      t.integer     :"ペット:攻"
+      t.integer     :"ペット:魔攻"
+      t.integer     :"ペット:ダブルアタック"
+      t.integer     :"ペット:リジェネ"
+      t.integer     :"ペット:被ダメージ"
+      t.integer     :"ペット:被物理ダメージ"
+      t.integer     :"ペット:被魔法ダメージ"
+      t.integer     :"契約の履行使用間隔"
+      t.integer     :"契約の履行使用間隔II"
       t.timestamps
     end
   end

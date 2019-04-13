@@ -1,7 +1,5 @@
 <script>
-$(function() {
-  $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', "data-original-title": "" });
-})
+  initTooltip();
 </script>
 <div class="text-center border-bottom mb-3">
   <h3><%= @set.job[:ens] %> / <%= @set.user.auth['info']['name'] %><br>

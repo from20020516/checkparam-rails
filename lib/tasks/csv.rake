@@ -2,7 +2,7 @@ namespace :csv do
   require 'csv'
 
   def tables
-    ActiveRecord::Base.connection.tables - ["schema_migrations","ar_internal_metadata","users"]
+    ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata users]
   end
 
   task :check => :environment do
@@ -16,7 +16,7 @@ namespace :csv do
     tables.each { |table|
       puts table
       model = table.classify.constantize
-      column_name = model.column_names - ["created_at","updated_at"]
+      column_name = model.column_names - %w[created_at updated_at]
       begin
         CSV.open("db/csv/#{table}.csv", 'wb') { |csv|
           csv << column_name
