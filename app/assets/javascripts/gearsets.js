@@ -22,7 +22,8 @@ const init_icon = {
 function initTooltip() {
   // define tooltip for descriptions. require jQuery and popper.js
   $(function() {
-    $('[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', trigger: 'hover focus', delay: { hide: 350 }, placement: 'bottom', 'data-original-title': '' });
+    $('img[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', trigger: 'focus'});
+    $('.key[data-toggle="tooltip"]').tooltip();
   })
 }
 function escStr(val) {
@@ -36,7 +37,6 @@ function setIcon() {
   $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
   .done(function(json) {
     elInputList.forEach(function(formEl) {
-      // console.log(json["descriptions"][formEl.value]);
       $(`.${formEl.id}`).attr({
         "src": `/icons/64/${formEl.value || init_icon[formEl.id]}.png`,
         "data-original-title": `${json["descriptions"][formEl.value] ? json["descriptions"][formEl.value] : ""}`,
@@ -44,7 +44,6 @@ function setIcon() {
     })
     document.querySelectorAll('.param').forEach(function(param) {
       let stat = json["checkparam"][param.id] // integer or undefined
-      // console.log(param.id,stat);
       $(`#${escStr(param.id)}`).text(stat || "")
       $(`#${escStr(param.id)}_title`).attr('data-present', Boolean(stat));
     })

@@ -68,13 +68,27 @@ html {
         opacity: .5;
       }
     }
+    .ad-area {
+      min-height: 260px;
+    }
     .tooltip-inner {
       max-width: 370px;
       text-align: left;
       opacity: .9;
+      a {
+        font-weight: bold;
+        //color: white;
+        text-decoration: underline;
+      }
     }
     #toast-container {
         opacity: .9;
+    }
+    .card {
+      text-decoration: none;
+      img {
+        background: #212529;
+      }
     }
     .footer {
       font-size: small;

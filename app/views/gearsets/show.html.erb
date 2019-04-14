@@ -12,9 +12,9 @@
         <% slots.each do |slot| %>
           <div class="col-3">
             <% if @items[slot.en].present? %>
-              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "64x64", data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
+              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "64x64", tabindex: 0, data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
             <% else %>
-              <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64", data: { toggle: "tooltip", "original-title": "" } %>
+              <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64" %>
             <% end %>
           </div>
         <% end %>
@@ -39,14 +39,14 @@
         <div class="form-group row align-items-center py-1 mb-0">
           <% if @items[slot.en].present? %>
             <div class="col-3 col-form-label text-center">
-              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "48x48", data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
+              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "48x48", tabindex: 0, data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
             </div>
             <div class="col-9 pl-0">
               <%= link_to @items[slot.en][:name], "http://wiki.ffo.jp/html/#{@items[slot.en][:wiki_id]}.html", {target: "_blank"} %>
             </div>
           <% else %>
             <div class="col-3 col-form-label text-center">
-              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48", data: { toggle: "tooltip", "original-title": ""} %>
+              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48" %>
             </div>
             <div class="col-9">
             </div>
