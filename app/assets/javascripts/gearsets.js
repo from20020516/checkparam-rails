@@ -18,20 +18,15 @@ const init_icon = {
   gearset_legs: 12807,
   gearset_feet: 12935,
 }
-
-function initTooltip() {
-  // define tooltip for descriptions. require jQuery and popper.js
-  $(function() {
-    $('img[data-toggle="tooltip"]').tooltip({ html: true, container: 'body', trigger: 'focus'});
-    $('.key[data-toggle="tooltip"]').tooltip();
-  })
-}
 function escStr(val) {
   return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, "\\$&");
 }
 // Fire when after rendering or Job/Set changed.
 function setIcon() {
-  initTooltip();
+  // define tooltip for descriptions. require jQuery and popper.js
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip({ html: true });
+  })
   const elInputList = document.querySelectorAll('#gearset .form-control');
   const values = [...elInputList].map((el) => el.value);
   $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
@@ -42,6 +37,7 @@ function setIcon() {
         "data-original-title": `${json["descriptions"][formEl.value] ? json["descriptions"][formEl.value] : ""}`,
       })
     })
+    // console.log(json["checkparam"]);
     document.querySelectorAll('.param').forEach(function(param) {
       let stat = json["checkparam"][param.id] // integer or undefined
       $(`#${escStr(param.id)}`).text(stat || "")

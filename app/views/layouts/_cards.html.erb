@@ -1,0 +1,16 @@
+<% Gearset.latest.each do |set| %>
+  <a href="<%= gearset_path(set.id) %>" class="card rounded-0 mx-auto my-3 row bg-transparent">
+    <div class="card-body card-icons p-0 mx-auto row">
+      <div class="col-12 bg-transparent">
+        <%= image_tag set.user.auth["extra"]["raw_info"]["profile_image_url_https"], size: "48", align: "left" %>
+        <h5 class="card-title"><%= set.job[I18n.locale] %></h5>
+        <h6 class="card-subtitle">@<%= set.user.auth["info"]["nickname"] %></h6>
+      </div>
+      <% slots.each do |slot| %>
+        <div class="col-3 bg-transparent">
+          <%= image_tag "/icons/64/#{set[slot.en]}.png", size: "48" %>
+        </div>
+      <% end %>
+    </div>
+  </a>
+<% end %>

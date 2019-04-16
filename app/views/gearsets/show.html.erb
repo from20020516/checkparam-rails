@@ -1,57 +1,45 @@
-<script>
-  initTooltip();
-</script>
 <div class="text-center border-bottom mb-3">
-  <h3><%= @set.job[:ens] %> / <%= @set.user.auth['info']['name'] %><br>
-  (<%= link_to "@#{@set.user.auth['info']['nickname']}", "https://twitter.com/#{@set.user.auth['info']['nickname']}" %>)</h3>
+  <h3><%= @gearset.job[:ens] %> / <%= @gearset.user.auth['info']['name'] %>
+  (<%= link_to "@#{@gearset.user.auth['info']['nickname']}", "https://twitter.com/#{@gearset.user.auth['info']['nickname']}" %>)</h3>
 </div>
 <div class="row mx-auto" id="gearset">
   <div class="col-lg-6">
-    <div class="mx-auto" id="gearmenu">
+    <div class="mx-auto" id="gear-icons">
       <div class="row m-0">
         <% slots.each do |slot| %>
+          <%= hidden_field :gearset, slot.en, class: "form-control" %>
           <div class="col-3">
-            <% if @items[slot.en].present? %>
-              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "64x64", tabindex: 0, data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
-            <% else %>
-              <%= image_tag "/icons/64/#{slot.img}.png", size: "64x64" %>
-            <% end %>
+            <%= image_tag "/icons/64/#{slot.img}.png", class: "gearset_#{slot.en}", tabindex: 0, data: { toggle: "tooltip" } %>
           </div>
         <% end %>
       </div>
     </div>
     <div class="py-2 text-center">
-      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@set.job[I18n.locale]}%20@#{@set.user.auth['info']['nickname']}&url=#{gearset_url}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@gearset.job[I18n.locale]}%20@#{@gearset.user.auth['info']['nickname']}&url=#{gearset_url}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
     </div>
     <div class="row checkparam">
-      <% @set.checkparam.each do |key,value| %>
-        <div class="col-4 px-0 text-center key" id="<%= key %>_title" data-toggle="tooltip" data-original-title="<%= key %>" data-present="<%= value.present? %>">
-          <%= key %>
+      <% stat_columns.each do |key| %>
+        <div class="col-4 px-0 text-center key" id="<%= key %>_title" data-toggle="tooltip" data-original-title="<%= t(key) %>">
+          <%= t(key) %>
         </div>
         <div class="col-2 px-0 text-center param" id="<%= key %>">
-          <%= value %>
         </div>
       <% end %>
     </div>
   </div>
   <div class="col-lg-6 show">
-      <% slots.each do |slot| %>
-        <div class="form-group row align-items-center py-1 mb-0">
-          <% if @items[slot.en].present? %>
-            <div class="col-3 col-form-label text-center">
-              <%= image_tag "/icons/64/#{@items[slot.en][:id]}.png", size: "48x48", tabindex: 0, data: { toggle: "tooltip", "original-title": @items[slot.en][:description]} %>
-            </div>
-            <div class="col-9 pl-0">
-              <%= link_to @items[slot.en][:name], "http://wiki.ffo.jp/html/#{@items[slot.en][:wiki_id]}.html", {target: "_blank"} %>
-            </div>
-          <% else %>
-            <div class="col-3 col-form-label text-center">
-              <%= image_tag "/icons/64/#{slot.img}.png", size: "48x48" %>
-            </div>
-            <div class="col-9">
-            </div>
-          <% end %>
+    <% slots.each do |slot| %>
+      <div class="form-group row align-items-center py-1 mb-0">
+        <div class="col-3 col-form-label text-center">
+          <%= image_tag "/icons/64/#{slot.img}.png", class: "gearset_#{slot.en}", size: "48", tabindex: 0, data: { toggle: "tooltip" } %>
         </div>
-      <% end %>
+        <div class="col-9 pl-0">
+          <%= link_to_if @gearset[slot.en].present?, Item.find_by(id: @gearset[slot.en])&.[](I18n.locale), "http://wiki.ffo.jp/html/#{Item.find_by(id: @gearset[slot.en])&.wiki_id}.html", {target: "_blank"} %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
+<script>
+  setIcon();
+</script>

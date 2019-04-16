@@ -64,6 +64,9 @@ class CreateStats < ActiveRecord::Migration[5.2]
       t.integer     :"ペット:被魔法ダメージ"
       t.integer     :"契約の履行使用間隔"
       t.integer     :"契約の履行使用間隔II"
+      t.integer     :"ペット:契約の履行ダメージ"
+      t.integer     :"召喚獣維持費"
+      t.integer     :"詠唱中断率"
       t.timestamps
     end
   end

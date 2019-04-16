@@ -60,7 +60,6 @@ namespace :parse do
         begin
           jobs = convert_job(item[:jobs])
           @item = Item.find_or_create_by(id: item[:id])
-          @item.description = Description.find_or_create_by(item_id: item[:id])
           @item.stat = Stat.find_or_create_by(item_id: @item.id)
           @item.update(
             slot: item[:slots],
@@ -69,16 +68,19 @@ namespace :parse do
             en: item[:en],
             wiki_id: @item[:wiki_id] || Wiki.find_by(ja: item[:ja])&.id || Wiki.find_by(ja: item[:ja].gsub(/(\+[1-3]$|改$|^[真極])/, ''))&.id
           )
+
           next if item[:description].blank?
 
-          @item.description.update(
-            ja: "<a href='http://wiki.ffo.jp/html/#{@item[:wiki_id]}.html' target='_blank'>#{item[:ja]}</a><br>#{item[:description][:ja]&.gsub(/\n/, '<br>')}<br>#{jobs[:ja]}",
-            en: "<a href='http://wiki.ffo.jp/html/#{@item[:wiki_id]}.html' target='_blank'>#{item[:en]}</a><br>#{item[:description][:en]&.gsub(/\n/, '<br>')}<br>#{jobs[:en]}",
-            raw: item[:description][:ja]&.gsub(/\n/, ' ')
-          )
+          text = item[:description][:ja]&.gsub(/\n/, ' ')
+          @item.update(
+            description: {
+              ja: "<a href='http://wiki.ffo.jp/html/#{@item[:wiki_id]}.html' target='_blank'>#{item[:ja]}</a><br>#{item[:description][:ja]&.gsub(/\n/, '<br>')}<br>#{jobs[:ja]}",
+              en: "<a href='http://wiki.ffo.jp/html/#{@item[:wiki_id]}.html' target='_blank'>#{item[:en]}</a><br>#{item[:description][:en]&.gsub(/\n/, '<br>')}<br>#{jobs[:en]}",
+              # raw: item[:description][:ja]&.gsub(/\n/, ' ')
+            })
 
           # get keys && values from text.
-          hash = @item.description.raw.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/).map do |arg|
+          hash = text.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/).map do |arg|
             arg.split(/\s/).flat_map do |stat|
               stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?$/)
             end.to_h

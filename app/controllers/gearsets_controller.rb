@@ -1,10 +1,6 @@
-include Common
 class GearsetsController < ApplicationController
   include ApplicationHelper
   before_action :authenticate_user!, only: [:create, :update, :descriptions]
-
-  def index
-  end
 
   # Fire when a Equipment changed with new set.
   def create
@@ -17,16 +13,16 @@ class GearsetsController < ApplicationController
   end
 
   def show
-    @set = Gearset.find(params[:id])
-    item = Item.joins(:description).select("items.*, items.#{I18n.locale} AS name, descriptions.#{I18n.locale} AS description").where(id: @set.slot_item.values).to_a
-    @items = @set.slot_item.compact.invert.sort.to_h.values.zip(item.map {|i| i.attributes}).to_h.with_indifferent_access
+    @gearset = Gearset.find(params[:id])
   end
 
   def descriptions
-    gear_id = JSON.parse(ajax_params)
+    gears = JSON.parse(ajax_params).map(&:to_i)
+    stats = Stat.where(item_id: gears).group_by(&:item_id)
+    stats = gears.map { |i| stats[i][0].attributes.with_indifferent_access if stats[i].present? }.compact
     results = {
-      descriptions: Description.where(item_id: gear_id).pluck(:item_id, current_user.lang).to_h,
-      checkparam: Gearset.checkparam(gear_id)
+      descriptions: Item.where(id: gears).map { |item| [item.id, item.description[I18n.locale.to_s]] }.to_h,
+      checkparam: stat_columns.map { |stat_name| [stat_name, stats.pluck(stat_name).compact.inject(:+)] }.to_h
     }
     render json: results
   end
