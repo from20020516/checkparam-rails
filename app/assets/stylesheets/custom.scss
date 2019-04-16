@@ -1,65 +1,83 @@
+$base-color: #00001F;
+$striped-base-color: #212529;
+$gearset-border-color: #003366;
 html {
   position: relative;
   min-height: 100%;
   body {
-    background-color: #00001F;
+    background: $base-color;
     color: silver;
     margin-bottom: 50px;
     span {
       color: white;
     }
     .navbar {
-      background-color: black;
+      background: black;
       height: 50px;
-      #twitter_icon {
-        outline: 1px solid grey;
-      }
     }
     .container{
       a {
-        color: lightslategray;
+        color: lightslategrey;
         font-weight: bold;
       }
+      img {
+        outline: none;
+      }
     }
-    #gearmenu {
-      width: (64+1+1)*4+5*2px;
-      height: 274px;
-      border: 5px solid #003366;
-
+    #gear-icons {
+      $menu-size: (64+1+1)*4+5*2px;
+      width: $menu-size;
+      height: $menu-size;
+      border: 5px solid $gearset-border-color;
       div[class^="col"] {
-        outline: 1px solid #003366;
+        outline: 1px solid $gearset-border-color;
         outline-offset: -1px;
-        background-color: lightslategray;
+        background: lightslategrey;
         padding: 1px 1px;
       }
     }
-    main.container {
+    .card {
+      $menu-size: (48+1+1)*4+5*2px;
+      width: $menu-size;
+      height: $menu-size+48;
+      text-decoration: none;
+      background: $base-color;
+      .card-icons {
+        border: 5px solid $gearset-border-color;
+        div[class^="col"] {
+          outline: 1px solid $gearset-border-color;
+          outline-offset: -1px;
+          padding: 1px 1px;
+        }
+      }
+    }
+    main {
       padding-top: 60px;
       .form-control {
-        color: #00001F;
+        color: $base-color;
         font-weight: bold;
-        background-color: silver;
+        background: silver;
       }
       .checkparam {
-        .col-4,
-        .col-2 {
+        outline: 1px solid $base-color;
+        outline-offset: -1px;
+        background: $striped-base-color;
+        .key {
+          @extend .checkparam;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          outline: 1px solid #00001F;
-          outline-offset: -1px;
-          &.key {
-            background-color: #212529;
-          }
-          &.param {
-            background-color: #32383D;
-          }
           &[data-present="true"] {
             color: silver;
           }
           &[data-present="false"] {
             color: grey;
           }
+          background: rgba(255,255,255,.05);
+        }
+        .param {
+          @extend .checkparam;
+          background: rgba(0,0,0,.05);
         }
       }
     }
@@ -71,28 +89,24 @@ html {
     .ad-area {
       min-height: 260px;
     }
-    .tooltip-inner {
-      max-width: 370px;
-      text-align: left;
-      opacity: .9;
-      a {
-        font-weight: bold;
-        //color: white;
-        text-decoration: underline;
+    .tooltip {
+      max-width: 95%;
+      .tooltip-inner {
+        max-width: 100%;
+        text-align: left;
+        opacity: .9;
+        a {
+          font-weight: bold;
+          text-decoration: underline;
+        }
       }
     }
     #toast-container {
-        opacity: .9;
-    }
-    .card {
-      text-decoration: none;
-      img {
-        background: #212529;
-      }
+      opacity: .9;
     }
     .footer {
       font-size: small;
-      color: #777;
+      color: lightslategrey;
       position: absolute;
       bottom: 0;
       width: 100%;
@@ -102,12 +116,13 @@ html {
   }
   h1,
   h2,
-  h3 {
+  h3,
+  h6 {
     text-align: center;
   }
   h4,
   h5 {
-    text-align: center;
+    @extend h3;
     color: gainsboro;
   }
 }

@@ -10,15 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_13_084507) do
-
-  create_table "descriptions", primary_key: "item_id", force: :cascade do |t|
-    t.text "ja"
-    t.text "en"
-    t.text "raw"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 2019_04_10_044005) do
 
   create_table "gearsets", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -49,6 +41,7 @@ ActiveRecord::Schema.define(version: 2019_04_13_084507) do
     t.integer "job"
     t.string "ja"
     t.string "en"
+    t.json "description"
     t.integer "wiki_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -130,11 +123,11 @@ ActiveRecord::Schema.define(version: 2019_04_13_084507) do
     t.integer "ペット:被魔法ダメージ"
     t.integer "契約の履行使用間隔"
     t.integer "契約の履行使用間隔II"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "ペット:契約の履行ダメージ"
     t.integer "召喚獣維持費"
     t.integer "詠唱中断率"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

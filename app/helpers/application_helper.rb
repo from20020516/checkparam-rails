@@ -16,11 +16,7 @@ module ApplicationHelper
     Stat.column_names - %w[id item_id created_at updated_at Ｄ]
   end
 
-  def allow_sets
+  def set_uplimit
     10
-  end
-
-  def cards
-    Gearset.where('main > 0 & head > 0 & body > 0 & hands > 0 & legs > 0 & feet > 0').last(3)
   end
 end
