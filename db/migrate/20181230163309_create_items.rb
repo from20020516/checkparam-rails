@@ -5,7 +5,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.integer :job
       t.string  :ja
       t.string  :en
-      t.json    :description
+      t.text    :description
       t.integer :wiki_id
       t.timestamps
     end

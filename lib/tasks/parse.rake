@@ -90,9 +90,9 @@ namespace :parse do
           # get key that exists in stat model.
           hash = hash.select { |k, _v| @item.stat.attributes.keys.member?(k) }
           @item.stat.update(hash)
+
         rescue StandardError => e
           puts e, item.inspect
-          # byebug
         end
       end
     end
