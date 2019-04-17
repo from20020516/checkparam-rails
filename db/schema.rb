@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2019_04_10_044005) do
     t.integer "job"
     t.string "ja"
     t.string "en"
-    t.json "description"
+    t.text "description"
     t.integer "wiki_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2019_04_10_044005) do
     t.string "lang", default: "ja"
     t.integer "job_id", default: 1
     t.integer "set_id", default: 1
-    t.json "auth"
+    t.text "auth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

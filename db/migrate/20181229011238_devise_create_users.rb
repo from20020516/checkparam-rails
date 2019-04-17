@@ -36,7 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string    :lang, default: "ja"
       t.integer   :job_id, default: 1
       t.integer   :set_id, default: 1
-      t.json      :auth
+      t.text      :auth
 
       t.timestamps null: false
     end

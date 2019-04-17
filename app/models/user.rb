@@ -1,9 +1,24 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :omniauthable, :rememberable
-  #, :timeoutable, :trackable, :registerable, :validatable, :recoverable, :confirmable, :lockable
+  devise :database_authenticatable, :omniauthable, :rememberable #, :timeoutable, :trackable, :registerable, :validatable, :recoverable, :confirmable, :lockable
 
-  has_many :gearsets, dependent: :destroy
+  has_many :gearsets
   belongs_to :job
+
+  serialize :auth
+  before_save :prepare_save
+
+  def prepare_save
+    if auth.class == String
+      begin
+        self.auth = JSON.parse(auth).deep_transform_keys(&:to_sym)
+      rescue
+        self.auth = eval(auth).deep_transform_keys(&:to_sym)
+      rescue => e
+        pp e
+      end
+    end
+    self
+  end
 
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first
@@ -16,8 +31,8 @@ class User < ApplicationRecord
         )
       end
       user.update(
-        email:      auth.info.email,
-        auth:       auth,
+        email: auth.info.email,
+        auth: auth.to_json
       )
     user
   end

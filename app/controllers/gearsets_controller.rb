@@ -21,7 +21,7 @@ class GearsetsController < ApplicationController
     stats = Stat.where(item_id: gears).group_by(&:item_id)
     stats = gears.map { |i| stats[i][0].attributes.with_indifferent_access if stats[i].present? }.compact
     results = {
-      descriptions: Item.where(id: gears).map { |item| [item.id, item.description[I18n.locale.to_s]] }.to_h,
+      descriptions: Item.where(id: gears).map { |item| [item.id, item.description[I18n.locale]] }.to_h,
       checkparam: stat_columns.map { |stat_name| [stat_name, stats.pluck(stat_name).compact.inject(:+)] }.to_h
     }
     render json: results

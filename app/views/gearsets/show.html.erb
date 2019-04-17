@@ -1,6 +1,6 @@
 <div class="text-center border-bottom mb-3">
-  <h3><%= @gearset.job[:ens] %> / <%= @gearset.user.auth['info']['name'] %>
-  (<%= link_to "@#{@gearset.user.auth['info']['nickname']}", "https://twitter.com/#{@gearset.user.auth['info']['nickname']}" %>)</h3>
+  <h3><%= @gearset.job[:ens] %> / <%= @gearset.user.auth[:info][:name] %>
+  (<%= link_to "@#{@gearset.user.auth[:info][:nickname]}", "https://twitter.com/#{@gearset.user.auth[:info][:nickname]}" %>)</h3>
 </div>
 <div class="row mx-auto" id="gearset">
   <div class="col-lg-6">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="py-2 text-center">
-      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@gearset.job[I18n.locale]}%20@#{@gearset.user.auth['info']['nickname']}&url=#{gearset_url}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
+      <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@gearset.job[I18n.locale]}%20@#{@gearset.user.auth[:info][:nickname]}&url=#{gearset_url}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
     </div>
     <div class="row checkparam">
       <% stat_columns.each do |key| %>
