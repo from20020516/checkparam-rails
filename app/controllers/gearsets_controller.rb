@@ -1,6 +1,6 @@
 class GearsetsController < ApplicationController
   include ApplicationHelper
-  before_action :authenticate_user!, only: [:create, :update, :descriptions]
+  before_action :authenticate_user!, only: [:create, :update]
 
   # Fire when a Equipment changed with new set.
   def create
