@@ -22,7 +22,7 @@ class GearsetsController < ApplicationController
     stats = gears.map { |i| stats[i][0].attributes.with_indifferent_access if stats[i].present? }.compact
     results = {
       descriptions: Item.where(id: gears).map { |item| [item.id, item.description[I18n.locale]] }.to_h,
-      checkparam: stat_columns.map { |stat_name| [stat_name, stats.pluck(stat_name).compact.inject(:+)] }.to_h
+      checkparam: stat_names.map { |stat_name| [stat_name, stats.pluck(stat_name).compact.inject(:+)] }.to_h
     }
     render json: results
   end

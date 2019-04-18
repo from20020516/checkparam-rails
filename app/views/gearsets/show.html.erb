@@ -1,4 +1,4 @@
-<%= render 'layouts/debug' if Rails.env == 'development' %>
+<%#= render 'layouts/debug' if Rails.env == 'development' %>
 <div class='text-center border-bottom mb-3'>
   <h3><%= @gearset.job[:ens] %> / <%= @gearset.user.auth[:info][:name] %>
   (<%= link_to "@#{@gearset.user.auth[:info][:nickname]}", "https://twitter.com/#{@gearset.user.auth[:info][:nickname]}" %>)</h3>
@@ -19,7 +19,7 @@
       <%= link_to t('share_this_set'),"https://twitter.com/intent/tweet?text=Checkparam｜#{@gearset.job[I18n.locale]}%20@#{@gearset.user.auth[:info][:nickname]}&url=#{gearset_url}&hashtags=FF11,checkparam", {onclick: "window.open(this.href,'hoge','height=400,width=600');return false do"} %>
     </div>
     <div class='row checkparam'>
-      <% stat_columns.each do |key| %>
+      <% stat_names.each do |key| %>
         <div class='col-4 px-0 text-center key' id='<%= key %>_title' data-toggle='tooltip' data-original-title='<%= t(key) %>'>
           <%= t(key) %>
         </div>
@@ -36,7 +36,7 @@
         </div>
         <div class='col-9 pl-0'>
           <% if @gearset[slot.en].present? %>
-            <%# TODO: fix %>
+            <%# TODO: fix -- where: define method in model? %>
             <% item = Item.find_by(id: @gearset[slot.en]) %>
             <%= link_to item[I18n.locale], "http://wiki.ffo.jp/html/#{item.wiki_id}.html", {target: '_blank'} %>
           <% end %>

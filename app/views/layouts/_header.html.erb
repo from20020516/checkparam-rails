@@ -9,7 +9,7 @@
               <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id}, {class: 'form-control-sm px-1', onchange: "Rails.fire(this.form, 'submit')"}) %>
             </li>
             <li class='nav-item'>
-              <%= f.select(:set_id, (1..set_uplimit).to_a, {selected: current_user.set_id}, {class: 'form-control-sm px-1', onchange: "Rails.fire(this.form, 'submit')"}) %>
+              <%= f.select(:set_id, [*1..10], {selected: current_user.set_id}, {class: 'form-control-sm px-1', onchange: "Rails.fire(this.form, 'submit')"}) %>
             </li>
           <% end %>
         <% end %>
