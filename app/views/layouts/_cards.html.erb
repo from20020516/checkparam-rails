@@ -1,10 +1,10 @@
-<% gs.each do |set| %>
+<% @gs.each do |set| %>
   <a href='<%= gearset_path(set.id) %>' class='card rounded-0 mx-auto my-3 row bg-transparent'>
     <div class='card-body card-icons p-0 mx-auto row'>
       <div class='col-12 bg-transparent'>
-        <%= image_tag set.user.auth[:extra][:raw_info][:profile_image_url_https], size: '64', align: 'left' %>
-        <h5 class='card-title mt-2'><%= set.job[I18n.locale] %></h5>
-        <h6 class='card-subtitle'>@<%= set.user.auth[:info][:nickname] %></h6>
+        <%= image_tag YAML.load(set.auth)[:extra][:raw_info][:profile_image_url_https], size: '64', align: 'left' %>
+        <h5 class='card-title mt-2'><%= set[I18n.locale] %></h5>
+        <h6 class='card-subtitle'>@<%= YAML.load(set.auth)[:info][:nickname] %></h6>
       </div>
       <% slots.each do |slot| %>
         <div class='col-3 bg-transparent'>
@@ -14,3 +14,11 @@
     </div>
   </a>
 <% end %>
+  <a class='carousel-control-prev' href='#main-carousel' role='button' data-slide='prev'>
+    <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+    <span class='sr-only'>Previous</span>
+  </a>
+  <a class='carousel-control-next' href='#main-carousel' role='button' data-slide='next'>
+    <span class='carousel-control-next-icon' aria-hidden='true'></span>
+    <span class='sr-only'>Next</span>
+  </a>

@@ -12,11 +12,7 @@ module ApplicationHelper
     Gearset.find_or_create_by(user_id: current_user.id, job_id: current_user.job_id, set_id: current_user.set_id)
   end
 
-  def stat_columns
+  def stat_names
     Stat.column_names - %w[id item_id created_at updated_at Ｄ]
-  end
-
-  def set_uplimit
-    10
   end
 end
