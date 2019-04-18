@@ -6,7 +6,7 @@ namespace :csv do
     ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata encrypted_password]
   end
 
-  task :check => :environment do
+  task :status => :environment do
     tables.each { |table|
       model = table.classify.constantize
       puts [table, model.all.length].to_s
@@ -20,7 +20,7 @@ namespace :csv do
       model = table.classify.constantize
       column_name = model.column_names - %w[created_at updated_at]
       begin
-        current_csv = CSV.generate(force_quotes: true) { |csv|
+        current_csv = CSV.generate { |csv|
           csv << column_name
           model.all.each { |elem|
             csv << elem.slice(column_name).values
@@ -37,7 +37,8 @@ namespace :csv do
         #   }
         # }
       rescue => e
-        pp e
+        pp e, hash
+        byebug
         break
       end
     }
@@ -54,11 +55,14 @@ namespace :csv do
           begin
             hash = row.to_h.slice(*column_name.map(&:to_sym))
             model.find_or_create_by(hash)
+
           rescue => e
-            pp e
+            pp e, hash
+            byebug
             break
           end
         end
+
       rescue => e
         pp e
       end

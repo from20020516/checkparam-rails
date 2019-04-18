@@ -3,9 +3,10 @@ class Gearset < ApplicationRecord
   belongs_to :user
   belongs_to :job
 
-  scope :latest, -> { where('main > 0 & head > 0 & body > 0 & hands > 0 & legs > 0 & feet > 0').sort_by(&:updated_at).last(2) }
+  scope :latest, -> { where('main > 0 & head > 0 & body > 0 & hands > 0 & legs > 0 & feet > 0').sort_by(&:updated_at).reverse.first(10).to_a }
 
   def gears
+    # TODO: link to Item.
     self.slice(slots.pluck(:en))
   end
 

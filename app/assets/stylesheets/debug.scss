@@ -2,12 +2,18 @@
 //   outline: 1px dashed gray;
 //   outline-offset: -1px;
 // }
+// .ad-area {
+//   outline: 1px dashed gray;
+//   outline-offset: -1px;
+// }
 .console {
   opacity: .9;
 }
-[class*="console"] {
+
+[class*='console'] {
   font-size: 18px !important;
 }
+
 .debug_dump {
   background: silver;
   outline: 1px solid white;

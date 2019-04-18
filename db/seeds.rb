@@ -24,7 +24,7 @@ tables.each { |table|
 User.find_or_create_by(id: 1).update(
   email: 'user@checkparam.com',
   password: 'password',
-  auth: {"info": {"nickname": "from20020516"}, "extra": {"raw_info": {"profile_image_url_https": "/default_profile_400x400.png"}}}
+  auth: {"info": {"nickname": "from20020516"}, "extra": {"raw_info": {"profile_image_url_https": "/icons/default_profile.png"}}}
 )
 
 tables.each { |table|

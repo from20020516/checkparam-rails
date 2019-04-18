@@ -172,7 +172,7 @@ namespace :parse do
       password: 'password',
       # uid: 1042812468748156928,
       # provider: "twitter",
-      auth: { "info": { "nickname": 'from20020516' }, "extra": { "raw_info": { "profile_image_url_https": '/default_profile_400x400.png' } } }
+      auth: { "info": { "nickname": 'from20020516' }, "extra": { "raw_info": { "profile_image_url_https": '/icons/default_profile.png' } } }
     )
     Gearset.where(id: [1..5]).delete_all
     Gearset.create([
