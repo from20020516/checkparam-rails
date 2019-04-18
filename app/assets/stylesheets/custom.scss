@@ -15,7 +15,7 @@ html {
       background: black;
       height: 50px;
     }
-    .container{
+    .container {
       a {
         color: lightslategrey;
         font-weight: bold;
@@ -24,10 +24,10 @@ html {
         outline: none;
       }
     }
+    $menu-size: (64+1+1)*4+5*2px;
     #gear-icons {
-      $menu-size: (64+1+1)*4+5*2px;
       width: $menu-size;
-      height: auto;
+      height: $menu-size;
       border: 5px solid $gearset-border-color;
       div[class^='col'] {
         outline: 1px solid $gearset-border-color;
@@ -38,6 +38,7 @@ html {
     }
     .card {
       @extend #gear-icons;
+      height: $menu-size+64;
       text-decoration: none;
     }
     main {
@@ -62,15 +63,28 @@ html {
           &[data-present='false'] {
             color: grey;
           }
-          background: rgba(255,255,255,.05);
+          background: rgba(255, 255, 255, .05);
         }
         .param {
           @extend .checkparam;
-          background: rgba(0,0,0,.05);
+          background: rgba(0, 0, 0, .05);
         }
       }
     }
-    @each $num in 16622,12332,17174,17326,12523,13074,13358,12551,12679,13505,13606,13215,12807,12935 {
+    @each $num in 16622,
+    12332,
+    17174,
+    17326,
+    12523,
+    13074,
+    13358,
+    12551,
+    12679,
+    13505,
+    13606,
+    13215,
+    12807,
+    12935 {
       img[src^='/icons/#{$num}.png'] {
         opacity: .5;
       }
