@@ -3,13 +3,9 @@
   <% type = 'error' if type == 'alert' %>
   <script>
     toastr.options = {
-      "positionClass" : "toast-bottom-center mb-2",
-      "timeOut" : 3000,
-      // "debug" : true,
-      // "timeOut" : 0,
-      // "closeOnHover" : false,
-      // "tapToDismiss" : false,
+      'positionClass' : 'toast-bottom-center mb-2',
+      'timeOut' : 3000,
     }
-    toastr.<%= type %>("<%= message %>")
+    toastr.<%= type %>('<%= message %>')
   </script>
 <% end %>

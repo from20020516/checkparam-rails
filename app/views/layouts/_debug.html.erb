@@ -1,6 +1,5 @@
 <div>
   <%= debug params.inspect %>
-  <%= debug gearset.user.inspect %>
   <%= debug gearset.inspect %>
-  <%= debug Time.now %><%= debug I18n.locale %>
+  <%= debug [I18n.locale, Time.now] %>
 </div>

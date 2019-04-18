@@ -26,22 +26,22 @@ function escStr(val) {
 function setIcon() {
   // define tooltip for descriptions. require jQuery and popper.js
   $(function() {
-    $('[data-toggle="tooltip"]').tooltip({ html: true });
+    $("[data-toggle='tooltip']").tooltip({ html: true });
   })
   const elInputList = document.querySelectorAll('#gearset .form-control');
   const values = [...elInputList].map((el) => el.value);
-  $.getJSON("/descriptions/", `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
+  $.getJSON('/descriptions/', `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
     .done(function(json) {
       elInputList.forEach(function(formEl) {
         $(`.${formEl.id}`).attr({
-          "src": `/icons/64/${formEl.value || init_icon[formEl.id]}.png`,
-          "data-original-title": `${json["descriptions"][formEl.value] ? json["descriptions"][formEl.value] : ""}`,
+          'src': `/icons/${formEl.value || init_icon[formEl.id]}.png`,
+          'data-original-title': `${json['descriptions'][formEl.value] ? json['descriptions'][formEl.value] : ''}`,
         })
       })
-      // console.log(json["checkparam"]);
+      // console.log(json['checkparam']);
       document.querySelectorAll('.param').forEach(function(param) {
-        let stat = json["checkparam"][param.id] // integer or undefined
-        $(`#${escStr(param.id)}`).text(stat || "")
+        let stat = json['checkparam'][param.id] // integer or undefined
+        $(`#${escStr(param.id)}`).text(stat || '')
         $(`#${escStr(param.id)}_title`).attr('data-present', Boolean(stat));
       })
     })

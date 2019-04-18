@@ -5,9 +5,15 @@ class UsersController < ApplicationController
   # Fire when job/set changed.
   def update
     current_user.update(user_params)
-    I18n.locale = current_user.lang.to_sym
-    #redirect_to request.referer
-    render partial: 'layouts/gearset_partial', locals: {current_user: current_user}
+
+    if user_params.include?(:lang)
+      I18n.locale = current_user.lang.to_sym
+      respond_to do |format|
+        format.js { render inline: 'location.reload();' }
+      end
+    else
+      render partial: 'layouts/gearset_partial', locals: { current_user: current_user }
+    end
   end
 
   def destroy

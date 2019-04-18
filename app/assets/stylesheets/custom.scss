@@ -27,9 +27,9 @@ html {
     #gear-icons {
       $menu-size: (64+1+1)*4+5*2px;
       width: $menu-size;
-      height: $menu-size;
+      height: auto;
       border: 5px solid $gearset-border-color;
-      div[class^="col"] {
+      div[class^='col'] {
         outline: 1px solid $gearset-border-color;
         outline-offset: -1px;
         background: lightslategrey;
@@ -37,19 +37,8 @@ html {
       }
     }
     .card {
-      $menu-size: (48+1+1)*4+5*2px;
-      width: $menu-size;
-      height: $menu-size+48;
+      @extend #gear-icons;
       text-decoration: none;
-      background: $base-color;
-      .card-icons {
-        border: 5px solid $gearset-border-color;
-        div[class^="col"] {
-          outline: 1px solid $gearset-border-color;
-          outline-offset: -1px;
-          padding: 1px 1px;
-        }
-      }
     }
     main {
       padding-top: 60px;
@@ -67,10 +56,10 @@ html {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          &[data-present="true"] {
+          &[data-present='true'] {
             color: silver;
           }
-          &[data-present="false"] {
+          &[data-present='false'] {
             color: grey;
           }
           background: rgba(255,255,255,.05);
@@ -82,7 +71,7 @@ html {
       }
     }
     @each $num in 16622,12332,17174,17326,12523,13074,13358,12551,12679,13505,13606,13215,12807,12935 {
-      img[src^='/icons/64/#{$num}.png'] {
+      img[src^='/icons/#{$num}.png'] {
         opacity: .5;
       }
     }

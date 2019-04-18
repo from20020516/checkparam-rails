@@ -1,19 +1,19 @@
 <% if user_signed_in? %>
-  <div id="gearset">
+  <div id='gearset'>
     <%= render 'layouts/gearset_partial' %>
     <script>
       // Set Icon when an Equipment changed. //
-      document.querySelector("#gearset").addEventListener("change", setIcon, {passive: true});
+      document.querySelector('#gearset').addEventListener('change', setIcon, {passive: true});
     </script>
   </div>
 <% else %>
-  <div class="text-center my-4">
+  <div class='text-center my-4'>
     <h1><span>/checkparam</span> your Ideas.</h1>
-    <div class="my-3">
+    <div class='my-3'>
       <%= t('welcome_html') %>
-      <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, class: "btn btn-secondary btn-lg my-2" %>
+      <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, class: 'btn btn-secondary btn-lg my-2' %>
     </div>
-    <div class="text-left bg-dark">
+    <div class='text-left bg-dark'>
       <ul>
         <li><b>Lv98以下</b>の装備は、一部を除き収録されていません。</li>
         <li>以下の部位について、<b>IL118以下</b>の装備は一部を除き収録されていません。<br>
@@ -22,7 +22,7 @@
       </ul>
     </div>
     <h2>TO-DO</h2>
-    <div class="text-left bg-dark">
+    <div class='text-left bg-dark'>
       <ul>
         <li>オーグメント値の入力/保存</li>
         <li>ユーザーコメントの入力/保存</li>
@@ -30,8 +30,25 @@
     </div>
     機能追加の要望も随時募集しています。
   </div>
-  <h2>Recent Gearsets</h2>
-  <div class="d-flex justify-content-around row">
-    <%= render 'layouts/cards' %>
+  <div id='main-carousel' class='carousel slide' data-ride='carousel'>
+    <div class='carousel-inner'>
+      <% [*0..2].each do |i| %>
+        <% if i % 3 == 0 %>
+          <div class='carousel-item <%= 'active' if i == 0 %>' data-interval='5000'>
+            <div class='d-flex justify-content-around row px-5'>
+              <%= render 'layouts/cards', gs: Gearset.latest.slice(i,3) %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <a class='carousel-control-prev' href='#main-carousel' role='button' data-slide='prev'>
+      <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+      <span class='sr-only'>Previous</span>
+    </a>
+    <a class='carousel-control-next' href='#main-carousel' role='button' data-slide='next'>
+      <span class='carousel-control-next-icon' aria-hidden='true'></span>
+      <span class='sr-only'>Next</span>
+    </a>
   </div>
 <% end %>

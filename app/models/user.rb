@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :omniauthable, :rememberable #, :timeoutable, :trackable, :registerable, :validatable, :recoverable, :confirmable, :lockable
+  devise :database_authenticatable, :omniauthable, :rememberable
 
   has_many :gearsets
   belongs_to :job
@@ -12,6 +12,7 @@ class User < ApplicationRecord
       begin
         self.auth = JSON.parse(auth).deep_transform_keys(&:to_sym)
       rescue
+        # TODO: fix eval.
         self.auth = eval(auth).deep_transform_keys(&:to_sym)
       rescue => e
         pp e

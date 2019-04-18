@@ -2,24 +2,24 @@
 <html>
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79568079-2"></script>
+    <script async src='https://www.googletagmanager.com/gtag/js?id=UA-79568079-2'></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-79568079-2');
     </script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Checkparam</title>
     <%= csrf_meta_tags %>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css' rel='stylesheet'>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js' integrity='sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o' crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js'></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= render 'layouts/shim' %>
   </head>
@@ -27,31 +27,35 @@
     <header>
       <%= render 'layouts/header' %>
     </header>
-    <main class="container">
-      <div class="row">
-        <div class="col-lg-8">
-          <%= yield %>
+    <main class='container'>
+      <% unless !user_signed_in? && controller.action_name == 'index' %>
+        <div class='row'>
+          <div class='col-lg-8'>
+            <%= yield %>
+          </div>
+          <div class='col-lg-4 text-center sidebar'>
+            <%= render 'layouts/sidebar' %>
+          </div>
         </div>
-        <div class="col-lg-4 text-center sidebar">
-          <%= render 'layouts/sidebar' %>
-        </div>
-      </div>
+      <% else %>
+        <%= yield %>
+      <% end %>
     </main>
-    <footer class="footer border-top">
-      <div class="container text-center">
-        <div class="row align-items-center">
-          <div class="col-lg-2">
-            <%= link_to "About", "/about" %>
+    <footer class='footer border-top'>
+      <div class='container text-center'>
+        <div class='row align-items-center'>
+          <div class='col-lg-2'>
+            <%= link_to 'About', '/about' %>
           </div>
-          <div class="col-lg-8">記載されている会社名・製品名・システム名などは、各社の商標、または登録商標です。<br>Copyright (C) 2002 - 2019 SQUARE ENIX CO., LTD. All Rights Reserved.
+          <div class='col-lg-8'>記載されている会社名・製品名・システム名などは、各社の商標、または登録商標です。<br>Copyright (C) 2002 - 2019 SQUARE ENIX CO., LTD. All Rights Reserved.
           </div>
-          <div class="col-lg-2">
-            <%= link_to image_tag('rails_logo.gif'), "https://rubyonrails.org/", class: "align-items-center" %>
+          <div class='col-lg-2'>
+            <%= link_to image_tag('rails_logo.gif'), 'https://rubyonrails.org/', class: 'align-items-center' %>
           </div>
         </div>
       </div>
     </footer>
     <%= render 'layouts/flash_messages' %>
-    <%# console if Rails.env == 'development' %>
+    <% console if Rails.env == 'development' %>
   </body>
 </html>

@@ -9,11 +9,12 @@
 
 # TO-DO
 
-- [x] DB Restructure with type JSON.
-- [x] Change Description get method.
+- [x] DB Restructure.
+- [x] Change description method.
 - [x] Ajax /checkparam score.
 - [x] Add wiki link to popup.
 - [x] Use I18n instead lang.
-- [ ] Stats translation => 日本語 key available.
+- [x] Stats translation => 日本語 key available.
 - [x] Ranking/Recent posts
 - [ ] Users Comment
+- [ ] scroll menu

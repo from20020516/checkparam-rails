@@ -11,8 +11,8 @@
 # bundle exec whenever --clear-crontab
 
 # Rails.root PATH
-require File.expand_path(File.dirname(__FILE__) + "/environment")
-set :output, "#{Rails.root}/log/crontab.log"
+require File.expand_path("#{File.dirname(__FILE__)}/environment")
+set :output, Rails.root.join('log', 'crontab.log')
 set :environment, :production
 
 # every 1.minute do # 1.minute 1.day 1.week 1.month 1.year is also supported
@@ -23,5 +23,16 @@ every :monday, at: '5am' do
 end
 
 every :thursday, at: '5am' do
-  command "cd #{Rails.root}/public && wget https://github.com/ProjectTako/ffxi-addons/raw/master/equipviewer/icons.7z -O icons.7z && 7za x icons.7z -aoa icons/64 && cd ../Resources && git pull && cd .. && export RAILS_ENV=production && rails parse:items && rails parse:stats"
+  command "
+    cd #{Rails.root} &&
+    wget https://github.com/ProjectTako/ffxi-addons/raw/master/equipviewer/icons.7z -O public/icons.7z &&
+    7za e public/icons.7z -aos -opublic/icons/ icons/64/*.png &&
+    git submodule foreach git pull origin master &&
+    export RAILS_ENV=production &&
+    rails csv:export &&
+    rails parse:items &&
+    bin/rails assets:precompile &&
+    kill -9 `pgrep -f puma` &&
+    bin/rails s -p 8080 -e production -d
+  "
 end

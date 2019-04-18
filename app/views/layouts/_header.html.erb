@@ -1,43 +1,41 @@
-<nav class="navbar navbar-expand fixed-top navbar-dark">
-  <div class="collapse navbar-collapse d-flex justify-content-around">
-    <%= link_to "Checkparam", root_path, class: "navbar-brand mr-0" %>
+<nav class='navbar navbar-expand fixed-top navbar-dark'>
+  <div class='collapse navbar-collapse d-flex justify-content-around'>
+    <%= link_to 'Checkparam', root_path, class: 'navbar-brand mr-0' %>
     <% if user_signed_in? %>
-      <ul class="navbar-nav">
-        <% if !["about","show"].include?(controller.action_name) %>
-          <%= form_with model: current_user, class: "form-inline watch" do |f| %>
-            <li class="nav-item">
-              <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id}, {class: 'form-control-sm px-1', onchange: 'Rails.fire(this.form, "submit")'}) %>
+      <ul class='navbar-nav'>
+        <% if !['about','show'].include?(controller.action_name) %>
+          <%= form_with model: current_user, class: 'form-inline watch' do |f| %>
+            <li class='nav-item'>
+              <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id}, {class: 'form-control-sm px-1', onchange: "Rails.fire(this.form, 'submit')"}) %>
             </li>
-            <li class="nav-item">
-              <%= f.select(:set_id, (1..set_uplimit).to_a, {selected: current_user.set_id}, {class: 'form-control-sm px-1', onchange: 'Rails.fire(this.form, "submit")'}) %>
+            <li class='nav-item'>
+              <%= f.select(:set_id, (1..set_uplimit).to_a, {selected: current_user.set_id}, {class: 'form-control-sm px-1', onchange: "Rails.fire(this.form, 'submit')"}) %>
             </li>
           <% end %>
         <% end %>
       </ul>
-      <%= form_with model: current_user, class: "watch form-inline dropleft" do |f| %>
-        <a class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= image_tag current_user.auth[:extra][:raw_info][:profile_image_url_https], class: "border border-light", size: '48x48' %>
+      <%= form_with model: current_user, class: 'watch form-inline dropleft' do |f| %>
+        <a class='nav-link p-0' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+          <%= image_tag current_user.auth[:extra][:raw_info][:profile_image_url_https], class: 'border border-light', size: '48x48' %>
         </a>
-        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-          <div class="dropdown-item">
-            <%= "@#{current_user.auth[:info][:nickname]}" %>
+        <div class='dropdown-menu text-center' aria-labelledby='navbarDropdown'>
+          <div class='dropdown-item'>
+            @<%= current_user.auth[:info][:nickname] %>
           </div>
-          <% if !["about","show"].include?(controller.action_name) %>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>">JP
-                <%= f.radio_button :lang, :ja, onchange: 'Rails.fire(this.form, "submit")' %>
+            <div class='btn-group btn-group-toggle' data-toggle='buttons'>
+              <label class='btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>'>JP
+                <%= f.radio_button :lang, :ja, onchange: "Rails.fire(this.form, 'submit')" %>
               </label>
-              <label class="btn btn-secondary <%= 'active' if current_user.lang == 'en' %>">EN
-                <%= f.radio_button :lang, :en, onchange: 'Rails.fire(this.form, "submit")' %>
+              <label class='btn btn-secondary <%= 'active' if current_user.lang == 'en' %>'>EN
+                <%= f.radio_button :lang, :en, onchange: "Rails.fire(this.form, 'submit')" %>
               </label>
             </div>
-          <% end %>
-          <div class="dropdown-divider"></div>
-          <%= link_to t('logout'), destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" %>
+          <div class='dropdown-divider'></div>
+          <%= link_to t('logout'), destroy_user_session_path, method: :delete, class: 'dropdown-item text-danger' %>
         </div>
       <% end %>
     <% else %>
-      <%= button_to 'Login with Twitter', user_twitter_omniauth_authorize_path, class: "btn btn-secondary" %>
+      <%= button_to 'Login with Twitter', user_twitter_omniauth_authorize_path, class: 'btn btn-secondary' %>
     <% end %>
   </div>
 </nav>
