@@ -26,19 +26,5 @@
     </div>
     機能追加の要望も随時募集しています。
   </div>
-  <div id='main-carousel' class='carousel slide' data-ride='carousel'>
-    <div class='carousel-inner'>
-      <% [*0..9].each do |i| %>
-        <% if i % 3 == 0 %>
-          <% @gs = Gearset.latest.slice(i,3) %>
-          <% next if @gs.blank? %>
-          <div class='carousel-item <%= 'active' if i == 0 %>' data-interval='5000'>
-            <div class='d-flex justify-content-around row px-5'>
-              <%= render 'layouts/cards', gs: @gs %>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'layouts/cards', columns: 3 %>
 <% end %>
