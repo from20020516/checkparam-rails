@@ -10,6 +10,7 @@
 !.keep
 
 vendor
+log
 bin
 tmp
 node_modules

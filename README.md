@@ -15,6 +15,5 @@
 - [x] Add wiki link to popup.
 - [x] Use I18n instead lang.
 - [x] Stats translation => 日本語 key available.
-- [x] Ranking/Recent posts
+- [x] Carousel style gearsets preview
 - [ ] Users Comment
-- [ ] scroll menu

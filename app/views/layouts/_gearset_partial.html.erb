@@ -3,18 +3,18 @@
   <div class='col-lg-6'>
     <div class='mx-auto' id='gear-icons'>
       <div class='row m-0'>
-        <% slots.each do |slot| %>
+        <% Slot.all.each do |slot| %>
           <div class='col-3'>
-            <%= image_tag "/icons/#{slot.img}.png", class: "gearset_#{slot.en}", tabindex: 0, data: { toggle: 'tooltip' } %>
+            <%= image_tag "/icons/#{slot.img}.png", size: '64', class: "gearset_#{slot.en}", tabindex: 0, data: { toggle: 'tooltip' } %>
           </div>
         <% end %>
       </div>
     </div>
     <div class='py-2 text-center'>
-      <%= link_to t('share_this_set'), gearset_path(gearset.id) %>
+      <%= link_to t('share_this_set'), gearset_path(Gearset.current_set(current_user).id) %>
     </div>
     <div class='row checkparam'>
-      <% stat_names.each do |key| %>
+      <% Stat.names.each do |key| %>
         <div class='col-4 px-0 text-center key' id='<%= key %>_title' data-toggle='tooltip' data-original-title='<%= t(key) %>'>
           <%= t(key) %>
         </div>
@@ -24,20 +24,17 @@
     </div>
   </div>
   <div class='col-lg-6'>
-    <%= form_with model: gearset do |f| %>
-      <% slots.each do |slot| %>
+    <%= form_with model: Gearset.current_set(current_user) do |f| %>
+      <% Slot.all.each do |slot| %>
         <div class='form-group row align-items-center py-1 mb-0'>
             <div class='col-3 col-form-label text-center'>
                 <%= image_tag "/icons/#{slot.img}.png", size: '48', class: "gearset_#{slot.en}", tabindex: 0, data: { toggle: 'tooltip' } %>
             </div>
             <div class='col-9 pl-0'>
-              <%= f.collection_select(slot.en, items.select{|item| item.slot & 2**slot.pos > 0}, :id, current_user.lang, {include_blank: true}, {class: 'form-control', onchange: "Rails.fire(this.form, 'submit')"}) %>
+              <%= f.collection_select(slot.en, @current_gears.select{ |item| item.slot & 2**slot.pos > 0 }, :id, current_user.lang, {include_blank: true}, {class: 'form-control', onchange: "Rails.fire(this.form, 'submit')"}) %>
             </div>
         </div>
       <% end %>
     <% end %>
   </div>
 </div>
-<script>
-  setIcon();
-</script>
