@@ -9,6 +9,9 @@ module CheckparamRails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
     config.i18n.default_locale = :ja
+    config.logger = Logger.new("log/production.log", 1, 1 * 1024 * 1024)
+    config.log_formatter = Logger::Formatter.new
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

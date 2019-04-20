@@ -3,7 +3,7 @@
     <%= link_to 'Checkparam', root_path, class: 'navbar-brand mr-0' %>
     <% if user_signed_in? %>
       <ul class='navbar-nav'>
-        <% if !['about','show'].include?(controller.action_name) %>
+        <% if action_name == 'index' %>
           <%= form_with model: current_user, class: 'form-inline watch' do |f| %>
             <li class='nav-item'>
               <%= f.collection_select(:job_id, Job.all.slice(1..22), :id, :ens, {selected: current_user.job_id}, {class: 'form-control-sm px-1', onchange: "Rails.fire(this.form, 'submit')"}) %>
@@ -22,14 +22,14 @@
           <div class='dropdown-item'>
             @<%= current_user.auth[:info][:nickname] %>
           </div>
-            <div class='btn-group btn-group-toggle' data-toggle='buttons'>
-              <label class='btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>'>JP
-                <%= f.radio_button :lang, :ja, onchange: "Rails.fire(this.form, 'submit')" %>
-              </label>
-              <label class='btn btn-secondary <%= 'active' if current_user.lang == 'en' %>'>EN
-                <%= f.radio_button :lang, :en, onchange: "Rails.fire(this.form, 'submit')" %>
-              </label>
-            </div>
+          <div class="btn-group btn-group-toggle <% 'd-none' unless controller_name == 'gearset' %>" id="language" data-toggle='buttons'>
+            <label class='btn btn-secondary <%= 'active' if current_user.lang == 'ja' %>' id='ja'>JP
+              <%= f.radio_button :lang, :ja, onchange: "Rails.fire(this.form, 'submit')" %>
+            </label>
+            <label class='btn btn-secondary <%= 'active' if current_user.lang == 'en' %>' id='en'>EN
+              <%= f.radio_button :lang, :en, onchange: "Rails.fire(this.form, 'submit')" %>
+            </label>
+          </div>
           <div class='dropdown-divider'></div>
           <%= link_to t('logout'), destroy_user_session_path, method: :delete, class: 'dropdown-item text-danger' %>
         </div>

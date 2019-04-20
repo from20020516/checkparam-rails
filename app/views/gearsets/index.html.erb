@@ -1,10 +1,6 @@
 <% if user_signed_in? %>
   <div id='gearset'>
     <%= render 'layouts/gearset_partial' %>
-    <script>
-      // Set Icon when an Equipment changed. //
-      document.querySelector('#gearset').addEventListener('change', setIcon, {passive: true});
-    </script>
   </div>
 <% else %>
   <div class='text-center my-4'>

@@ -1,19 +1,11 @@
 class UsersController < ApplicationController
-  include ApplicationHelper
   before_action :authenticate_user!
 
   # Fire when job/set changed.
   def update
     current_user.update(user_params)
-
-    if user_params.include?(:lang)
-      I18n.locale = current_user.lang.to_sym
-      respond_to do |format|
-        format.js { render inline: 'location.reload();' }
-      end
-    else
-      render partial: 'layouts/gearset_partial', locals: { current_user: current_user }
-    end
+    @current_gears = Item.current_job(current_user.job_id, current_user.lang)
+    render partial: 'layouts/gearset_partial', locals: { current_user: current_user, lang: current_user.lang.to_sym }
   end
 
   def destroy

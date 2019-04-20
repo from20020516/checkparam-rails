@@ -19,38 +19,53 @@ const init_icon = {
   gearset_feet: 12935,
 }
 
+// escape ':' because selector reserved.
+// TODO: replace colon. that's reserved by SQL too.
 function escStr(val) {
   return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, "\\$&");
 }
+
 // Fire when after rendering or Job/Set changed.
 function setIcon() {
+  // console.log('setIcon', new Date());
   // define tooltip for descriptions. require jQuery and popper.js
-  $(function() {
-    $("[data-toggle='tooltip']").tooltip({ html: true });
-  })
+  $("[data-toggle='tooltip']").tooltip({ html: true });
+
   const elInputList = document.querySelectorAll('#gearset .form-control');
   const values = [...elInputList].map((el) => el.value);
-  $.getJSON('/descriptions/', `id=${JSON.stringify(values)}`) // get JSON of item descriptions.
-    .done(function(json) {
-      elInputList.forEach(function(formEl) {
-        $(`.${formEl.id}`).attr({
-          'src': `/icons/${formEl.value || init_icon[formEl.id]}.png`,
-          'data-original-title': `${json['descriptions'][formEl.value] ? json['descriptions'][formEl.value] : ''}`,
-        })
-      })
-      // console.log(json['checkparam']);
-      document.querySelectorAll('.param').forEach(function(param) {
-        let stat = json['checkparam'][param.id] // integer or undefined
-        $(`#${escStr(param.id)}`).text(stat || '')
-        $(`#${escStr(param.id)}_title`).attr('data-present', Boolean(stat));
+  const locale = (document.querySelector("#language .active") || false).id; // js.undefined != ruby.false
+
+  // get JSON of descriptions.
+  $.getJSON('/descriptions/', `id=${JSON.stringify(values)}&lang=${JSON.stringify(locale || false)}`)
+  .done(function (json) {
+    elInputList.forEach(function (formEl) {
+      $(`.${formEl.id}`).attr({
+        'src': `/icons/${formEl.value || init_icon[formEl.id]}.png`,
+        'data-original-title': `${json['descriptions'][formEl.value] ? json['descriptions'][formEl.value] : ''}`,
       })
     })
-}
-// Ajax callback for refresh #gearset when user change Job/Set.
-(function() {
-  $(function() {
-    return $('.watch').on('ajax:complete', function(event) { // when .watch changed,
-      return $('#gearset').html(event.detail[0].response);
+    document.querySelectorAll('.param').forEach(function (param) {
+      let stat = json['checkparam'][param.id] // integer || undefined
+      $(`#${escStr(param.id)}`).text(stat || '')
+      $(`#${escStr(param.id)}_title`).attr('data-present', Boolean(stat));
     })
   })
-}).call(this)
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  if ($('#gearset')[0]) {
+    // fire when .watch(job/set/lang) changed.
+    $('.watch').on('ajax:complete', function (event) {
+      if ($("body[data-action='show']")[0]) {
+        location.reload();
+      } else {
+        $('#gearset').html(event.detail[0].response);
+        setIcon();
+      }
+    })
+    // fire when a equipment changed.
+    document.querySelector('#gearset').addEventListener('change', setIcon, { passive: true });
+    // fire when page loaded.
+    setIcon();
+  }
+})

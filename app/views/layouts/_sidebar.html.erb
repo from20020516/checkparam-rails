@@ -1,11 +1,8 @@
 <h5>Advertisement</h5>
-<div class='my-4'>
-  <%= link_to image_tag('refriender_logo.gif', size: '300x119'), 'https://refriender.finalfantasyxi.com/' %>
-</div>
 <div class='my-4 ad-area'>
-  <%= render 'layouts/amazon' if Rails.env == 'production' %>
+  <%#= render 'layouts/amazon' %>
 </div>
-<div id='main-carousel' class='carousel slide' data-ride='carousel'>
+<div id='main-carousel' class='carousel slide my-4' data-ride='carousel'>
   <div class='carousel-inner'>
     <% [*0..9].each do |i| %>
       <% @gs = Gearset.latest.slice(i,1) %>
@@ -15,6 +12,9 @@
       </div>
     <% end %>
   </div>
+</div>
+<div class='my-4'>
+  <%= link_to image_tag('refriender_logo.gif', size: '300x119'), 'https://refriender.finalfantasyxi.com/' %>
 </div>
 <div class='my-4'>
   <a href='https://twitter.com/from20020516?ref_src=twsrc%5Etfw' class='twitter-follow-button' data-show-count='false'>Follow @from20020516</a><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script>
