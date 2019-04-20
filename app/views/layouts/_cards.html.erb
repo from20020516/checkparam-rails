@@ -1,8 +1,8 @@
 <div id='main-carousel' class='carousel slide' data-ride='carousel'>
   <div class='carousel-inner'>
-    <% [*0..Gearset.latest.length-1].each do |i| %>
+    <% [*0..Gearset.recent.length-1].each do |i| %>
       <% if i % columns == 0 %>
-        <% gearset = Gearset.latest.slice(i, columns) %>
+        <% gearset = Gearset.recent.slice(i, columns) %>
         <% next if gearset.blank? %>
         <div class='carousel-item <%= 'active' if i == 0 %>' data-interval='10000'>
           <div class='row d-flex justify-content-center'>

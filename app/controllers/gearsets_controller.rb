@@ -4,12 +4,12 @@ class GearsetsController < ApplicationController
 
   # Fire when a Equipment changed with new set.
   def create
-    Gearset.current_set(current_user).update(gearset_params)
+    Gearset.current(current_user).update(gearset_params)
   end
 
   # Fire when a Equipment chenged.
   def update
-    Gearset.current_set(current_user).update(gearset_params)
+    Gearset.current(current_user).update(gearset_params)
   end
 
   def show
@@ -17,17 +17,11 @@ class GearsetsController < ApplicationController
   end
 
   def descriptions
-    lang = JSON.parse(params.require(:lang)) || I18n.locale
-    gears = JSON.parse(params.require(:id)).map(&:to_i)
-
-    # TODO: remove "colon" in DB key name.
-    stats_raw = Stat.current_stat(gears)
-    stats = gears.map { |i| stats_raw[i]&.first&.attributes&.with_indifferent_access }.compact
-
+    # lang = JSON.parse(params.require(:lang)) || I18n.locale
+    ids = JSON.parse(params.require(:id)).map(&:to_i)
     results = {
-      descriptions: Item.where(id: gears).map { |item| [item.id, item.description[lang.to_sym]] }.to_h,
-      checkparam: Stat.names.map { |key| [key, stats.pluck(key).compact.inject(:+)] }.to_h
-      # TODO: use model scope.
+      descriptions: Item.current(ids).pluck(:id).zip(Item.current(ids).pluck(:description).pluck(I18n.locale)).to_h,
+      checkparam: Stat.checkparam(ids)
     }
     render json: results
   end
