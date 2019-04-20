@@ -85,8 +85,8 @@ namespace :parse do
               stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?$/)
             end.to_h
           end
-          # .to_i values && 'pet:' prefix to some keys.
-          hash = hash[0].merge(hash[1]&.map { |k, v| ["ペット:#{k}", v] }.to_h).transform_values(&:to_i)
+          # .to_i values && 'pet_' prefix to some keys.
+          hash = hash[0].merge(hash[1]&.map { |k, v| ["ペット_#{k}", v] }.to_h).transform_values(&:to_i)
           # get key that exists in stat model.
           hash = hash.select { |k, _v| @item.stat.attributes.keys.member?(k) }
           @item.stat.update(hash)
@@ -111,7 +111,7 @@ namespace :parse do
           stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?/)
         }.to_h
       }
-      hash = hash[0].merge(hash[1]&.map { |k, v| ["ペット:#{k}", v] }.to_h).transform_values(&:to_i)
+      hash = hash[0].merge(hash[1]&.map { |k, v| ["ペット_#{k}", v] }.to_h).transform_values(&:to_i)
       hash.keys.each { |key| result[key] += 1 }
     end
 

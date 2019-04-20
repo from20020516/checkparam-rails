@@ -18,13 +18,6 @@ const init_icon = {
   gearset_legs: 12807,
   gearset_feet: 12935,
 }
-
-// escape ':' because selector reserved.
-// TODO: replace colon. that's reserved by SQL too.
-function escStr(val) {
-  return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, "\\$&");
-}
-
 // Fire when after rendering or Job/Set changed.
 function setIcon() {
   // console.log('setIcon', new Date());
@@ -46,8 +39,8 @@ function setIcon() {
     })
     document.querySelectorAll('.param').forEach(function (param) {
       let stat = json['checkparam'][param.id] // integer || undefined
-      $(`#${escStr(param.id)}`).text(stat || '')
-      $(`#${escStr(param.id)}_title`).attr('data-present', Boolean(stat));
+      $(`#${param.id}`).text(stat || '')
+      $(`#${param.id}_title`).attr('data-present', Boolean(stat));
     })
   })
 }
