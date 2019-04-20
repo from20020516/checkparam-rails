@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_044005) do
+ActiveRecord::Schema.define(version: 2019_04_20_190526) do
 
   create_table "gearsets", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -112,18 +112,18 @@ ActiveRecord::Schema.define(version: 2019_04_10_044005) do
     t.integer "被ケアル回復量"
     t.integer "クリティカルヒット"
     t.integer "クリティカルヒットダメージ"
-    t.integer "ペット:命中"
-    t.integer "ペット:魔命"
-    t.integer "ペット:攻"
-    t.integer "ペット:魔攻"
-    t.integer "ペット:ダブルアタック"
-    t.integer "ペット:リジェネ"
-    t.integer "ペット:被ダメージ"
-    t.integer "ペット:被物理ダメージ"
-    t.integer "ペット:被魔法ダメージ"
+    t.integer "ペット_命中"
+    t.integer "ペット_魔命"
+    t.integer "ペット_攻"
+    t.integer "ペット_魔攻"
+    t.integer "ペット_ダブルアタック"
+    t.integer "ペット_リジェネ"
+    t.integer "ペット_被ダメージ"
+    t.integer "ペット_被物理ダメージ"
+    t.integer "ペット_被魔法ダメージ"
     t.integer "契約の履行使用間隔"
     t.integer "契約の履行使用間隔II"
-    t.integer "ペット:契約の履行ダメージ"
+    t.integer "ペット_契約の履行ダメージ"
     t.integer "召喚獣維持費"
     t.integer "詠唱中断率"
     t.datetime "created_at", null: false

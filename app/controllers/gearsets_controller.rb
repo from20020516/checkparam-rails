@@ -17,10 +17,10 @@ class GearsetsController < ApplicationController
   end
 
   def descriptions
-    # lang = JSON.parse(params.require(:lang)) || I18n.locale
+    lang = (JSON.parse(params.require(:lang)) || I18n.locale).to_sym
     ids = JSON.parse(params.require(:id)).map(&:to_i)
     results = {
-      descriptions: Item.current(ids).pluck(:id).zip(Item.current(ids).pluck(:description).pluck(I18n.locale)).to_h,
+      descriptions: Item.current(ids).pluck(:id).zip(Item.current(ids).pluck(:description).pluck(lang)).to_h,
       checkparam: Stat.checkparam(ids)
     }
     render json: results
