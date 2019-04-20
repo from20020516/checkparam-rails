@@ -37,7 +37,7 @@
         </div>
         <div class='col-9 pl-0'>
           <% if @gearset[slot.en].present? %>
-            <%= link_to @gearset.gears[slot.en][I18n.locale], "http://wiki.ffo.jp/html/#{@gearset.gears[slot.en][:wiki_id]}.html", {target: '_blank'} %>
+            <%= link_to @gearset.items[slot.en][I18n.locale], "http://wiki.ffo.jp/html/#{@gearset.items[slot.en][:wiki_id]}.html", {target: '_blank'} %>
           <% end %>
         </div>
       </div>

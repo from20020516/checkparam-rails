@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class='py-2 text-center'>
-      <%= link_to t('share_this_set'), gearset_path(Gearset.current_set(current_user).id) %>
+      <%= link_to t('share_this_set'), gearset_path(Gearset.current(current_user).id) %>
     </div>
     <div class='row checkparam'>
       <% Stat.names.each do |key| %>
@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class='col-lg-6'>
-    <%= form_with model: Gearset.current_set(current_user) do |f| %>
+    <%= form_with model: Gearset.current(current_user) do |f| %>
       <% Slot.all.each do |slot| %>
         <div class='form-group row align-items-center py-1 mb-0'>
             <div class='col-3 col-form-label text-center'>

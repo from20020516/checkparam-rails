@@ -4,15 +4,13 @@ class Item < ApplicationRecord
   serialize :description
   before_save :prepare_save
 
-  scope :current_job, ->(job_id, lang = :ja) { where('job & ? > 0', 2**job_id).order(lang) }
-  # TODO: decide
-  scope :current_set, ->(*args) { where(id: args).group_by(&:id) }
   scope :current, ->(*args) { where(id: args) }
+  scope :current_job, ->(job_id, lang = :ja) { where('job & ? > 0', 2**job_id).order(lang) }
 
   def prepare_save
     if description.class == String
       begin
-        # TODO: fix eval.
+        # TODO: fix eval && unuse self
         self.description = eval(description)&.transform_keys(&:to_sym)
 
       rescue => e
