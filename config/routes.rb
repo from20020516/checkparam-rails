@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   resources :gearsets
 
   root 'gearsets#index'
-  get  '/about', to: 'gearsets#about'
+  get  '/about', to: 'users#about'
   get  '/descriptions', to: 'gearsets#descriptions'
 end
