@@ -2,7 +2,7 @@
 
 namespace :parse do
   task items: :environment do
-    return true if Wiki.all.blank?
+    return puts 'Blank wiki model.' if Wiki.all.blank?
 
     require 'benchmark'
     @state = Rufus::Lua::State.new
@@ -23,7 +23,7 @@ namespace :parse do
     ')
 
     keep_list = %w[
-      クラーケンクラブ 玄武盾 守りの指輪 妖蟲の髪飾り+1 アルコンリング 胡蝶のイヤリング 素破の耳 磁界の耳 幽界の耳 ラジャスリング ブルタルピアス ロケイシャスピアス エボカーリング ラジャスリング 八輪の帯 火輪の帯 土輪の帯 水輪の帯 風輪の帯 氷輪の帯 雷輪の帯 光輪の帯 闇輪の帯 フォシャゴルゲット フォシャベルト ノーヴィオピアス ノーヴィアピアス ニヌルタサッシュ ガネーシャマーラー ウィトフルベルト インカントストーン ジーゲルサッシュ ストロファデピアス プロリクスリング シェルターリング ブラキュラピアス エフェドラリング ハオマリング マリソンメダル デビリスメダル エポナリング ギフトピアス ヘカテーピアス ラベジャーゴルジェ タントラネックレス オリゾンケープ ゴエティアチェーン エストクルカラー レイダーベルト クリードカラー ベイルベルト フェリンマント アエドベルト シルバンスカーフ 雲海喉輪 伊賀襟巻 ランサートルク コーラーサッシュ マーヴィスカーフ ナバーチチョーカー チルコネックレス カリスネックレス サバントテーシス ラベジャーオーブ タントラタスラム オリゾンロケット ゴエティアマント エストクルケープ レイダーブーメラン クリードボードリエ ベイルチョーカー フェリンネックレス アエドマティネ シルバンクラミュス 雲海菅蓑 伊賀道中合羽 ランサーペルリーヌ コーラーペンダント マーヴィタスラム ナバーチマント チルコサッシュ カリスフェザー サバントチェーン ラベジャーピアス タントラピアス オリゾンピアス ゴエティアピアス エストクルピアス レイダーピアス クリードピアス ベイルピアス フェリンピアス アエドピアス シルバンピアス 雲海耳飾 伊賀耳飾 ランサーピアス コーラーピアス マーヴィピアス ナバーチピアス チルコピアス カリスピアス サバントピアス ピュシアサッシュ+1 キャリアーサッシュ
+      クラーケンクラブ 玄武盾 守りの指輪 妖蟲の髪飾り+1 アルコンリング 胡蝶のイヤリング 素破の耳 磁界の耳 幽界の耳 ラジャスリング ブルタルピアス ロケイシャスピアス エボカーリング ラジャスリング 八輪の帯 火輪の帯 土輪の帯 水輪の帯 風輪の帯 氷輪の帯 雷輪の帯 光輪の帯 闇輪の帯 フォシャゴルゲット フォシャベルト ノーヴィオピアス ノーヴィアピアス ニヌルタサッシュ ガネーシャマーラー ウィトフルベルト インカントストーン ジーゲルサッシュ ストロファデピアス プロリクスリング シェルターリング ブラキュラピアス エフェドラリング ハオマリング マリソンメダル デビリスメダル エポナリング ギフトピアス ヘカテーピアス ラベジャーゴルジェ タントラネックレス オリゾンケープ ゴエティアチェーン エストクルカラー レイダーベルト クリードカラー ベイルベルト フェリンマント アエドベルト シルバンスカーフ 雲海喉輪 伊賀襟巻 ランサートルク コーラーサッシュ マーヴィスカーフ ナバーチチョーカー チルコネックレス カリスネックレス サバントテーシス ラベジャーオーブ タントラタスラム オリゾンロケット ゴエティアマント エストクルケープ レイダーブーメラン クリードボードリエ ベイルチョーカー フェリンネックレス アエドマティネ シルバンクラミュス 雲海菅蓑 伊賀道中合羽 ランサーペルリーヌ コーラーペンダント マーヴィタスラム ナバーチマント チルコサッシュ カリスフェザー サバントチェーン ラベジャーピアス タントラピアス オリゾンピアス ゴエティアピアス エストクルピアス レイダーピアス クリードピアス ベイルピアス フェリンピアス アエドピアス シルバンピアス 雲海耳飾 伊賀耳飾 ランサーピアス コーラーピアス マーヴィピアス ナバーチピアス チルコピアス カリスピアス サバントピアス ピュシアサッシュ+1 キャリアーサッシュ ハーティーピアス
     ]
 
     # Old RMEs and DNC Male.
@@ -34,89 +34,39 @@ namespace :parse do
       21067, 21068, 21069, 20794, 20795, 21485, 21143, 21144, 20835, 20836, 20649, 20650, 20555, 20556, 20647, 20648, 21060, 21061, 21062, 21063,
       20745, 20746, 20884, 20885, 20882, 20883, 20750, 20751, 21139, 21140, 20929, 20930, 20559, 20560, 21210, 21211, 22115, 20484, 20485, 20972,
       20973, 21015, 21016, 21017, 21018, 21019, 21020, 20974, 20975, 20927, 20928, 20970, 20971, 27846, 23125, 23460, 28129, 23259, 23594, 27702,
-      23058, 23393, 28262, 23326, 23661, 27982, 23192, 23527, 18571, 18572]
-
-    def convert_job(jobs)
-      if jobs == 8388606
-        { ja: 'All Jobs',
-          en: 'All Jobs' }
-      else
-        job2bin = format('%#024b', jobs).split('').map(&:to_i).reverse
-        { ja: Job.pluck(:jas).zip(job2bin).to_h.select { |_k, v| v == 1 }.keys.join,
-          en: Job.pluck(:ens).zip(job2bin).to_h.select { |_k, v| v == 1 }.keys.join('/') }
-      end
-    end
+      23058, 23393, 28262, 23326, 23661, 27982, 23192, 23527, 18571, 18572
+    ]
 
     benchmark_result = Benchmark.realtime do
       JSON.parse(res).each do |data|
         # IL119 gears and slots w/o IL or Instrument, Bell
-        item = data[1][0] # items.lua
-        item[:description] = data[1][1] # item_descriptions.lua
-        item = item.with_indifferent_access
+        next if ignore_list.include?(data[0].to_i)
+        next unless data[1][0]['item_level'] == 119 || data[1][0]['level'] == 99 && ([2, 8, 512, 1024, 6144, 24576, 32768].include?(data[1][0]['slots']) || [41, 42, 45].include?(data[1][0]['skill'])) || keep_list.include?(data[1][0]['ja'])
 
-        next if ignore_list.include?(item[:id])
-        next unless item[:item_level] == 119 || item[:level] == 99 && ([2, 8, 512, 1024, 6144, 24576, 32768].include?(item[:slots]) || [41, 42, 45].include?(item[:skill])) || keep_list.include?(item[:ja])
-
-        begin
-          jobs = convert_job(item[:jobs])
-          @item = Item.find_or_create_by(id: item[:id])
-          @item.stat = Stat.find_or_create_by(item_id: @item.id)
-          @item.update(
-            slot: item[:slots],
-            job: item[:jobs],
-            ja: item[:ja],
-            en: item[:en],
-            wiki_id: @item[:wiki_id] || Wiki.find_by(ja: item[:ja])&.id || Wiki.find_by(ja: item[:ja].gsub(/(\+[1-3]$|改$|^[真極])/, ''))&.id
-          )
-
-          next if item[:description].blank?
-
-          text = item[:description][:ja]&.gsub(/\n/, ' ')
-          @item.update(
-            description: {
-              ja: "<a href='http://wiki.ffo.jp/html/#{@item[:wiki_id]}.html' target='_blank'>#{item[:ja]}</a><br>#{item[:description][:ja]&.gsub(/\n/, '<br>')}<br>#{jobs[:ja]}",
-              en: "<a href='http://wiki.ffo.jp/html/#{@item[:wiki_id]}.html' target='_blank'>#{item[:en]}</a><br>#{item[:description][:en]&.gsub(/\n/, '<br>')}<br>#{jobs[:en]}",
-              # raw: item[:description][:ja]&.gsub(/\n/, ' ')
-            })
-
-          # get keys && values from text.
-          hash = text.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/).map do |arg|
-            arg.split(/\s/).flat_map do |stat|
-              stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?$/)
-            end.to_h
-          end
-          # .to_i values && 'pet_' prefix to some keys.
-          hash = hash[0].merge(hash[1]&.map { |k, v| ["ペット_#{k}", v] }.to_h).transform_values(&:to_i)
-          # get key that exists in stat model.
-          hash = hash.select { |k, _v| @item.stat.attributes.keys.member?(k) }
-          @item.stat.update(hash)
-
-        rescue StandardError => e
-          puts e, item.inspect
-        end
+        Item.find_or_create_by(id: data[0].to_i).init(data)
       end
     end
     p benchmark_result
   end
 
   task statlist: :environment do
-    result = {}
-    result.default = 0
+    result = Hash.new(0)
     Item.all.each do |item|
-      description = item.description.raw
-
-      next if description.blank?
-      hash = description.split(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/).map { |arg|
-        arg.split(/\s/).flat_map { |stat|
-          stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?/)
-        }.to_h
-      }
-      hash = hash[0].merge(hash[1]&.map { |k, v| ["ペット_#{k}", v] }.to_h).transform_values(&:to_i)
-      hash.keys.each { |key| result[key] += 1 }
+      str = item.description[:raw]
+      def status(str)
+        str.split(/\s/).flat_map { |stat| stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?$/) }.to_h
+      end
+      sep = str.partition(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)
+      res = status(sep[0])&.merge(status(sep[2]).transform_keys { |key| sep[1] + key }).map do |key, value|
+        [key.to_sym, value.to_i]
+      end .compact.to_h
+      res.keys.each { |key| result[key] += 1 }
+    rescue StandardError => e
+      puts e, item.inspect
     end
-
-    result = result.reject{ |k, _v| Stat.column_names.member?(k) || k.include?("スキル") }
-    pp result.sort_by(&:last).to_h
+    # exclude column if already exists.
+    column_names = Stat.column_names
+    p result.reject { |key, _value| column_names.member?(key.to_s) || key.to_s.include?('スキル') }.sort_by(&:last).to_h
   end
 
   task sample: :environment do
