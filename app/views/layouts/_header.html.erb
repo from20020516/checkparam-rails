@@ -16,7 +16,7 @@
       </ul>
       <%= form_with model: current_user, class: 'watch form-inline dropleft' do |f| %>
         <a class='nav-link p-0' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-          <%= image_tag current_user.auth[:extra][:raw_info][:profile_image_url_https], class: 'border border-light', size: '48x48' %>
+          <%= image_tag current_user.auth[:extra][:raw_info][:profile_image_url_https], onerror: "this.onerror=null;this.src='/icons/default_profile.png';", class: 'border border-light', size: '48x48' %>
         </a>
         <div class='dropdown-menu text-center' aria-labelledby='navbarDropdown'>
           <div class='dropdown-item'>
