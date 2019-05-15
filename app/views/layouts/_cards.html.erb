@@ -10,7 +10,7 @@
               <a href='<%= gearset_path(set.id) %>' class='card rounded-0 bg-transparent m-3'>
                 <div class='card-body card-icon row p-0 m-0'>
                   <div class='col-12 bg-transparent'>
-                    <%= image_tag YAML.load(set.auth)[:extra][:raw_info][:profile_image_url_https], size: '64', align: 'left' %>
+                    <%= image_tag YAML.load(set.auth)[:extra][:raw_info][:profile_image_url_https], onerror: "this.onerror=null;this.src='/icons/default_profile.png';", size: '64', align: 'left' %>
                     <h5 class='card-title mt-2'><%= set[I18n.locale] %></h5>
                     <h6 class='card-subtitle'>@<%= YAML.load(set.auth)[:info][:nickname] %></h6>
                   </div>
