@@ -14,7 +14,7 @@ class Item < ApplicationRecord
     str = description[:raw].sub(/(デュナミス〔Ｄ〕:|潜在能力:)/, '')
     def status(str)
       hash = Hash.new(0)
-      str.split(/\s/).flat_map { |stat| stat.sub(/ユニティランク\:(.+)([+-])\d+～(\d+%?)/, '\1\2\3').scan(/(\D+?)([+-]?\d+)%?$/) }.each { |key,value| hash[key] += value.to_i }
+      str.split(/\s/).flat_map { |stat| stat.sub(/ユニティランク\:(.+)([+-])\d+～(\d+%?)/, '\1\2\3').scan(/(\D+?)([+-]?\d+)%?$/) }.each { |key, value| hash[key] += value.to_i }
       hash
     end
     sep = str.partition(/ペット:|召喚獣:|飛竜:|オートマトン:|羅盤:/)
@@ -23,7 +23,7 @@ class Item < ApplicationRecord
     end .compact.to_h # TODO: use 'sep[1]+key' instead 'ペット_'
     begin
       stat.update(res)
-    rescue => e
+    rescue StandardError => e
       Stat.create(id: id).update(res)
     end
   end
@@ -43,15 +43,17 @@ class Item < ApplicationRecord
     begin
       # byebug
       update(description: {
-              ja: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:ja]}</a><br>#{item_data[:description][:ja]&.gsub(/\n/, '<br>')}<br>#{convert_job(item_data[:jobs])[:ja]}",
-              en: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:en]}</a><br>#{item_data[:description][:en]&.gsub(/\n/, '<br>')}<br>#{convert_job(item_data[:jobs])[:en]}",
-              raw: item_data[:description][:ja] })
-    rescue => e
+               ja: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:ja]}</a><br>#{item_data[:description][:ja]&.gsub(/\n/, '<br>')}<br>#{convert_job(item_data[:jobs])[:ja]}",
+               en: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:en]}</a><br>#{item_data[:description][:en]&.gsub(/\n/, '<br>')}<br>#{convert_job(item_data[:jobs])[:en]}",
+               raw: item_data[:description][:ja]
+             })
+    rescue StandardError => e
       puts e, item_data
       update(description: {
-        ja: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:ja]}</a><br><br>#{convert_job(item_data[:jobs])[:ja]}",
-        en: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:en]}</a><br><br>#{convert_job(item_data[:jobs])[:en]}",
-        raw: '' })
+               ja: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:ja]}</a><br><br>#{convert_job(item_data[:jobs])[:ja]}",
+               en: "<a href='http://wiki.ffo.jp/html/#{self[:wiki_id]}.html' target='_blank'>#{item_data[:en]}</a><br><br>#{convert_job(item_data[:jobs])[:en]}",
+               raw: ''
+             })
     end
     parse
   end

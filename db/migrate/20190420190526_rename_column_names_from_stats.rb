@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameColumnNamesFromStats < ActiveRecord::Migration[5.2]
   def change
     rename_column :stats, :"ペット:命中", :"ペット_命中"
