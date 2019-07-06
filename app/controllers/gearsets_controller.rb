@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class GearsetsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :update]
-  before_action :set_current_gears, only: [:index, :create]
+  before_action :authenticate_user!, only: %i[create update]
+  before_action :set_current_gears, only: %i[index create]
 
   # Fire when a Equipment changed with new set.
   def create

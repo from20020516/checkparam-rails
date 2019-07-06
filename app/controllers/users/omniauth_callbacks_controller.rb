@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def twitter
     callback_from :twitter
   end
 
   private
+
   def callback_from(provider)
     provider = provider.to_s
     @user = User.find_for_oauth(request.env['omniauth.auth'])

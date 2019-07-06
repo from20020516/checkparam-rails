@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Gearset < ApplicationRecord
   belongs_to :user
   belongs_to :job
@@ -11,7 +13,7 @@ class Gearset < ApplicationRecord
 
   def items
     items = Item.current(gears.values).group_by(&:id)
-    gears.map { |k,v| [k.to_sym, items[v]&.first] }.to_h.with_indifferent_access
+    gears.map { |k, v| [k.to_sym, items[v]&.first] }.to_h.with_indifferent_access
   end
 
   def checkparam
