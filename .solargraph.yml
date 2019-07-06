@@ -1,0 +1,20 @@
+include:
+- "**/*.rb"
+exclude:
+- "spec/**/*"
+- "test/**/*"
+- "vendor/**/*"
+reporters:
+- rubocop
+- require_not_found
+# https://github.com/castwide/solargraph/issues/87
+require:
+- actioncable
+- actionmailer
+- actionpack
+- actionview
+- activejob
+- activemodel
+- activerecord
+- activestorage
+- activesupport
