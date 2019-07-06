@@ -1,4 +1,4 @@
-<%# if false %>
+<% if false %>
   <%= render 'layouts/special' if lookup_context.find_all('layouts/_special').any? %>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field form-group row">
@@ -11,17 +11,17 @@
         <%= f.password_field :password, autocomplete: "current-password", value: "password", readonly: "readonly", class: "form-control" %>
       </div>
     </div>
-  
+
     <% if devise_mapping.rememberable? -%>
       <div class="field">
         <%= f.check_box :remember_me, {checked: true} %>
         <%= f.label :remember_me %>
       </div>
     <% end -%>
-  
+
     <div class="actions mb-4">
       <%= f.submit "Login", class: "btn btn-lg btn-outline-secondary btn-block" %>
     </div>
   <% end %>
-<%# end %>
+<% end %>
 <%= render "devise/shared/links" %>
