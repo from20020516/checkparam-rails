@@ -35,7 +35,7 @@
         </div>
       <% end %>
     <% else %>
-      <%= button_to 'Login with Twitter', user_twitter_omniauth_authorize_path, class: 'btn btn-secondary' %>
+      <%= button_to 'Login with Twitter', user_twitter_omniauth_authorize_path, method: :post, class: 'btn btn-secondary' %>
     <% end %>
   </div>
 </nav>

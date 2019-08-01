@@ -7,7 +7,7 @@
     <h1><span>/checkparam</span> your Ideas.</h1>
     <div class='my-3'>
       <%= t('welcome_html') %>
-      <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, class: 'btn btn-secondary btn-lg my-2' %>
+      <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, method: :post, class: 'btn btn-secondary btn-lg my-2' %>
     </div>
     <div class='text-left bg-dark'>
       <ul>
