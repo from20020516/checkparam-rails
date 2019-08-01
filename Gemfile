@@ -11,6 +11,7 @@ gem 'hirb'
 gem 'hirb-unicode'
 gem 'jbuilder'
 gem 'mini_racer', platforms: :ruby
+gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'puma'
 gem 'rails', '~> 5.2.3'
