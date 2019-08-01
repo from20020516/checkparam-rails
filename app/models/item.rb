@@ -31,7 +31,7 @@ class Item < ApplicationRecord
   def convert_job(bin)
     return { ja: 'All Jobs', en: 'All Jobs' } if bin.to_i == 8388606
 
-    res = Job.pluck(:jas, :ens).zip(format('%#024b', 386).split('').map(&:to_i).reverse).map { |k, v| k * v }.reject(&:blank?).transpose
+    res = Job.pluck(:jas, :ens).zip(format('%#024b', bin.to_i).split('').map(&:to_i).reverse).map { |k, v| k * v }.reject(&:blank?).transpose
     { ja: res[0].join, en: res[1].join('/') }
   end
 
