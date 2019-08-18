@@ -1,19 +1,35 @@
 # Checkparam
-> a Web site that provides gearset save and share for <span>Final Fantasy XI
+> a Web site that provides gearset save and share for Final Fantasy XI.
 
-- `config/master.key`
-- `git clone https://github.com/Windower/Resources`
-- `public/icons.7z`
-- `apt install liblua5.1-0`
-- `rails parse:init`
+## Requirements:
+- Docker
+- [Twitter API Key](https://developer.twitter.com/en/application/use-case)
 
-# TO-DO
+## Usage:
+```sh
+$ git clone https://github.com/from20020516/checkparam-rails.git
+$ cd checkparam-rails/
+$ git submodule update -i
+$ docker-compose build
+$ docker-compose run app bundle install
+$ rm config/credentials.yml.enc
+$ docker-compose run app rails credentials:edit
+```
+Add your Twitter API keys.
+```yml
+# aws:
+#   access_key_id: 123
+#   secret_access_key: 345
 
-- [x] DB Restructure.
-- [x] Change description method.
-- [x] Ajax /checkparam score.
-- [x] Add wiki link to popup.
-- [x] Use I18n instead lang.
-- [x] Stats translation => 日本語 key available.
-- [x] Carousel style gearsets preview
-- [ ] Users Comment
+# Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.
+secret_key_base: # Auto generated keybase.
+twitter:
+  twitter_api_key: # ADD YOUR API KEY HERE
+  twitter_api_secret: # ADD YOUR API SECRET HERE
+```
+```
+$ docker-compose run app rails db:migrate
+$ docker-compose run app rails db:seed
+$ docker-compose up
+$ curl localhost:3000
+```

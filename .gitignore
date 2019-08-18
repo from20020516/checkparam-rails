@@ -23,4 +23,4 @@ public/icons.7z
 config/master.key
 app/assets/images/special.png
 app/views/layouts/_special.html.erb
-.bashrc
+docker-compose.yml
