@@ -8,7 +8,6 @@ gem 'bootsnap', require: false
 gem 'colorize'
 gem 'devise'
 gem 'hirb'
-gem 'hirb-unicode'
 gem 'jbuilder'
 gem 'mini_racer', platforms: :ruby
 gem 'omniauth-rails_csrf_protection'
@@ -17,6 +16,7 @@ gem 'puma'
 gem 'rails', '~> 5.2.3'
 gem 'rails-i18n'
 gem 'redis'
+gem 'rubocop', '~> 0.74', require: false
 gem 'rufus-lua'
 gem 'sassc-rails'
 gem 'sqlite3'
