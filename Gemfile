@@ -5,7 +5,6 @@ ruby '2.6.3'
 
 gem 'bcrypt'
 gem 'bootsnap', require: false
-gem 'colorize'
 gem 'devise'
 gem 'hirb'
 gem 'jbuilder'
@@ -21,7 +20,6 @@ gem 'rufus-lua'
 gem 'sassc-rails'
 gem 'sqlite3'
 gem 'uglifier'
-gem 'whenever', require: false
 
 group :development, :test do
   gem 'better_errors'
