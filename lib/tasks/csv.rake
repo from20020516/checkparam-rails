@@ -8,6 +8,7 @@ namespace :csv do
     ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata encrypted_password]
   end
 
+  desc "show table names."
   task status: :environment do
     tables.each do |table|
       model = table.classify.constantize
@@ -15,6 +16,7 @@ namespace :csv do
     end
   end
 
+  desc "export DB to csv."
   task :export, ['name'] => :environment do |_, args|
     t = args.name ? [args.name] : tables
     t.each do |table|
@@ -39,6 +41,7 @@ namespace :csv do
     end
   end
 
+  desc "import csv to DB."
   task :import, ['name'] => :environment do |_, args|
     t = args.name ? [args.name] : tables
     t.each do |table|
