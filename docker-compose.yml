@@ -2,41 +2,28 @@ version: '3'
 services:
   app:
     build: .
-    command: bundle exec puma -C config/puma.rb
+    command: bundle exec rails s -b 0.0.0.0 -p 3000
     volumes:
       - .:/webapp
-      - bundle-data:/usr/local/bundle
-      - public-data:/webapp/public
-      - tmp-data:/webapp/tmp
+      - ./vendor/bundle:/usr/local/bundle
     environment:
-      - EDITOR=nano
-      # - RAILS_ENV=production
-      - RAILS_ENV=development
       - LUA_LIB=/var/lib/dpkg/info/liblua5.1-0:amd64.md5sums
-  nginx:
-    build: containers/nginx
-    ports:
-      - '3000:3000'
+      - EDITOR=nano
+      - RAILS_ENV=production
+  https-portal:
+    image: steveltn/https-portal:1
+    restart: always
+    environment:
+      # STAGE: 'production'
+      DOMAINS: 'checkparam.com -> http://app:3000'
+      STAGE: 'local'
+      # DOMAINS: 'localhost -> http://app:3000'
     volumes:
-      - public-data:/webapp/public
-      - tmp-data:/webapp/tmp
+      - ssl-certs:/var/lib/https-portal
+    ports:
+      - '80:80'
+      - '443:443'
     depends_on:
       - app
-  # https-portal:
-  #   image: steveltn/https-portal:1
-  #   restart: always
-  #   environment:
-  #     FORCE_RENEW: 'false'
-  #     STAGE: 'production'
-  #     DOMAINS: 'checkparam.com -> http://nginx:3000'
-  #     # STAGE: 'local'
-  #     # DOMAINS: 'localhost -> http://nginx:3000'
-  #   links:
-  #     - nginx
-  #   ports:
-  #     - '80:80'
-  #     - '443:443'
 volumes:
-  bundle-data:
-  public-data:
-  tmp-data:
+  ssl-certs:
