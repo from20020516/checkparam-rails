@@ -12,7 +12,7 @@ gem 'mini_racer', platforms: :ruby
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'puma'
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 6.0.0'
 gem 'rails-i18n'
 gem 'redis'
 gem 'rubocop', '~> 0.74', require: false
