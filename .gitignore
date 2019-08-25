@@ -13,6 +13,7 @@
 !jobs.csv
 master.key
 icons.7z
+.env
 
 .vscode/
 bin/

@@ -9,15 +9,13 @@ services:
     environment:
       - LUA_LIB=/var/lib/dpkg/info/liblua5.1-0:amd64.md5sums
       - EDITOR=nano
-      - RAILS_ENV=production
+      - RAILS_ENV=${ENV}
   https-portal:
     image: steveltn/https-portal:1
     restart: always
     environment:
-      # STAGE: 'production'
-      DOMAINS: 'checkparam.com -> http://app:3000'
-      STAGE: 'local'
-      # DOMAINS: 'localhost -> http://app:3000'
+      STAGE: ${STAGE}
+      DOMAINS: '${DOMAIN} -> http://app:3000, www.${DOMAIN} -> http://app:3000'
     volumes:
       - ssl-certs:/var/lib/https-portal
     ports:
