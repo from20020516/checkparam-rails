@@ -6,6 +6,7 @@ ruby '2.6.3'
 gem 'bcrypt'
 gem 'bootsnap', require: false
 gem 'devise'
+gem 'dotenv-rails'
 gem 'hirb'
 gem 'jbuilder'
 gem 'mini_racer', platforms: :ruby
