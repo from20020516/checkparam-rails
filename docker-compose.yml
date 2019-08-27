@@ -2,14 +2,14 @@ version: '3'
 services:
   app:
     build: .
-    command: bundle exec rails s -b 0.0.0.0 -p 3000
+    command: bash -c "cron && bundle exec whenever --update-crontab && bundle exec rails s -b 0.0.0.0 -p 3000"
     volumes:
       - .:/webapp
       - ./vendor/bundle:/usr/local/bundle
     environment:
       - LUA_LIB=/var/lib/dpkg/info/liblua5.1-0:amd64.md5sums
       - EDITOR=nano
-      - RAILS_ENV=${ENV}
+      - RAILS_ENV=${APP_ENV}
   https-portal:
     image: steveltn/https-portal:1
     restart: always
