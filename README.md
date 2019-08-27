@@ -9,9 +9,10 @@
 ```sh
 $ git clone https://github.com/from20020516/checkparam-rails.git
 $ cd checkparam-rails/
-$ git submodule update -i
+$ git submodule foreach git pull origin master
 $ docker-compose build
 $ docker-compose run app bundle install
+$ echo -e 'DOMAIN=localhost\nSTAGE=local\nAPP_ENV=development' > .env
 $ rm config/credentials.yml.enc
 $ docker-compose run app rails credentials:edit
 ```
@@ -31,5 +32,5 @@ twitter:
 $ docker-compose run app rails db:migrate
 $ docker-compose run app rails db:seed
 $ docker-compose up
-$ curl localhost:3000
+$ curl localhost
 ```

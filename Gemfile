@@ -21,9 +21,9 @@ gem 'rufus-lua'
 gem 'sassc-rails'
 gem 'sqlite3'
 gem 'uglifier'
+gem 'whenever', require: false
 
 group :development, :test do
-  gem 'better_errors'
   gem 'binding_of_caller'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'listen'
@@ -32,6 +32,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'better_errors'
   gem 'web-console'
 end
 
