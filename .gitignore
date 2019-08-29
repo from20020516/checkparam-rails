@@ -8,6 +8,7 @@
 *.sqlite3-journal
 *.log
 *.csv
+*.sh
 !.keep
 !slots.csv
 !jobs.csv
