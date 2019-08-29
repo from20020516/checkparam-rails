@@ -29,11 +29,11 @@ tables.each do |table|
       hash = row.to_h.select { |k, _v| model.column_names.member?(k) }
       model.find_or_create_by(hash)
     rescue StandardError => e
-      # pp e
+      pp e
       break
     end
   rescue StandardError => e
-    # pp e
+    pp e
   end
   puts "Import #{table}.csv (#{model.all.length} Records)"
 end

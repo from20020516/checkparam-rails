@@ -103,16 +103,16 @@ namespace :parse do
       end
 
       Item.all.each do |item|
-        next if item.wiki.present?
+        next if item.wiki_id.present?
 
         wiki_exact = Wiki.find_by(ja: item.ja)
         if wiki_exact.present?
           item.update(wiki_id: wiki_exact.id)
-          # puts [item.id, item.ja].to_s
+          puts [item.id, item.ja].to_s
         else
           wiki_alias = Wiki.find_by(ja: item.ja.gsub(/(\+[1-3]$|改$|^[真極])/, ''))
-          item.update(wiki_id: wiki_alias.id)
-          # puts [item.id, item.ja].to_s
+          item.update(wiki_id: wiki_alias.id) if wiki_alias&.id
+          puts [item.id, item.ja].to_s
         end
       end
     end

@@ -6,7 +6,8 @@ namespace :update do
   task items: :environment do
     sh "wget https://github.com/ProjectTako/ffxi-addons/raw/master/equipviewer/icons.7z -O public/icons.7z && \
         7za e public/icons.7z -aos -opublic/icons/ icons/64/*.png && \
-        git submodule foreach git pull origin master && \
+        cd Resources && git pull && cd .. && \
+        rails parse:wiki && \
         rails parse:items && \
         rails csv:export"
   end
