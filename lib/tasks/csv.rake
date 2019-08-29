@@ -20,7 +20,7 @@ namespace :csv do
   task :export, ['name'] => :environment do |_, args|
     t = args.name ? [args.name] : tables
     t.each do |table|
-      puts table
+      puts "[Export] #{table}.csv"
       model = table.classify.constantize
       column_names = model.column_names - %w[created_at updated_at]
       begin
@@ -45,7 +45,7 @@ namespace :csv do
   task :import, ['name'] => :environment do |_, args|
     t = args.name ? [args.name] : tables
     t.each do |table|
-      puts table
+      puts "[Import] #{table}.csv"
       model = table.classify.constantize
       primary_key = model.primary_key.to_sym
       column_names = (model.column_names - %w[created_at updated_at]).map(&:to_sym)
@@ -55,12 +55,11 @@ namespace :csv do
           p [model, hash[primary_key]] if hash[primary_key] % 1000 == 0
           model.find_or_initialize_by(primary_key => hash[primary_key]).update(hash)
         rescue StandardError => e
-          pp e, hash
-          byebug
+          pp "ERR: #{e}", hash
           break
         end
       rescue StandardError => e
-        pp e
+        pp "ERR: #{e}"
       end
     end
   end

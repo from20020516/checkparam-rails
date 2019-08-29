@@ -47,7 +47,7 @@ namespace :parse do
         Item.find_or_create_by(id: data[0].to_i).init(data)
       end
     end
-    p benchmark_result
+    p "completed parse in #{benchmark_result} seconds."
   end
 
   desc "show the type of stat."
