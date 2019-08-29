@@ -7,18 +7,18 @@
 *.sqlite3
 *.sqlite3-journal
 *.log
-*.csv
 *.sh
-!.keep
-!slots.csv
-!jobs.csv
+*.txt
 master.key
 icons.7z
+users.csv
+gearsets.csv
 .env
 
 .vscode/
-bin/
 node_modules/
-public/assets/
-tmp/
-vendor/bundle/
+public/*/*
+tmp/*/*
+vendor/bundle/ruby/2.6.0/*
+
+!.keep

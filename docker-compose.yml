@@ -5,7 +5,7 @@ services:
     command: bash -c "cron && bundle exec whenever --update-crontab && bundle exec rails s -b 0.0.0.0 -p 3000"
     volumes:
       - .:/webapp
-      - ./vendor/bundle:/usr/local/bundle
+      - ./vendor/bundle/ruby/2.6.0:/usr/local/bundle
     environment:
       - LUA_LIB=/var/lib/dpkg/info/liblua5.1-0:amd64.md5sums
       - EDITOR=nano
