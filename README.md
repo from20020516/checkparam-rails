@@ -9,6 +9,7 @@
 ```sh
 $ git clone https://github.com/from20020516/checkparam-rails.git
 $ cd checkparam-rails/
+$ git clone https://github.com/Windower/Resources.git
 $ docker-compose build
 $ docker-compose run app bundle install
 $ echo -e 'DOMAIN=localhost\nSTAGE=local\nAPP_ENV=development' > .env

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:about]
 
   # Fire when job/set changed.
   def update
@@ -13,6 +13,9 @@ class UsersController < ApplicationController
   def destroy
     current_user.destroy
     redirect_to root_path
+  end
+  
+  def about
   end
 
   private
