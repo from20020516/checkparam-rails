@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_04_23_034616) do
 
-  create_table "gearsets", force: :cascade do |t|
+  create_table "gearsets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "job_id", default: 1, null: false
     t.integer "set_id", default: 1, null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_034616) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "items", force: :cascade do |t|
+  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.integer "slot"
     t.integer "job"
     t.string "ja"
@@ -47,20 +47,20 @@ ActiveRecord::Schema.define(version: 2019_04_23_034616) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "jobs", force: :cascade do |t|
+  create_table "jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.string "ja"
     t.string "en"
     t.string "ens"
     t.string "jas"
   end
 
-  create_table "slots", force: :cascade do |t|
+  create_table "slots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.integer "pos"
     t.string "en"
     t.integer "img"
   end
 
-  create_table "stats", primary_key: "item_id", force: :cascade do |t|
+  create_table "stats", primary_key: "item_id", id: :integer, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.integer "HP", default: 0
     t.integer "MP", default: 0
     t.integer "STR", default: 0
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_034616) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.datetime "remember_created_at"
@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_034616) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "wikis", force: :cascade do |t|
+  create_table "wikis", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.text "ja"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
