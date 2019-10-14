@@ -1,8 +1,8 @@
-version: '3'
+version: '3.2'
 services:
   app:
     build: .
-    command: bash -c "cron && bundle exec whenever --update-crontab && bundle exec rails s -b 0.0.0.0 -p 3000"
+    command: bash -c "cron && bundle install && bundle exec whenever --update-crontab && bundle exec rails s -b 0.0.0.0 -p 80"
     volumes:
       - .:/webapp
       - bundle-volume:/usr/local/bundle
@@ -30,7 +30,7 @@ services:
       SERVER_NAMES_HASH_BUCKET_SIZE: 256
       CLIENT_MAX_BODY_SIZE: 256M
       STAGE: ${STAGE}
-      DOMAINS: 'db.${DOMAIN} -> http://phpmyadmin, ${DOMAIN} -> http://app:3000'
+      DOMAINS: 'db.${DOMAIN} -> http://phpmyadmin, ${DOMAIN} -> http://app'
 volumes:
   bundle-volume:
   ssl-certs:
