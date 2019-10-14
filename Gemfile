@@ -10,6 +10,7 @@ gem 'dotenv-rails'
 gem 'hirb'
 gem 'jbuilder'
 gem 'mini_racer', platforms: :ruby
+gem 'mysql2'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'puma'
