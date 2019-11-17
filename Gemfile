@@ -20,6 +20,7 @@ gem 'redis'
 gem 'rubocop', '~> 0.74', require: false
 gem 'rufus-lua'
 gem 'sassc-rails'
+gem 'sqlite3'
 gem 'uglifier'
 gem 'whenever', require: false
 
