@@ -8,7 +8,6 @@ namespace :update do
         7za e public/icons.7z -aos -opublic/icons/ icons/64/*.png && \
         cd Resources && git pull && cd .. && \
         rails parse:wiki && \
-        rails parse:items && \
-        rails csv:export"
+        rails parse:items"
   end
 end

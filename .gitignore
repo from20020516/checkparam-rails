@@ -4,21 +4,20 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+*.sql
 *.sqlite3
 *.sqlite3-journal
 *.log
 *.sh
-*.txt
 master.key
 icons.7z
-users.csv
-gearsets.csv
 .env
+.irb_history
 
 .vscode/
 node_modules/
 public/*/*
-tmp/*/*
+tmp/*
 vendor/bundle/ruby/2.6.0/*
 Resources/
 

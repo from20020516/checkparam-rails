@@ -1,21 +1,30 @@
 version: '3.2'
 services:
-  app:
+  checkparam:
     build: .
-    command: bash -c "cron && bundle install && bundle exec whenever --update-crontab && bundle exec rails s -b 0.0.0.0 -p 80"
+    command: bash -c "cron && bundle exec whenever --update-crontab && rails s -b 0.0.0.0 -p 80"
     volumes:
-      - .:/webapp
+      - .:/var/www/html
       - bundle-volume:/usr/local/bundle
     environment:
       - LUA_LIB=/var/lib/dpkg/info/liblua5.1-0:amd64.md5sums
       - EDITOR=nano
       - RAILS_ENV=${APP_ENV}
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --default_authentication_plugin=mysql_native_password
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: production
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:
       - PMA_HOST=${DB_HOST}
     volumes:
-      - ./php.ini:/usr/local/etc/php/php.ini
       - session-volume:/sessions
   https-portal:
     image: steveltn/https-portal:latest
@@ -30,8 +39,9 @@ services:
       SERVER_NAMES_HASH_BUCKET_SIZE: 256
       CLIENT_MAX_BODY_SIZE: 256M
       STAGE: ${STAGE}
-      DOMAINS: 'db.${DOMAIN} -> http://phpmyadmin, ${DOMAIN} -> http://app'
+      DOMAINS: 'db.${DOMAIN} -> http://phpmyadmin, ${DOMAIN} -> http://checkparam'
 volumes:
   bundle-volume:
+  mysql-volume:
   ssl-certs:
   session-volume:
