@@ -3,7 +3,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
-Import CSV.
+# Import CSV.
 tables = ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata]
 tables.each do |table|
   model = table.classify.constantize
