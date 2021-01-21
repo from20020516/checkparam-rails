@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.8"
 services:
   checkparam:
     build: .
@@ -7,12 +7,14 @@ services:
       - ..:/var/www:delegated
     environment:
       - BUNDLE_PATH=/var/www/vendor/bundle
-      - EDITOR='code --wait'
+      - EDITOR=code --wait
   mysql:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: development
+    volumes:
+      - mysql:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
@@ -20,3 +22,5 @@ services:
     tmpfs: /sessions
     ports:
       - 8080:80
+volumes:
+  mysql:
