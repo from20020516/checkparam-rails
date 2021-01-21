@@ -18,8 +18,9 @@ icons.7z
 node_modules/
 public/*/*
 tmp/*
-vendor/bundle/ruby/2.6.0/*
-Resources/
+vendor/
 
 !public/icons/.png
 !.keep
+
+/config/master.key
