@@ -1,0 +1,8 @@
+services:
+  checkparam:
+    environment:
+      RAILS_ENV: production
+    ports:
+      - 80:80
+    working_dir: /var/www
+    command: sh -c 'rails tmp:clear && rails assets:precompile && rails s -p 80'

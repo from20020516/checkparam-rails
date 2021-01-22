@@ -11,13 +11,13 @@
 - [Cloning and Open this repository in VSCode.](https://code.visualstudio.com/docs/editor/versioncontrol#_cloning-a-repository)
 - [Install Remote Development Extension](https://code.visualstudio.com/docs/remote/remote-overview)
 - `Remote-Containers: Rebuild and Reopen in Container` (Found on Ctrl+Shift+P OR ⌘+Shift+P)
-- Add `.env` file with your Twitter API keys. (Callback URI: `http://127.0.0.1:3000/users/auth/twitter/callback`)
+- Add `.env` file with your Twitter API keys. (Callback URI: `http://localhost:3000/users/auth/twitter/callback`)
 - Exec commands inside devcontainer.
 ```
-bundle install --path vendor/bundle
-mysql -hmysql -uroot --password=secret development < db/development.sql
+bundle
+mysql -hmysql -uroot --password=secret checkparam < .devcontainer/checkparam.sql
 rails update:items
-rails s -b 0.0.0.0
+rails s
 ```
 
 ## Docs:

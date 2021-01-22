@@ -12,7 +12,7 @@ services:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: development
+      MYSQL_DATABASE: checkparam
     volumes:
       - mysql:/var/lib/mysql
   phpmyadmin:

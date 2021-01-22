@@ -21,3 +21,4 @@ vendor/
 !.keep
 
 /config/master.key
+credentials.yml
