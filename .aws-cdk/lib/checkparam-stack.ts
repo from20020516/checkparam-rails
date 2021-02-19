@@ -26,7 +26,8 @@ export class CheckparamStack extends cdk.Stack {
       defaultDatabaseName: 'checkparam',
       scaling: {
         maxCapacity: 1,
-        minCapacity: 1
+        minCapacity: 1,
+        autoPause: cdk.Duration.minutes(15)
       },
       vpc,
       securityGroups: [vpcSg],
