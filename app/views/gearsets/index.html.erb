@@ -3,28 +3,12 @@
     <%= render 'layouts/gearset_partial' %>
   </div>
 <% else %>
-  <div class='text-center my-4'>
-    <h1><span>/checkparam</span> your Ideas.</h1>
-    <div class='my-3'>
-      <%= t('welcome_html') %>
-      <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, method: :post, class: 'btn btn-secondary btn-lg my-2' %>
+  <div class='d-flex flex-column text-center m-4'>
+    <div class='m-4'>
+      <h1><span>/checkparam</span> your Ideas.</h1>
+      <p class='m-4'><%= t('welcome_html') %></p>
     </div>
-    <div class='text-left bg-dark'>
-      <ul>
-        <li><b>Lv98以下</b>の装備は、一部を除き収録されていません。</li>
-        <li>以下の部位について、<b>IL118以下</b>の装備は一部を除き収録されていません。<br>
-          メイン / サブ / レンジ / 頭 / 胴 / 両手 / 両脚 / 両足</li>
-        <li><b>リクエストがあれば収録します。</b></li>
-      </ul>
-    </div>
-    <h2>TO-DO</h2>
-    <div class='text-left bg-dark'>
-      <ul>
-        <li>オーグメント値の入力/保存</li>
-        <li>ユーザーコメントの入力/保存</li>
-      </ul>
-    </div>
-    機能追加の要望も随時募集しています。
+    <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, method: :post, class: 'btn btn-secondary btn-lg m-4' %>
   </div>
   <%= render 'layouts/cards', columns: 3 %>
 <% end %>
