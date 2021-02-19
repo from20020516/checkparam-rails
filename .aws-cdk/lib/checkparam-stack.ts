@@ -5,6 +5,9 @@ import * as ec2 from '@aws-cdk/aws-ec2'
 import * as ecs from '@aws-cdk/aws-ecs'
 import * as lambda from '@aws-cdk/aws-lambda'
 import * as rds from '@aws-cdk/aws-rds'
+import * as s3 from '@aws-cdk/aws-s3'
+import * as s3deployment from '@aws-cdk/aws-s3-deployment'
+
 import * as dotenv from 'dotenv'
 import * as path from 'path'
 dotenv.config({ path: path.join(__dirname, '../../.env') })
@@ -36,6 +39,18 @@ export class CheckparamStack extends cdk.Stack {
       }
     })
 
+    const bucket = new s3.Bucket(this, 'Bucket', {
+      publicReadAccess: true,
+      bucketName: 'checkparam',
+      versioned: true,
+      websiteIndexDocument: 'index.html',
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    })
+    new s3deployment.BucketDeployment(this, 'BucketDeployment', {
+      sources: [s3deployment.Source.asset('./s3')],
+      destinationBucket: bucket
+    })
+
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
       code: lambda.DockerImageCode.fromImageAsset('../'),
       vpc,
@@ -55,6 +70,9 @@ export class CheckparamStack extends cdk.Stack {
     })
     new apigw.HttpApi(this, 'HttpAPI', {
       defaultIntegration: new apigwIntegrations.LambdaProxyIntegration({ handler })
+    }).addRoutes({
+      integration: new apigwIntegrations.HttpProxyIntegration({ url: `${bucket.bucketWebsiteUrl}/{proxy}` }),
+      path: '/icons/{proxy}'
     })
 
     // const pmaTask = new ecs.FargateTaskDefinition(this, 'PMATask')
@@ -72,6 +90,5 @@ export class CheckparamStack extends cdk.Stack {
     //   platformVersion: ecs.FargatePlatformVersion.VERSION1_4,
     //   securityGroups: [vpcSg]
     // })
-
   }
 }

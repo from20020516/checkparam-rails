@@ -3,4 +3,5 @@
 log/
 vendor/
 public/assets
+public/icons
 tmp/

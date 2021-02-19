@@ -4,21 +4,14 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-*.log
-*.sh
-master.key
-icons.7z
+.DS_Store
 .env
 .irb_history
-
 .vscode/
+/config/master.key
+icons.7z
+log/
 node_modules/
 public/*/*
 tmp/*
 vendor/
-
-!public/icons/.png
-!.keep
-
-/config/master.key
-credentials.yml
