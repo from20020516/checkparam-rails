@@ -5,12 +5,13 @@ ruby '2.7.2'
 
 gem 'bcrypt'
 gem 'bootsnap', require: false
-gem 'devise'
+gem "devise", git: "https://github.com/heartcombo/devise", branch: "master"
 gem 'dotenv-rails'
 gem 'hirb'
 gem 'jbuilder'
 gem 'mini_racer', platforms: :ruby
 gem 'mysql2'
+gem 'omniauth'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'puma'
