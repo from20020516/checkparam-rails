@@ -2,7 +2,6 @@
 
 namespace :csv do
   require 'csv'
-  require 'byebug'
 
   def tables
     ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata encrypted_password]
@@ -35,7 +34,6 @@ namespace :csv do
         end
       rescue StandardError => e
         pp e, hash
-        byebug
         break
       end
     end
