@@ -1,0 +1,6 @@
+.aws-cdk/
+.devcontainer/
+log/
+vendor/
+public/assets
+tmp/
