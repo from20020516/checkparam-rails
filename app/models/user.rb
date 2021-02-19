@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :database_authenticatable, :omniauthable, :rememberable
+  devise :database_authenticatable, :rememberable, :omniauthable, omniauth_providers: %i[twitter]
 
   has_many :gearsets
   belongs_to :job
@@ -23,18 +23,14 @@ class User < ApplicationRecord
     self
   end
 
-  def self.find_for_oauth(auth)
-    user = User.where(uid: auth.uid, provider: auth.provider).first
-    user ||= User.create(
-      uid: auth.uid,
-      password: Devise.friendly_token[0, 20],
-      provider: auth.provider,
-      lang: auth&.extra&.raw_info&.[](:lang) == 'ja' ? 'ja' : 'en'
-    )
-    user.update(
-      email: auth.info.email,
-      auth: auth.to_json
-    )
-    user
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.uid = auth.uid
+      user.password = Devise.friendly_token[0, 20]
+      user.provider = auth.provider
+      user.lang = auth&.extra&.raw_info&.[](:lang) == 'ja' ? 'ja' : 'en'
+      user.email = auth.info.email
+      user.auth = auth.to_json
+    end
   end
 end
