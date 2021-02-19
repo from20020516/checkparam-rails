@@ -23,6 +23,9 @@ $app ||= Rack::Builder.parse_file("#{__dir__}/config.ru").first
 ENV['RACK_ENV'] ||= 'production'
 
 def handler(event:, context:)
+
+  p event
+
   # Check if the body is base64 encoded. If it is, try to decode it
   body = if event['isBase64Encoded']
     Base64.decode64 event['body']
@@ -41,6 +44,7 @@ def handler(event:, context:)
     'QUERY_STRING' => Rack::Utils.build_query(event['queryStringParameters'] || {}),
     'SERVER_NAME' => headers.fetch('host', 'localhost'),
     'SERVER_PORT' => headers.fetch('x-forwarded-port', 443).to_s,
+    'RACK_REQUEST_COOKIE_HASH' => event['cookies']&.map{ |str| str.split('=') }&.to_h,
     'rack.version' => Rack::VERSION,
     'rack.url_scheme' => headers.fetch('cloudfront-forwarded-proto') { headers.fetch('x-forwarded-proto', 'https') },
     'rack.input' => StringIO.new(body),
@@ -65,16 +69,13 @@ def handler(event:, context:)
     # Response from Rack must have status, headers and body
     status, headers, body = $app.call env
 
-    p headers
-    p body
-
     # body is an array. We combine all the items to a single string
     body_content = ""
     body.each do |item|
       body_content += item.to_s
     end
 
-    isBinary = headers['Content-Encoding'] === 'gzip' || !(['text/html'].include?(headers['Content-Type']))
+    isBinary = !(['text/html'].include?(headers['Content-Type']))
 
     # We return the structure required by AWS API Gateway since we integrate with it
     # https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
