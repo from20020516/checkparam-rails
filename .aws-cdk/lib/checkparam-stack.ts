@@ -46,10 +46,10 @@ export class CheckparamStack extends cdk.Stack {
       websiteIndexDocument: 'index.html',
       removalPolicy: cdk.RemovalPolicy.DESTROY
     })
-    new s3deployment.BucketDeployment(this, 'BucketDeployment', {
-      sources: [s3deployment.Source.asset('./s3')],
-      destinationBucket: bucket
-    })
+    // new s3deployment.BucketDeployment(this, 'BucketDeployment', {
+    //   sources: [s3deployment.Source.asset('./s3')],
+    //   destinationBucket: bucket
+    // })
 
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
       code: lambda.DockerImageCode.fromImageAsset('../'),
