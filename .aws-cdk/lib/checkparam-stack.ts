@@ -69,7 +69,10 @@ export class CheckparamStack extends cdk.Stack {
       }
     })
     new apigw.HttpApi(this, 'HttpAPI', {
-      defaultIntegration: new apigwIntegrations.LambdaProxyIntegration({ handler })
+      defaultIntegration: new apigwIntegrations.LambdaProxyIntegration({
+        handler,
+        payloadFormatVersion: apigw.PayloadFormatVersion.VERSION_2_0
+      })
     }).addRoutes({
       integration: new apigwIntegrations.HttpProxyIntegration({ url: `${bucket.bucketWebsiteUrl}/{proxy}` }),
       path: '/icons/{proxy}'
