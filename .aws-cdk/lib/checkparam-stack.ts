@@ -7,7 +7,6 @@ import * as lambda from '@aws-cdk/aws-lambda'
 import * as rds from '@aws-cdk/aws-rds'
 import * as s3 from '@aws-cdk/aws-s3'
 import * as s3deployment from '@aws-cdk/aws-s3-deployment'
-
 import * as dotenv from 'dotenv'
 import * as path from 'path'
 dotenv.config({ path: path.join(__dirname, '../../.env') })
@@ -16,8 +15,27 @@ export class CheckparamStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
-    const vpc = ec2.Vpc.fromLookup(this, 'Vpc', {
-      isDefault: true
+    const vpc = new ec2.Vpc(this, 'Vpc', {
+      cidr: '10.0.0.0/16',
+      natGateways: 1,
+      maxAzs: 2,
+      subnetConfiguration: [
+        {
+          cidrMask: 24,
+          name: 'Public',
+          subnetType: ec2.SubnetType.PUBLIC,
+        },
+        {
+          cidrMask: 24,
+          name: 'Private',
+          subnetType: ec2.SubnetType.PRIVATE,
+        },
+        {
+          cidrMask: 24,
+          name: 'Isolated',
+          subnetType: ec2.SubnetType.ISOLATED,
+        }
+      ]
     })
 
     const vpcSg = new ec2.SecurityGroup(this, 'VpcSg', { vpc })
@@ -35,16 +53,13 @@ export class CheckparamStack extends cdk.Stack {
       vpc,
       securityGroups: [vpcSg],
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PUBLIC
-      }
+        subnetType: ec2.SubnetType.ISOLATED
+      },
     })
 
     const bucket = new s3.Bucket(this, 'Bucket', {
       publicReadAccess: true,
-      bucketName: 'checkparam',
-      versioned: true,
-      websiteIndexDocument: 'index.html',
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      websiteIndexDocument: 'index.html'
     })
     // new s3deployment.BucketDeployment(this, 'BucketDeployment', {
     //   sources: [s3deployment.Source.asset('./s3')],
@@ -54,7 +69,7 @@ export class CheckparamStack extends cdk.Stack {
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
       code: lambda.DockerImageCode.fromImageAsset('../'),
       vpc,
-      allowPublicSubnet: true,
+      vpcSubnets: vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE }),
       timeout: cdk.Duration.seconds(30),
       memorySize: 512,
       environment: {
