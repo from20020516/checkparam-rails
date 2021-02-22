@@ -48,7 +48,7 @@ export class CheckparamStack extends cdk.Stack {
       scaling: {
         maxCapacity: 1,
         minCapacity: 1,
-        autoPause: cdk.Duration.minutes(15)
+        autoPause: cdk.Duration.minutes(1440)
       },
       vpc,
       securityGroups: [vpcSg],
@@ -61,36 +61,53 @@ export class CheckparamStack extends cdk.Stack {
       publicReadAccess: true,
       websiteIndexDocument: 'index.html'
     })
-    // new s3deployment.BucketDeployment(this, 'BucketDeployment', {
-    //   sources: [s3deployment.Source.asset('./s3')],
-    //   destinationBucket: bucket
-    // })
+    new s3deployment.BucketDeployment(this, 'BucketDeployment', {
+      sources: [s3deployment.Source.asset('./s3', { exclude: ['*.png'] })],
+      destinationBucket: bucket,
+      prune: false
+    })
 
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
       code: lambda.DockerImageCode.fromImageAsset('../'),
       vpc,
       vpcSubnets: vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE }),
       timeout: cdk.Duration.seconds(30),
-      memorySize: 512,
+      memorySize: 256,
       environment: {
         DB_HOST: aurora.clusterEndpoint.hostname,
         DB_USER: aurora.secret?.secretValueFromJson('username').toString()!,
         DB_PASSWORD: aurora.secret?.secretValueFromJson('password').toString()!,
-        RAILS_ENV: 'production',
         RAILS_MASTER_KEY: process.env.RAILS_MASTER_KEY!,
         SECRET_KEY_BASE: process.env.SECRET_KEY_BASE!,
         TWITTER_API_KEY: process.env.TWITTER_API_KEY!,
         TWITTER_API_SECRET: process.env.TWITTER_API_SECRET!
       }
     })
-    new apigw.HttpApi(this, 'HttpAPI', {
+    const httpApi = new apigw.HttpApi(this, 'HttpAPI', {
       defaultIntegration: new apigwIntegrations.LambdaProxyIntegration({
         handler,
         payloadFormatVersion: apigw.PayloadFormatVersion.VERSION_2_0
       })
-    }).addRoutes({
-      integration: new apigwIntegrations.HttpProxyIntegration({ url: `${bucket.bucketWebsiteUrl}/{proxy}` }),
-      path: '/icons/{proxy}'
+    })
+    httpApi.addRoutes({
+      integration: new apigwIntegrations.HttpProxyIntegration({ url: `${bucket.bucketWebsiteUrl}/favicon.ico` }),
+      path: '/favicon.ico',
+      methods: [apigw.HttpMethod.GET]
+    })
+    httpApi.addRoutes({
+      integration: new apigwIntegrations.HttpProxyIntegration({ url: `${bucket.bucketWebsiteUrl}/apple-touch-icon.png` }),
+      path: '/apple-touch-icon.png',
+      methods: [apigw.HttpMethod.GET]
+    })
+    httpApi.addRoutes({
+      integration: new apigwIntegrations.HttpProxyIntegration({ url: `${bucket.bucketWebsiteUrl}/assets/{proxy}` }),
+      path: '/assets/{proxy}',
+      methods: [apigw.HttpMethod.GET]
+    })
+    httpApi.addRoutes({
+      integration: new apigwIntegrations.HttpProxyIntegration({ url: `${bucket.bucketWebsiteUrl}/icons/{proxy}` }),
+      path: '/icons/{proxy}',
+      methods: [apigw.HttpMethod.GET]
     })
 
     // const pmaTask = new ecs.FargateTaskDefinition(this, 'PMATask')

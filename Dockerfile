@@ -12,7 +12,6 @@ ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/
 ENV LUA_LIB=/usr/lib64/liblua-5.1.so
 ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=1
-ENV RAILS_SERVE_STATIC_FILES=1
 
 WORKDIR /var/task
 
@@ -25,8 +24,6 @@ RUN bundle package
 
 ADD . /var/task
 RUN bundle install
-RUN ./bin/rails assets:clean
-RUN ./bin/rails assets:precompile
 
 RUN yum remove -y gcc make gcc-c++ git
 
