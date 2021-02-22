@@ -35,6 +35,7 @@ def handler(event:, context:)
 
   # Rack expects the querystring in plain text, not a hash
   headers = event.fetch 'headers', {}
+  headers['cookie'] = event['cookies'].join('; ') if event['cookies']
 
   # Environment required by Rack (http://www.rubydoc.info/github/rack/rack/file/SPEC)
   env = {
@@ -44,7 +45,6 @@ def handler(event:, context:)
     'QUERY_STRING' => Rack::Utils.build_query(event['queryStringParameters'] || {}),
     'SERVER_NAME' => headers.fetch('host', 'localhost'),
     'SERVER_PORT' => headers.fetch('x-forwarded-port', 443).to_s,
-    'RACK_REQUEST_COOKIE_HASH' => event['cookies']&.map{ |str| str.split('=') }&.to_h,
     'rack.version' => Rack::VERSION,
     'rack.url_scheme' => headers.fetch('cloudfront-forwarded-proto') { headers.fetch('x-forwarded-proto', 'https') },
     'rack.input' => StringIO.new(body),
@@ -64,6 +64,8 @@ def handler(event:, context:)
     end
     env[header] = value.to_s
   end
+
+  p env
 
   begin
     # Response from Rack must have status, headers and body
