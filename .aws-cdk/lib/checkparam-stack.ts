@@ -42,19 +42,17 @@ export class CheckparamStack extends cdk.Stack {
     vpcSg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80))
     vpcSg.addIngressRule(ec2.Peer.ipv4(vpc.vpcCidrBlock), ec2.Port.allTraffic())
 
-    const aurora = new rds.ServerlessCluster(this, 'AuroraServerless', {
-      engine: rds.DatabaseClusterEngine.auroraMysql({ version: rds.AuroraMysqlEngineVersion.VER_5_7_12 }),
-      defaultDatabaseName: 'checkparam',
-      scaling: {
-        maxCapacity: 1,
-        minCapacity: 1,
-        autoPause: cdk.Duration.minutes(1440)
-      },
+    const mysqlSg = new ec2.SecurityGroup(this, 'MySQLSG', { vpc })
+    mysqlSg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(3306))
+
+    const mysql = new rds.DatabaseInstance(this, 'MySQL', {
+      engine: rds.DatabaseInstanceEngine.mysql({ version: rds.MysqlEngineVersion.VER_5_7_31 }),
+      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
       vpc,
-      securityGroups: [vpcSg],
       vpcSubnets: {
-        subnetType: ec2.SubnetType.ISOLATED
+        subnetType: ec2.SubnetType.PUBLIC
       },
+      securityGroups: [mysqlSg],
     })
 
     const bucket = new s3.Bucket(this, 'Bucket', {
@@ -69,14 +67,12 @@ export class CheckparamStack extends cdk.Stack {
 
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
       code: lambda.DockerImageCode.fromImageAsset('../'),
-      vpc,
-      vpcSubnets: vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE }),
       timeout: cdk.Duration.seconds(30),
       memorySize: 256,
       environment: {
-        DB_HOST: aurora.clusterEndpoint.hostname,
-        DB_USER: aurora.secret?.secretValueFromJson('username').toString()!,
-        DB_PASSWORD: aurora.secret?.secretValueFromJson('password').toString()!,
+        DB_HOST: mysql.instanceEndpoint.hostname,
+        DB_USER: mysql.secret?.secretValueFromJson('username').toString()!,
+        DB_PASSWORD: mysql.secret?.secretValueFromJson('password').toString()!,
         RAILS_MASTER_KEY: process.env.RAILS_MASTER_KEY!,
         SECRET_KEY_BASE: process.env.SECRET_KEY_BASE!,
         TWITTER_API_KEY: process.env.TWITTER_API_KEY!,
@@ -114,7 +110,7 @@ export class CheckparamStack extends cdk.Stack {
     // pmaTask.addContainer('PMAContainer', {
     //   image: ecs.ContainerImage.fromRegistry('phpmyadmin'),
     //   environment: {
-    //     PMA_HOSTS: aurora.clusterEndpoint.hostname,
+    //     PMA_HOSTS: mysql.instanceEndpoint.hostname,
     //     UPLOAD_LIMIT: '2G'
     //   }
     // })
