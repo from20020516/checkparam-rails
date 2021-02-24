@@ -8,7 +8,6 @@
       <h1><span>/checkparam</span> your Ideas.</h1>
       <p class='m-4'><%= t('welcome_html') %></p>
     </div>
-    <%= button_to t('sign_in_with_twitter'), user_twitter_omniauth_authorize_path, method: :post, class: 'btn btn-secondary btn-lg m-4' %>
   </div>
   <%= render 'layouts/cards', columns: 3 %>
 <% end %>
