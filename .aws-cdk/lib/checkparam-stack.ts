@@ -67,7 +67,7 @@ export class CheckparamStack extends cdk.Stack {
 
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
       code: lambda.DockerImageCode.fromImageAsset('../', {
-        target: 'production'
+        target: 'handler'
       }),
       timeout: cdk.Duration.seconds(30),
       retryAttempts: 0,

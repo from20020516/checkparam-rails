@@ -20,7 +20,7 @@ RUN bundle install
 
 #
 
-FROM public.ecr.aws/lambda/ruby:2.7 as production
+FROM public.ecr.aws/lambda/ruby:2.7 as handler
 
 ENV LANG C.UTF-8
 ENV BOOTSNAP_CACHE_DIR=/tmp/cache
