@@ -55,20 +55,24 @@ export class CheckparamStack extends cdk.Stack {
       prune: false
     })
 
+    const environment = {
+      DB_HOST: mysql.instanceEndpoint.hostname,
+      DB_USER: mysql.secret?.secretValueFromJson('username').toString()!,
+      DB_PASSWORD: mysql.secret?.secretValueFromJson('password').toString()!,
+      RAILS_MASTER_KEY: process.env.RAILS_MASTER_KEY!,
+      SECRET_KEY_BASE: process.env.SECRET_KEY_BASE!,
+      TWITTER_API_KEY: process.env.TWITTER_API_KEY!,
+      TWITTER_API_SECRET: process.env.TWITTER_API_SECRET!
+    }
+
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
-      code: lambda.DockerImageCode.fromImageAsset('../'),
+      code: lambda.DockerImageCode.fromImageAsset('../', {
+        target: 'production'
+      }),
       timeout: cdk.Duration.seconds(30),
       retryAttempts: 0,
       memorySize: 256,
-      environment: {
-        DB_HOST: mysql.instanceEndpoint.hostname,
-        DB_USER: mysql.secret?.secretValueFromJson('username').toString()!,
-        DB_PASSWORD: mysql.secret?.secretValueFromJson('password').toString()!,
-        RAILS_MASTER_KEY: process.env.RAILS_MASTER_KEY!,
-        SECRET_KEY_BASE: process.env.SECRET_KEY_BASE!,
-        TWITTER_API_KEY: process.env.TWITTER_API_KEY!,
-        TWITTER_API_SECRET: process.env.TWITTER_API_SECRET!
-      }
+      environment,
     })
     handler.currentVersion.addAlias('production', {
       provisionedConcurrentExecutions: 1
