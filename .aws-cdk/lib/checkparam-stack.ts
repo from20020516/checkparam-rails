@@ -3,6 +3,8 @@ import * as apigwIntegrations from '@aws-cdk/aws-apigatewayv2-integrations'
 import * as cdk from '@aws-cdk/core'
 import * as ec2 from '@aws-cdk/aws-ec2'
 import * as ecs from '@aws-cdk/aws-ecs'
+import * as events from '@aws-cdk/aws-events'
+import * as eventsTargets from '@aws-cdk/aws-events-targets'
 import * as lambda from '@aws-cdk/aws-lambda'
 import * as rds from '@aws-cdk/aws-rds'
 import * as s3 from '@aws-cdk/aws-s3'
@@ -76,6 +78,29 @@ export class CheckparamStack extends cdk.Stack {
     })
     handler.currentVersion.addAlias('production', {
       provisionedConcurrentExecutions: 1
+    })
+
+    const updater = new lambda.DockerImageFunction(this, 'Updater', {
+      code: lambda.DockerImageCode.fromImageAsset('../', {
+        target: 'updater',
+        entrypoint: ['/bin/sh', '-c'],
+        cmd: ['bin/rails update:items']
+      }),
+      reservedConcurrentExecutions: 1,
+      timeout: cdk.Duration.seconds(900),
+      retryAttempts: 0,
+      memorySize: 256,
+      environment,
+    })
+    new events.Rule(this, 'ScheduledEvent', {
+      schedule: events.Schedule.cron({
+        minute: '0',
+        hour: '5',
+        weekDay: 'WED',
+      }),
+      targets: [
+        new eventsTargets.LambdaFunction(updater),
+      ]
     })
 
     const httpApi = new apigw.HttpApi(this, 'HttpAPI', {

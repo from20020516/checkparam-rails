@@ -1,5 +1,6 @@
 # ignore .DS_Store to keep cache.
 .*
+!.git*
 Dockerfile
 log/
 public/assets
