@@ -1,7 +1,8 @@
-.aws-cdk/
-.devcontainer/
+# ignore .DS_Store to keep cache.
+.*
+Dockerfile
 log/
-vendor/
 public/assets
 public/icons
 tmp/
+vendor/
