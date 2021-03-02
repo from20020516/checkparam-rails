@@ -58,6 +58,7 @@ export class CheckparamStack extends cdk.Stack {
     const handler = new lambda.DockerImageFunction(this, 'Handler', {
       code: lambda.DockerImageCode.fromImageAsset('../'),
       timeout: cdk.Duration.seconds(30),
+      retryAttempts: 0,
       memorySize: 256,
       environment: {
         DB_HOST: mysql.instanceEndpoint.hostname,
@@ -69,6 +70,10 @@ export class CheckparamStack extends cdk.Stack {
         TWITTER_API_SECRET: process.env.TWITTER_API_SECRET!
       }
     })
+    handler.currentVersion.addAlias('production', {
+      provisionedConcurrentExecutions: 1
+    })
+
     const httpApi = new apigw.HttpApi(this, 'HttpAPI', {
       defaultIntegration: new apigwIntegrations.LambdaProxyIntegration({
         handler,
