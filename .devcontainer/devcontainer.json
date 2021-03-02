@@ -13,5 +13,11 @@
 	],
 	"forwardPorts": [
 		3000
-	]
+	],
+	"remoteEnv": {
+		"BUNDLE_APP_CONFIG": null,
+		"BUNDLE_CACHE_ALL": "true",
+		"BUNDLE_PATH": "${containerWorkspaceFolder}/vendor/bundle",
+		"EDITOR": "code --wait"
+	}
 }

@@ -7,7 +7,6 @@
 .DS_Store
 .env
 .irb_history
-/config/master.key
 icons.7z
 log/
 node_modules/
