@@ -75,6 +75,7 @@ export class CheckparamStack extends cdk.Stack {
       retryAttempts: 0,
       memorySize: 256,
       environment,
+      logRetention: 1,
     })
     handler.currentVersion.addAlias('production', {
       provisionedConcurrentExecutions: 1
