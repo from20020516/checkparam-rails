@@ -33,11 +33,21 @@ export class CheckparamStack extends cdk.Stack {
     vpcSg.addIngressRule(ec2.Peer.ipv4(vpc.vpcCidrBlock), ec2.Port.allTraffic())
 
     const mysqlSg = new ec2.SecurityGroup(this, 'MySQLSG', { vpc })
+    /**
+     * @deprecated of course unsafe.
+     */
     mysqlSg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(3306))
 
+    const engine = rds.DatabaseInstanceEngine.mysql({ version: rds.MysqlEngineVersion.VER_5_7_31 })
     const mysql = new rds.DatabaseInstance(this, 'MySQL', {
-      engine: rds.DatabaseInstanceEngine.mysql({ version: rds.MysqlEngineVersion.VER_5_7_31 }),
+      engine,
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
+      parameterGroup: new rds.ParameterGroup(this, 'ParameterGroup', {
+        engine,
+        parameters: {
+          max_allowed_packet: '8388608'
+        }
+      }),
       vpc,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PUBLIC
