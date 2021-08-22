@@ -36,3 +36,14 @@ COPY --from=builder /var/task/ .
 COPY --from=builder /usr/lib64/mysql/ /usr/lib64/mysql/
 
 CMD ["lambda.handler"]
+
+#
+
+FROM handler as updater
+
+RUN yum install -y git
+
+WORKDIR /var/task
+
+ENTRYPOINT ["/bin/sh", "-c"]
+CMD ["bin/rails update:items"]

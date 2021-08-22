@@ -4,7 +4,7 @@ namespace :update do
 
   desc "Update Items"
   task items: :environment do
-    sh "cd Resources && git pull && cd .. && \
+    sh "git submodule update --remote && \
         rails parse:wiki && \
         rails parse:items"
   end
