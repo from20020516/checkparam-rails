@@ -4,7 +4,7 @@ namespace :csv do
   require 'csv'
 
   def tables
-    ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata encrypted_password]
+    ActiveRecord::Base.connection.tables - %w[schema_migrations ar_internal_metadata encrypted_password sessions]
   end
 
   desc "show table names."

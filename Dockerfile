@@ -14,7 +14,8 @@ ADD ./Gemfile /var/task/Gemfile
 ADD ./Gemfile.lock /var/task/Gemfile.lock
 RUN bundle config set --local cache_all true \
     && bundle config --local without 'development test' \
-    && bundle config set --local path 'vendor/bundle'
+    && bundle config set --local path 'vendor/bundle' \
+    && bundle config set --local system 'true'
 RUN bundle package
 RUN bundle install
 
