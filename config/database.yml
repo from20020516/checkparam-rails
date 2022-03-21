@@ -1,13 +1,8 @@
 default: &default
-  adapter: mysql2
-  host: <%= ENV.fetch('DB_HOST', 'mysql') %>
-  username: <%= ENV.fetch('DB_USER', 'root') %>
-  password: <%= ENV.fetch('DB_PASSWORD', 'secret') %>
-  encoding: utf8
-  charset: utf8mb4
-  pool: 5
-  timeout: false
   database: checkparam
+  adapter: aurora_serverless
+  secret_arn: <%= ENV.fetch('DB_SECRET_ARN') %>
+  resource_arn: <%= ENV.fetch('DB_ARN') %>
 
 development:
   <<: *default

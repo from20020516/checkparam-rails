@@ -9,3 +9,4 @@ services:
       - RAILS_SERVE_STATIC_FILES=1
     volumes:
       - ..:/var/www:cached
+      - ~/.aws:/root/.aws:ro

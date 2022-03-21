@@ -3,15 +3,15 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '2.7.5'
 
 gem 'activerecord-session_store'
+gem 'activerecord-aurora-serverless-adapter'
 gem 'bcrypt'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise', :github => 'heartcombo/devise', branch: 'master'
 gem 'dotenv-rails'
 gem 'jbuilder'
-gem 'mysql2'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter', :github => 'arunagw/omniauth-twitter', branch: 'master'
 gem 'puma'
@@ -34,9 +34,11 @@ group :development do
   gem 'mini_racer', platforms: :ruby
   gem 'sass-rails', '>= 6'
   gem 'uglifier'
+  gem 'mysql2'
 end
 
 group :test do
   gem 'capybara'
   gem 'rspec'
+  gem 'mysql2'
 end
