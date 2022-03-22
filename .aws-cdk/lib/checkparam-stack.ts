@@ -49,7 +49,7 @@ export class CheckparamStack extends Stack {
           character_set_client: 'utf8mb4',
           character_set_connection: 'utf8mb4',
           character_set_database: 'utf8mb4',
-          character_set_filesystem: "utf8mb4",
+          character_set_filesystem: 'utf8mb4',
           character_set_results: 'utf8mb4',
           character_set_server: 'utf8mb4',
           collation_server: 'utf8mb4_bin',
@@ -63,7 +63,7 @@ export class CheckparamStack extends Stack {
       scaling: {
         minCapacity: rds.AuroraCapacityUnit.ACU_1,
         maxCapacity: rds.AuroraCapacityUnit.ACU_2,
-        autoPause: Duration.minutes(15)
+        autoPause: Duration.minutes(5)
       },
       removalPolicy: RemovalPolicy.DESTROY,
     })

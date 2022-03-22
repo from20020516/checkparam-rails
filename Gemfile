@@ -34,7 +34,6 @@ group :development do
   gem 'mini_racer', platforms: :ruby
   gem 'sass-rails', '>= 6'
   gem 'uglifier'
-  gem 'mysql2'
 end
 
 group :test do
