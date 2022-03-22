@@ -3,7 +3,7 @@
 namespace :parse do
   desc "parse Item data."
   task items: :environment do
-    return puts 'blank wiki data.' if Wiki.all.blank?
+    return puts 'blank wiki data.' if Wiki.all.count.zero?
 
     require 'benchmark'
     @state = Rufus::Lua::State.new
@@ -53,7 +53,7 @@ namespace :parse do
   desc "show the type of stat."
   task statlist: :environment do
     result = Hash.new(0)
-    Item.all.each do |item|
+    Item.all.select(:id, :ja).each do |item|
       str = item.description[:raw]
       def status(str)
         str.split(/\s/).flat_map { |stat| stat.sub(/[+-]\d+～/, '').scan(/(\D+?)([+-]?\d+)%?$/) }.to_h
@@ -88,21 +88,25 @@ namespace :parse do
       Nokogiri::HTML.parse(html, nil, charset)
     end
 
-    max = !Wiki.all.empty? ? 10 : parser(10000).xpath('//*[@id="article"]/div/dl[1]/dd[3]').children.text.delete('^0-9')
+    max = Wiki.all.count.zero? ? parser(10000).xpath('//*[@id="article"]/div/dl[1]/dd[3]').children.text.delete('^0-9') : 10
     puts [max.present?, max].to_s
 
     if max.present?
       (1..max.to_i).each do |page_id|
         doc = parser(page_id)
         (1..50).each do |i|
-          item = doc.xpath("//*[@id='article']/div/ul/li[#{i}]/a")
-          id = item.attribute('href').value.delete('^0-9')
-          ja = item.children.text
-          Wiki.find_or_create_by(id: id, ja: ja)
+          begin
+            item = doc.xpath("//*[@id='article']/div/ul/li[#{i}]/a")
+            id = item.attribute('href').value.delete('^0-9')
+            ja = item.children.text
+            Wiki.find_or_create_by(id: id, ja: ja)
+          rescue
+            break
+          end
         end
       end
 
-      Item.all.each do |item|
+      Item.all.select(:id, :ja, :wiki_id).each do |item|
         next if item.wiki_id.present?
 
         wiki_exact = Wiki.find_by(ja: item.ja)

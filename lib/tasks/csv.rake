@@ -25,8 +25,10 @@ namespace :csv do
       begin
         current_csv = CSV.generate do |csv|
           csv << column_names
-          model.all.each do |elem|
-            csv << elem.slice(column_names).values
+          model.find_in_batches(batch_size: 1000) do |elem|
+            elem.each do |elem|
+              csv << elem.slice(column_names).values
+            end
           end
         end
         File.open("db/csv/#{table}.csv", 'w') do |file|
