@@ -16,7 +16,7 @@
                   </div>
                   <% Slot.all.each do |slot| %>
                     <div class='col-3 bg-transparent'>
-                      <%= image_tag "/icons/#{set[slot.en]}.png", size: '64' %>
+                      <%= image_tag "/icons/#{set[slot.en] || slot.img}.png", size: '64' %>
                     </div>
                   <% end %>
                 </div>

@@ -10,3 +10,4 @@ services:
     volumes:
       - ..:/var/www:cached
       - ~/.aws:/root/.aws:ro
+      - /var/run/docker.sock:/var/run/docker.sock
